@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Admin\UserController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -18,9 +20,34 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+Route::group(['prefix' => 'dashboard',],function(){
+    Route::get('/', function () {
+        return view('dashboard');
+    })->name('dashboard');
+
+    
+    Route::group(['prefix' => 'users',], function () {
+    //Route::get('/', 'UserController@index')->name('user.index');
+    Route::get('/', [UserController::class, 'index'])->name('user.index');
+    Route::get('/create',[UserController::class, 'create'])->name('user.create');
+    Route::post('/store',[UserController::class, 'store'])->name('user.store');
+
+    Route::group(['prefix' => '{user}'], function () {
+    Route::get('/show',[UserController::class, 'show'])->name('user.show');
+    // Route::get('/edit','UserController@edit')->name('user.edit');
+    // Route::patch('/','Usercontroller@update')->name('user.update');
+    // Route::get('/delete','UserController@delete')->name('user.delete');
+    // Route::delete('/','UserController@destroy')->name('user.destroy');
+
+    });
+});
+
+
+
+
+
+
+});
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

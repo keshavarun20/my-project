@@ -97,6 +97,7 @@
         Scripts
     ***********************************-->
     @include('layouts.admin._script')
+    
 	<script>
 		function cardsCenter()
 		{
@@ -142,8 +143,11 @@
 				cardsCenter();
 			}, 1000); 
 		});
-		
+
+        
+	
 	</script>
+    @yield('js')
 
 </body>
 </html>
