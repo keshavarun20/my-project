@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('doctors', function (Blueprint $table) {
+        Schema::create('receptionists', function (Blueprint $table) {
             $table->id();
             $table->string('first_name');
             $table->string('last_name');
@@ -22,13 +22,7 @@ return new class extends Migration
             $table->string('address_lane_1');
             $table->string('address_lane_2')->nullable();
             $table->string('city');
-            $table->foreignId('consultation_id');
-            $table->string('specialty')->nullable();
-            $table->string('slmc_no');
-            $table->string('base_hospital');
             $table->timestamps();
-
-            $table->foreign('consultation_id')->references('id')->on('consultations')->onDelete('cascade');
         });
     }
 
@@ -37,6 +31,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('doctors');
+        Schema::dropIfExists('receptionists');
     }
 };

@@ -5,11 +5,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Doctor extends Model
+class Patient extends Model
 {
     use HasFactory;
 
     protected $fillable = [
+        'today_date',
         'first_name',
         'last_name',
         'dob',
@@ -19,14 +20,5 @@ class Doctor extends Model
         'address_lane_1',
         'address_lane_2',
         'city',
-        'consultation_id',
-        'slmc_no',
-        'base_hospital',
-
     ];
-
-    public function user()
-    {
-        return $this->belongsTo(User::class, 'user_id');
-    }
 }

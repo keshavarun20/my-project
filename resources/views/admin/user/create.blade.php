@@ -1,6 +1,9 @@
 @extends('layouts.admin.master')
-@section('title','User List')
+@section('title','User Create')
 @section('content')
+
+
+
 
 <div class="content-body">
     <div class="container-fluid">
@@ -13,7 +16,6 @@
                     <div class="basic-form">
                         <form method="post" action="{{ route('user.store') }}" enctype="multipart/form-data">
                             @csrf
-                            @method('POST')
                             <div class="row">
                                 <div class="col-md-8">
                                     @include('admin.user._form')
@@ -32,5 +34,7 @@
         </div>
     </div>
 </div>
+
+
 
 @endsection

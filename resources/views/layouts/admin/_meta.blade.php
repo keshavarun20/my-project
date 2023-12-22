@@ -9,4 +9,4 @@
 	<meta property="og:description" content="Fillow : Fillow Saas Admin  Bootstrap 5 Template">
 	<meta property="og:image" content="https:/fillow.dexignlab.com/xhtml/social-image.png">
 	<meta name="format-detection" content="telephone=no">
-    <title>{{ config('app.name') }} - @yield('title')</title>
+    <title> @yield('title')</title>
