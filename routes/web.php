@@ -34,8 +34,8 @@ Route::group(['prefix' => 'dashboard',],function(){
 
     Route::group(['prefix' => '{user}'], function () {
     Route::get('/show',[UserController::class, 'show'])->name('user.show');
-    // Route::get('/edit','UserController@edit')->name('user.edit');
-    // Route::patch('/','Usercontroller@update')->name('user.update');
+    Route::get('/edit',[UserController::class, 'edit'])->name('user.edit');
+    Route::patch('/',[UserController::class, 'update'])->name('user.update');
     // Route::get('/delete','UserController@delete')->name('user.delete');
     // Route::delete('/','UserController@destroy')->name('user.destroy');
 

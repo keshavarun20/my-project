@@ -27,12 +27,18 @@
                                             @foreach ($users as $user)
                                             <tr>
                                                 <td>{{ $user->id }}</td>
-                                                <td>{{ $user->name }}</td>
+                                                @if($user->role->name == 'Doctor')
+                                                <td>{{ $user->doctor->first_name }}</td>
+                                                @elseif($user->role->name == 'Patient')
+                                                <td>{{ $user->patient->first_name }}</td>
+                                                @else
+                                                <td>{{ $user->receptionist }}</td>
+                                                @endif
                                                 <td>{{ $user->email }}</td>
                                                 <td>{{ $user->role->name }}</td>
                                                 <td>
                                                         <a href="{{ route('user.show',$user->id) }}" class="btn btn-info">View</i></a>
-														<a href="#" class="btn btn-primary">Edit</i></a>
+														<a href="{{ route('user.edit',$user->id) }}" class="btn btn-primary">Edit</i></a>
 														<a href="#" class="btn btn-danger">Delete</i></a>
 												</td>
                                             </tr>

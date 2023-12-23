@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('patients', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('user_id');
             $table->date('today_date');
             $table->string('first_name');
             $table->string('last_name');
@@ -24,6 +25,9 @@ return new class extends Migration
             $table->string('address_lane_2')->nullable();
             $table->string('city');
             $table->timestamps();
+
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+
         });
     }
 

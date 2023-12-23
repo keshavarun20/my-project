@@ -14,7 +14,7 @@
     <div class="row">
         <div class="mb-3 col-md-10">
             <label class="form-label" for="dob">Today's Date</label>
-            <input  type="date" name="today_date" class=" form-control" placeholder="Today's Date">
+            <input  type="date" name="today_date" class=" form-control" placeholder="Today's Date" >
             @error('today_date')
                 <div class="alert alert-danger">{{ $message }}</div>
             @enderror

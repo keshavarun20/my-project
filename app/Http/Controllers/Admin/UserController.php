@@ -12,6 +12,7 @@ use App\Models\Doctor;
 use App\Models\Patient;
 use App\Models\Receptionist;
 use App\Http\Requests\Admin\UserStoreRequest;
+use App\Http\Requests\Admin\UserUpdateRequest;
 
 class UserController extends Controller
 {
@@ -37,6 +38,7 @@ class UserController extends Controller
         //dd($data['role_id']);
         if ($data['role_id'] == 2){
             Doctor::create([
+                'user_id'=>$user->id,
                 'first_name'=>$data['first_name'],
                 'last_name'=>$data['last_name'],
                 'dob'=>$data['dob'],
@@ -54,6 +56,8 @@ class UserController extends Controller
             ]);
         } else if($data['role_id'] == 3){
             Patient::create([
+                'user_id'=>$user->id,
+                'today_date'=>$data['today_date'],
                 'first_name'=>$data['first_name'],
                 'last_name'=>$data['last_name'],
                 'dob'=>$data['dob'],
@@ -67,6 +71,7 @@ class UserController extends Controller
             
         } else {
               Receptionist::create([
+                'user_id'=>$user->id,
                 'first_name'=>$data['first_name'],
                 'last_name'=>$data['last_name'],
                 'dob'=>$data['dob'],
@@ -85,5 +90,19 @@ class UserController extends Controller
 
     public function show(User $user){
         return view('admin.user.show', compact('user'));
+    }
+
+    public function edit(User $user){
+        $roles = Role::all();
+        $consultations = Consultation::all();
+        return view('admin.user.edit', compact('roles', 'consultations', 'user'));
+    
+    }
+
+
+    public function update(User $user,UserUpdateRequest $request){
+        $data = $request->validated();
+        $user->update($data);
+        return redirect()->route('user.index')->with('success', 'Post  details has been updated Successfully!');
     }
 }

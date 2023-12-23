@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('doctors', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('user_id');
             $table->string('first_name');
             $table->string('last_name');
             $table->date('dob');
@@ -29,6 +30,7 @@ return new class extends Migration
             $table->timestamps();
 
             $table->foreign('consultation_id')->references('id')->on('consultations')->onDelete('cascade');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
 
