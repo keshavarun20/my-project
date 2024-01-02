@@ -1,6 +1,7 @@
 @extends('layouts.admin.master')
 @section('title', 'dashboard')
-@section('header')
+@section('header','Dashboard')
+@section('header',)
 @endsection
 @section('content')
     <div class="row page-title-header">

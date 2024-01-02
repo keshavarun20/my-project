@@ -27,7 +27,6 @@ Route::group(['prefix' => 'dashboard',],function(){
 
     
     Route::group(['prefix' => 'users',], function () {
-    //Route::get('/', 'UserController@index')->name('user.index');
     Route::get('/', [UserController::class, 'index'])->name('user.index');
     Route::get('/create',[UserController::class, 'create'])->name('user.create');
     Route::post('/store',[UserController::class, 'store'])->name('user.store');
@@ -36,8 +35,8 @@ Route::group(['prefix' => 'dashboard',],function(){
     Route::get('/show',[UserController::class, 'show'])->name('user.show');
     Route::get('/edit',[UserController::class, 'edit'])->name('user.edit');
     Route::patch('/',[UserController::class, 'update'])->name('user.update');
-    // Route::get('/delete','UserController@delete')->name('user.delete');
-    // Route::delete('/','UserController@destroy')->name('user.destroy');
+    Route::get('/delete',[UserController::class,'delete'])->name('user.delete');
+    Route::delete('/',[UserController::class,'destroy'])->name('user.destroy');
 
     });
 });

@@ -1,5 +1,6 @@
 @extends('layouts.admin.master')
 @section('title','Edit User')
+@section('header','Users')
 @section('content')
 
 <div class="content-body">
@@ -16,7 +17,7 @@
                             @method('PATCH') 
                             <div class="row">
                                 <div class="col-md-8">
-                                    @include('admin.user._form')
+                                    @include('admin.user._eform')
                                 </div>
                             </div>
                             <div class="row">

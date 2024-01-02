@@ -105,4 +105,9 @@ class UserController extends Controller
         $user->update($data);
         return redirect()->route('user.index')->with('success', 'Post  details has been updated Successfully!');
     }
+
+    public function destroy(User $user){
+        $user->delete();
+        return redirect()->route('user.index')->with('success', 'User details has been deleted Successfully!');
+    }
 }

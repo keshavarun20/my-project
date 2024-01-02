@@ -30,4 +30,8 @@ class Doctor extends Model
     {
         return $this->belongsTo(User::class, 'user_id');
     }
+
+    public function consultation(){
+        return $this->belongsTo(Consultation::class,'consultation_id');
+    }
 }

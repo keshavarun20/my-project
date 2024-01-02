@@ -1,5 +1,6 @@
 @extends('layouts.admin.master')
 @section('title','User Create')
+@section('header','Users')
 @section('content')
 
 <div class="content-body">
