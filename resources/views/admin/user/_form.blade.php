@@ -147,7 +147,7 @@
 </div>
 
 {{-- User Login Credentials --}}
-<div class="row">
+{{-- <div class="row">
     <div class="mb-3 col-md-10">
         <label class="form-label" for="email">Email</label>
         <input type="email" id="email" name="email" class="form-control" placeholder="Email">
@@ -162,6 +162,26 @@
         <input type="password" id="password" name="password" class="form-control" placeholder="Password">
         @error('password')
             <div class="alert alert-danger">{{ $message }}</div>
+        @enderror
+    </div>
+</div> --}}
+<div class="mb-3">
+    <label class="text-label form-label" for="validationCustomUsername">Username</label>
+    <div class="input-group">
+        <span class="input-group-text"> <i class="fa fa-user"></i> </span>
+        <input type="text" class="form-control" id="validationCustomUsername" name='email' placeholder="Enter a username.." required="">
+        @error('email')
+        <div class="alert alert-danger">{{ $message }}</div>
+        @enderror
+    </div>
+</div>
+<div class="mb-3">
+    <label class="text-label form-label" for="dlab-password">Password</label>
+    <div class="input-group transparent-append">
+        <span class="input-group-text"> <i class="fa fa-lock"></i> </span>
+        <input type="password" class="form-control" id="dlab-password" name='password' placeholder="Choose a safe one.." required="">
+        @error('password')
+        <div class="alert alert-danger">{{ $message }}</div>
         @enderror
     </div>
 </div>

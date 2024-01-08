@@ -3,7 +3,8 @@
 namespace App\Http\Requests\Admin;
 
 use Illuminate\Foundation\Http\FormRequest;
-
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Validation\Rule;
 
 class UserUpdateRequest extends FormRequest
 {
@@ -27,9 +28,10 @@ class UserUpdateRequest extends FormRequest
     {
         //dd($this);
         if($this->role_id == 2){
+            $user=$this->route('user');
             return[
-            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:users'],
-            'password' => ['required'],
+            'email' => ['required','string','lowercase','email','max:255',Rule::unique('users')->ignore($user->id)],
+            'password' => ['nullable','min:8'],
             'role_id' => ['required'],
             'first_name'=>['required'],
             'last_name'=>['required'],
@@ -42,16 +44,17 @@ class UserUpdateRequest extends FormRequest
             'city'=>['required'],
             'consultation_id'=>['required'],
             'specialty' => ['nullable'],
-            'slmc_no'=>['required', 'unique:doctors'],
+            'slmc_no'=>['required',Rule::unique('doctors')->ignore($user->doctor->id)],
             'base_hospital'=>['required'],
         ];
         
         }
         //dd(1);
         if($this->role_id == 3){
+            $user=$this->route('user');
             return[
-            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:users'],
-            'password' => ['required'],
+            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', Rule::unique('users')->ignore($user->id)],
+            'password' => ['nullable','min:8'],
             'role_id' => ['required'],
             'today_date'=>['required'],
             'first_name'=>['required'],
@@ -67,9 +70,10 @@ class UserUpdateRequest extends FormRequest
         
         }
 
+        $user=$this->route('user');
         return[
-            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:users'],
-            'password' => ['required'],
+            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', Rule::unique('users')->ignore($user->id)],
+            'password' => ['nullable', 'min:8'],
             'role_id' => ['required'],
             'first_name'=>['required'],
             'last_name'=>['required'],

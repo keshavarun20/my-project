@@ -55,7 +55,19 @@
         <!--**********************************
             Sidebar start
         ***********************************-->
-        @include('layouts.admin._sidebar')
+        @switch(Auth::user()->role->name)
+            @case('Admin')
+                @include('layouts.admin.sidebar._adminsidebar')
+                @break
+            
+            @case('Patient')
+                @include('layouts.admin.sidebar._sidebar')
+                @break
+
+            @case('Doctor')
+                @include('layouts.admin.sidebar._sidebar')
+                @break
+        @endswitch
         <!--**********************************
             Sidebar end
         ***********************************-->

@@ -132,7 +132,7 @@
                             <div class="mb-3 row">
                                 <label class="col-sm-3 col-form-label">Adress Lane 2</label>
                                 <div class="col-sm-9">
-                                    <input type="text" readonly="" class="form-control" value="{{ $user->patient->Address_lane_2 }}">
+                                    <input type="text" readonly="" class="form-control" value="{{ $user->patient->address_lane_2 }}">
                                 </div>
                             </div>
                             <div class="mb-3 row">
