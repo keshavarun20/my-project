@@ -44,6 +44,11 @@ class UserStoreRequest extends FormRequest
             'specialty' => ['nullable'],
             'slmc_no'=>['required', 'unique:doctors'],
             'base_hospital'=>['required'],
+            'daily_available'=>['required'],
+            'available_days'=>'required_if:daily_available, No',
+            'time'=>'required_if:daily_available , Yes',
+            'times'=>'required_if:daily_available , No',
+
         ];
         
         }

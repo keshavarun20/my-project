@@ -3,7 +3,8 @@
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\UserController;
-
+use App\Http\Controllers\Admin\DoctorScheduleController;
+use App\Http\Controllers\AppointmentController;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,7 +21,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::group(['prefix' => 'dashboard',],function(){
+Route::group(['prefix' => 'dashboard', 'middleware' => 'auth'],function(){
     Route::get('/', function () {
         return view('dashboard');
     })->name('dashboard');
@@ -35,11 +36,42 @@ Route::group(['prefix' => 'dashboard',],function(){
     Route::get('/show',[UserController::class, 'show'])->name('user.show');
     Route::get('/edit',[UserController::class, 'edit'])->name('user.edit');
     Route::patch('/',[UserController::class, 'update'])->name('user.update');
-    Route::get('/delete',[UserController::class,'delete'])->name('user.delete');
+    //Route::get('/delete',[UserController::class,'delete'])->name('user.delete');
     Route::delete('/',[UserController::class,'destroy'])->name('user.destroy');
 
+        });
     });
-});
+
+    Route::group(['prefix' => 'appointments',], function () {
+    Route::get('/', [AppointmentController::class, 'index'])->name('appointment.index');
+    Route::get('/create',[AppointmentController::class, 'create'])->name('appointment.create');
+    Route::get('ajaxRequest',[AppointmentController::class, 'getUser'])->name('get.user');
+    Route::post('/store',[AppointmentController::class, 'store'])->name('appointment.store');
+
+    // Route::group(['prefix' => '{user}'], function () {
+    // Route::get('/show',[UserController::class, 'show'])->name('user.show');
+    // Route::get('/edit',[UserController::class, 'edit'])->name('user.edit');
+    // Route::patch('/',[UserController::class, 'update'])->name('user.update');
+    // Route::get('/delete',[UserController::class,'delete'])->name('user.delete');
+    // Route::delete('/',[UserController::class,'destroy'])->name('user.destroy');
+
+    //     });
+    });
+
+    Route::group(['prefix' => 'doctorschedule',], function () {
+    Route::get('/', [DoctorScheduleController::class, 'index'])->name('dschedule.index');
+    Route::get('/create',[DoctorScheduleController::class, 'create'])->name('dschedule.create');
+    Route::post('/store',[DoctorScheduleController::class, 'store'])->name('dschedule.store');
+
+    // Route::group(['prefix' => '{user}'], function () {
+    // Route::get('/show',[UserController::class, 'show'])->name('user.show');
+    // Route::get('/edit',[UserController::class, 'edit'])->name('user.edit');
+    // Route::patch('/',[UserController::class, 'update'])->name('user.update');
+    // Route::get('/delete',[UserController::class,'delete'])->name('user.delete');
+    // Route::delete('/',[UserController::class,'destroy'])->name('user.destroy');
+
+    //     });
+    });
 
 
 

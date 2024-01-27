@@ -7,7 +7,7 @@
     <div class="container-fluid">
     <div class="row page-titles">
         <ol class="breadcrumb">
-            <li class="breadcrumb-item active"><a href="{{ route('user.index') }}">Home</a></li>
+            <li class="breadcrumb-item active"><a href="{{ route('dschedule.index') }}">Home</a></li>
         </ol>
     </div>
         <div class="col-lg-12">
@@ -36,36 +36,25 @@
                     @endif
                 <div class="card-header">
                     <h4 class="card-title">User List</h4>
-                    <a href="{{ route('user.create')}}" class="btn btn-success">Create</a>
+                    <a href="{{ route('dschedule.create')}}" class="btn btn-success">Create</a>
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
                         <table class="table table-bordered table-striped verticle-middle table-responsive-sm">
                             <thead>
                                 <tr>
-                                    <th scope="col">User ID</th>
-                                    <th scope="col">Name</th>
-                                    <th scope="col">Email</th>
-                                    <th scope="col">Role</th>
+                                    <th scope="col">Specialist Doctors</th>
+                                    <th scope="col">Doctor Name</th>
+                                    <th scope="col">Visit Date</th>
+                                    <th scope="col">Time</th>
                                     <th scope="col">Action</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($users as $user)
                                 <tr>
-                                    <td>{{ $user->id }}</td>
-                                    @if($user->role->name == 'Doctor')
-                                    <td>{{ $user->doctor->first_name }}</td>
-                                    @elseif($user->role->name == 'Patient')
-                                    <td>{{ $user->patient->first_name }}</td>
-                                    @else
-                                    <td>{{ $user->receptionist->first_name }}</td>
-                                    @endif
-                                    <td>{{ $user->email }}</td>
-                                    <td>{{ $user->role->name }}</td>
                                     <td>
-                                        <a href="{{ route('user.show',$user->id) }}" class="btn btn-info">View</a>
-                                        <a href="{{ route('user.edit',$user->id) }}" class="btn btn-primary">Edit</a>
+                                        <a href="#" class="btn btn-info">View</a>
+                                        <a href="#" class="btn btn-primary">Edit</a>
                                         <button type="button" class="btn btn-danger mb-2" data-bs-toggle="modal" data-bs-target="#deleteModal">Delete</button>
                                         <!-- Delete User Modal -->
                                         <div class="modal fade" id="deleteModal">
@@ -81,7 +70,7 @@
                                                     <div class="modal-footer">
                                                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
                                                         <!-- Form for deletion -->
-                                                        <form action="{{ route('user.destroy', [$user->id]) }}" method="POST">
+                                                        <form action="#" method="POST">
                                                             @csrf
                                                             @method('DELETE')
                                                             <button type="submit" class="btn btn-danger">Delete</button>
@@ -92,7 +81,6 @@
                                         </div>
                                     </td>
                                 </tr>
-                                @endforeach
                             </tbody>
                         </table>
                     </div>

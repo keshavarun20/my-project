@@ -24,4 +24,11 @@
 	<script src="{{asset('js/plugins-init/jquery-asColorPicker.init.js') }}"></script>
 	<script src="{{asset('js/plugins-init/material-date-picker-init.js') }}"></script>
 	<script src="{{asset('js/plugins-init/pickadate-init.js') }}"></script>
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+	<script src="{{ asset('vendor/jquery-smartwizard/dist/js/jquery.smartWizard.js') }}"></script>
+	<script src="{{ asset('vendor/jquery-steps/build/jquery.steps.min.js') }}"></script>
+    <script src="{{ asset('vendor/jquery-validation/jquery.validate.min.js') }}"></script>
+    <script src="{{ asset('js/plugins-init/jquery.validate-init.js') }}"></script>
+    <script src="{{ asset('vendor/ckeditor/ckeditor.js') }}"></script>
+    <script src="{{ asset('js/plugins-init/datatables.init.js') }}"></script>
+    <script src="{{ asset('vendor/datatables/js/jquery.dataTables.min.js') }}"></script>
+	{{-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script> --}}

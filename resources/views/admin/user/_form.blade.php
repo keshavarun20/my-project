@@ -110,7 +110,7 @@
     <div class="row">
         <div class="mb-3 col-md-7">
             <label class="form-label" for="consultation_id">Consulation Name</label>
-            <select id="consultation_id" name="consultation_id" class="default-select form-control wide">
+            <select id="consultation_id" name="consultation_id" class="form-control wide">
                 <option selected disabled>Choose...</option>
                 @foreach($consultations as $consultation)
                     <option value="{{ $consultation->id }}">{{ $consultation->name }}</option>
@@ -144,27 +144,119 @@
             @enderror
         </div>
     </div>
+    <div class="row">
+        <fieldset class="mb-3 col-md-6">
+            <label class="col-form-label col-sm-6 pt-0">Daily Available</label>
+            <div class="col-sm-9">
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="daily_available" value="Yes">
+                    <label class="form-check-label">
+                        Yes
+                    </label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="daily_available" value="No" data-bs-toggle="modal" data-bs-target="#modalGrid">
+                    <label class="form-check-label">
+                        No
+                    </label>
+                </div>
+            </div>
+        </fieldset>
+        <div id="timeFieldsContainer" class="mb-3 col-md-6 d-none">
+            <label class="form-label">Time</label>
+            <input type="time" name="time"  class="form-control" placeholder="13:14"> 
+        </div>
+    </div>
+    <div class="modal fade" id="modalGrid">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Available Days</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal">
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="container">
+                        <div class="row">
+                            <div class="form-check mb-3 col-md-6">
+                                <input class="form-check-input" type="checkbox" name="available_days[]" value="Monday">
+                                <label class="form-check-label">Monday</label>
+                            </div>
+                            <div class="mb-3 col-md-6">
+                                <label class="form-label">Time</label>
+                                <input type="time"  name="times[]" class="form-control" placeholder="13:14"> 
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="form-check mb-3 col-md-6">
+                                <input class="form-check-input" type="checkbox" name="available_days[]" value="Tuesday">
+                                <label class="form-check-label">Tuesday</label>
+                            </div>
+                            <div class="mb-3 col-md-6">
+                                <label class="form-label">Time</label>
+                                <input type="time"  name="times[]" class="form-control" placeholder="13:14"> 
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="form-check mb-3 col-md-6">
+                                <input class="form-check-input" type="checkbox" name="available_days[]" value="Wednesday">
+                                <label class="form-check-label">Wednesday</label>
+                            </div>
+                            <div class="mb-3 col-md-6">
+                                <label class="form-label">Time</label>
+                                <input type="time"  name="times[]" class="form-control" placeholder="13:14"> 
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="form-check mb-3 col-md-6">
+                                <input class="form-check-input" type="checkbox" name="available_days[]" value="Thursday">
+                                <label class="form-check-label">Thursday</label>
+                            </div>
+                            <div class="mb-3 col-md-6">
+                                <label class="form-label">Time</label>
+                                <input type="time"  name="times[]" class="form-control" placeholder="13:14"> 
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="form-check mb-3 col-md-6">
+                                <input class="form-check-input" type="checkbox" name="available_days[]" value="Friday">
+                                <label class="form-check-label">Friday</label>
+                            </div>
+                            <div class="mb-3 col-md-6">
+                                <label class="form-label">Time</label>
+                                <input type="time"  name="times[]" class="form-control" placeholder="13:14"> 
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="form-check mb-3 col-md-6">
+                                <input class="form-check-input" type="checkbox" name="available_days[]" value="Saturday">
+                                <label class="form-check-label">Saturday</label>
+                            </div>
+                            <div class="mb-3 col-md-6">
+                                <label class="form-label">Time</label>
+                                <input type="time"  name="times[]" class="form-control" placeholder="13:14"> 
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="form-check mb-3 col-md-6">
+                                <input class="form-check-input" type="checkbox" name="available_days[]" value="Sunday">
+                                <label class="form-check-label">Sunday</label>
+                            </div>
+                            <div class="mb-3 col-md-6">
+                                <label class="form-label">Time</label>
+                                <input type="time"  name="times[]" class="form-control" placeholder="13:14"> 
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
-{{-- User Login Credentials --}}
-{{-- <div class="row">
-    <div class="mb-3 col-md-10">
-        <label class="form-label" for="email">Email</label>
-        <input type="email" id="email" name="email" class="form-control" placeholder="Email">
-        @error('email')
-            <div class="alert alert-danger">{{ $message }}</div>
-        @enderror
-    </div> 
-</div>
-<div class="row">
-    <div class="mb-3 col-md-10">
-        <label class="form-label" for="password">Password</label>
-        <input type="password" id="password" name="password" class="form-control" placeholder="Password">
-        @error('password')
-            <div class="alert alert-danger">{{ $message }}</div>
-        @enderror
-    </div>
-</div> --}}
 <div class="mb-3">
     <label class="text-label form-label" for="validationCustomUsername">Username</label>
     <div class="input-group">
@@ -204,6 +296,17 @@ $(document).ready(function() {
             $('#patient-info').addClass('d-none');
         }
     });
+
+   $('input[name="daily_available"]').change(function() {
+            var isDailyAvailable = $(this).val();
+            if (isDailyAvailable == 'Yes') {
+                $('#availabilityDays').addClass('d-none');
+                $('#timeFieldsContainer').removeClass('d-none');
+            } else {
+                $('#availabilityDays').removeClass('d-none');
+                $('#timeFieldsContainer').addClass('d-none');
+            }
+        });
 })
 </script>
 @endsection

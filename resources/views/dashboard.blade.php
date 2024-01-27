@@ -1,5 +1,5 @@
 @extends('layouts.admin.master')
-@section('title', 'dashboard')
+@section('title', 'Hatton Consultation Centre')
 @section('header','Dashboard')
 @section('header',)
 @endsection

@@ -151,7 +151,7 @@
     <label class="text-label form-label" for="validationCustomUsername">Username</label>
     <div class="input-group">
         <span class="input-group-text"> <i class="fa fa-user"></i> </span>
-        <input type="text" class="form-control" id="validationCustomUsername" name='email' placeholder="Enter a username.." required=""  value="{{$user->email}}">
+        <input type="text" class="form-control" id="validationCustomUsername" name='email' placeholder="Enter a username.." value="{{$user->email}}">
         @error('email')
         <div class="alert alert-danger">{{ $message }}</div>
         @enderror

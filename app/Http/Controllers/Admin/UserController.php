@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\DoctorSchedule;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
@@ -43,7 +44,7 @@ class UserController extends Controller
 
         //dd($data['role_id']);
         if ($data['role_id'] == 2){
-            Doctor::create([
+            $doctor=Doctor::create([
                 'user_id'=>$user->id,
                 'first_name'=>$data['first_name'],
                 'last_name'=>$data['last_name'],
@@ -60,6 +61,62 @@ class UserController extends Controller
                 'base_hospital'=>$data['base_hospital'],
 
             ]);
+            //dd($request);
+            if($request->input('daily_available') == 'No'){
+                $availableDays = $request->input('available_days', []);
+                $days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+                $times = $request->input('times', []);
+
+                $schedules = [];
+                foreach($days as $index=>$day){
+                    foreach ($availableDays as $availableDay) {
+                        if($availableDay == $day){
+                            $schedules[] = [
+                                'user_id'=>$user->id,
+                                'available_days' => $day,
+                                'time' => $times[$index],
+                            ];
+                        }
+                    }
+                }
+                //dd($request->input('times'));
+                //dd($schedules);
+                foreach ($schedules as $schedule) {
+                    DoctorSchedule::create([
+                        'user_id'=>$user->id,
+                        'doctor_id' => $doctor->id,
+                        'consultation_id' => $doctor->consultation->id,
+                        'daily_available'=>$data['daily_available'],
+                        'available_days' => $schedule['available_days'],
+                        'time' => $schedule['time']
+                    ]);
+                }
+
+
+            }//dd()
+            else {
+            $days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+
+                $schedules = [];
+                foreach ($days as $index => $day) {
+                    $schedules[$index] = [
+                        'available_days' => $day,
+                        'time' => $request->input('time'),
+                    ];
+                }
+            
+            foreach ($schedules as $schedule) {
+                DoctorSchedule::create([
+                    'user_id'=>$user->id,
+                    'doctor_id' => $doctor->id,
+                    'consultation_id' => $doctor->consultation->id,
+                    'daily_available'=>$data['daily_available'],
+                    'available_days' => $schedule['available_days'],
+                    'time' => $schedule['time']
+                ]);
+                }
+            }
+
         } else if($data['role_id'] == 3){
             Patient::create([
                 'user_id'=>$user->id,
@@ -111,134 +168,141 @@ class UserController extends Controller
         if($request->input('password')){
             $data['password'] = Hash::make($request->input('password'));
         }else{$data['password'] = $user->password;}
-        $user->update($data);
-        if ($data['role_id'] == 2 ){
+
+        
+
+        if($data['role_id'] != $user->role_id){
+            if ($user->role_id == 2) {
+                $doctor=Doctor::where('user_id', $user->id)->first();
+                $doctor->delete();
+                if($data['role_id'] == 1){
+                    Receptionist::create([
+                        'user_id'=>$user->id,
+                        'first_name'=>$data['first_name'],
+                        'last_name'=>$data['last_name'],
+                        'dob'=>$data['dob'],
+                        'mobile_number'=>$data['mobile_number'],
+                        'nic'=>$data['nic'],
+                        'gender'=>$data['gender'],
+                        'address_lane_1'=>$data['address_lane_1'],
+                        'address_lane_2'=>$data['address_lane_2'],
+                        'city'=>$data['city'],
+                    ]);
+                }
+                else{
+                    Patient::create([
+                        'user_id'=>$user->id,
+                        'today_date'=>$data['today_date'],
+                        'first_name'=>$data['first_name'],
+                        'last_name'=>$data['last_name'],
+                        'dob'=>$data['dob'],
+                        'mobile_number'=>$data['mobile_number'],
+                        'nic'=>$data['nic'],
+                        'gender'=>$data['gender'],
+                        'address_lane_1'=>$data['address_lane_1'],
+                        'address_lane_2'=>$data['address_lane_2'],
+                        'city'=>$data['city'],
+                    ]);
+                }
+            } 
+            elseif ($user->role_id == 3) {
+                $patient=Patient::where('user_id', $user->id);
+                $patient->delete();
+                if($data['role_id'] == 1){
+                    Receptionist::create([
+                        'user_id'=>$user->id,
+                        'first_name'=>$data['first_name'],
+                        'last_name'=>$data['last_name'],
+                        'dob'=>$data['dob'],
+                        'mobile_number'=>$data['mobile_number'],
+                        'nic'=>$data['nic'],
+                        'gender'=>$data['gender'],
+                        'address_lane_1'=>$data['address_lane_1'],
+                        'address_lane_2'=>$data['address_lane_2'],
+                        'city'=>$data['city'],
+                    ]);
+                }
+                else{
+                Doctor::create([
+                    'user_id'=>$user->id,
+                    'first_name'=>$data['first_name'],
+                    'last_name'=>$data['last_name'],
+                    'dob'=>$data['dob'],
+                    'mobile_number'=>$data['mobile_number'],
+                    'nic'=>$data['nic'],
+                    'gender'=>$data['gender'],
+                    'address_lane_1'=>$data['address_lane_1'],
+                    'address_lane_2'=>$data['address_lane_2'],
+                    'city'=>$data['city'],
+                    'consultation_id'=>$data['consultation_id'],
+                    'specialty'=>$data['specialty'],
+                    'slmc_no'=>$data['slmc_no'],
+                    'base_hospital'=>$data['base_hospital'],
+                ]);
+                }
+            } 
+            else {
+                $receptionist=Receptionist::where('user_id', $user->id);
+                $receptionist->delete();
+                if($data['role_id'] == 2){
+                Doctor::create([
+                    'user_id'=>$user->id,
+                    'first_name'=>$data['first_name'],
+                    'last_name'=>$data['last_name'],
+                    'dob'=>$data['dob'],
+                    'mobile_number'=>$data['mobile_number'],
+                    'nic'=>$data['nic'],
+                    'gender'=>$data['gender'],
+                    'address_lane_1'=>$data['address_lane_1'],
+                    'address_lane_2'=>$data['address_lane_2'],
+                    'city'=>$data['city'],
+                    'consultation_id'=>$data['consultation_id'],
+                    'specialty'=>$data['specialty'],
+                    'slmc_no'=>$data['slmc_no'],
+                    'base_hospital'=>$data['base_hospital'],
+                ]);
+
+                }
+                else{
+                    Patient::create([
+                        'user_id'=>$user->id,
+                        'today_date'=>$data['today_date'],
+                        'first_name'=>$data['first_name'],
+                        'last_name'=>$data['last_name'],
+                        'dob'=>$data['dob'],
+                        'mobile_number'=>$data['mobile_number'],
+                        'nic'=>$data['nic'],
+                        'gender'=>$data['gender'],
+                        'address_lane_1'=>$data['address_lane_1'],
+                        'address_lane_2'=>$data['address_lane_2'],
+                        'city'=>$data['city'],
+                    ]);
+                }
+            }
+            
+
+        } else{
+            if ($data['role_id'] == 2 ){
             $doctor = Doctor::where('user_id', $user->id)->first();
             $doctor->update($data);
-        }
-         elseif ($data['role_id'] == 3 ){
+            }
+            if ($data['role_id'] == 3 ){
             $patient = Patient::where('user_id', $user->id)->first();
             $patient->update($data);
-        }
-        else{
+            }
+            if($data['role_id'] == 1 ){
             $receptionist = Receptionist::where('user_id', $user->id)->first();
             $receptionist->update($data);
+            }
         }
 
-        // if($data['role_id'] != $user->role_id){
-        //     if ($user->role_id == 2) {
-        //         $doctor=Doctor::where('user_id', $user->id)->first();
-        //         $doctor->delete();
-        //         if($user->role_id == 1){
-        //             Receptionist::create([
-        //                 'user_id'=>$user->id,
-        //                 'first_name'=>$data['first_name'],
-        //                 'last_name'=>$data['last_name'],
-        //                 'dob'=>$data['dob'],
-        //                 'mobile_number'=>$data['mobile_number'],
-        //                 'nic'=>$data['nic'],
-        //                 'gender'=>$data['gender'],
-        //                 'address_lane_1'=>$data['address_lane_1'],
-        //                 'address_lane_2'=>$data['address_lane_2'],
-        //                 'city'=>$data['city'],
-        //             ]);
-        //         }
-        //         else{
-        //             Patient::create([
-        //                 'user_id'=>$user->id,
-        //                 'today_date'=>$data['today_date'],
-        //                 'first_name'=>$data['first_name'],
-        //                 'last_name'=>$data['last_name'],
-        //                 'dob'=>$data['dob'],
-        //                 'mobile_number'=>$data['mobile_number'],
-        //                 'nic'=>$data['nic'],
-        //                 'gender'=>$data['gender'],
-        //                 'address_lane_1'=>$data['address_lane_1'],
-        //                 'address_lane_2'=>$data['address_lane_2'],
-        //                 'city'=>$data['city'],
-        //             ]);
-        //         }
-        //     } 
-        //     elseif ($user->role_id == 3) {
-        //         $patient=Patient::where('user_id', $user->id);
-        //         $patient->delete();
-        //         if($user->role_id == 1){
-        //             Receptionist::create([
-        //                 'user_id'=>$user->id,
-        //                 'first_name'=>$data['first_name'],
-        //                 'last_name'=>$data['last_name'],
-        //                 'dob'=>$data['dob'],
-        //                 'mobile_number'=>$data['mobile_number'],
-        //                 'nic'=>$data['nic'],
-        //                 'gender'=>$data['gender'],
-        //                 'address_lane_1'=>$data['address_lane_1'],
-        //                 'address_lane_2'=>$data['address_lane_2'],
-        //                 'city'=>$data['city'],
-        //             ]);
-        //         }
-        //         else{
-        //         Doctor::create([
-        //             'user_id'=>$user->id,
-        //             'first_name'=>$data['first_name'],
-        //             'last_name'=>$data['last_name'],
-        //             'dob'=>$data['dob'],
-        //             'mobile_number'=>$data['mobile_number'],
-        //             'nic'=>$data['nic'],
-        //             'gender'=>$data['gender'],
-        //             'address_lane_1'=>$data['address_lane_1'],
-        //             'address_lane_2'=>$data['address_lane_2'],
-        //             'city'=>$data['city'],
-        //             'consultation_id'=>$data['consultation_id'],
-        //             'specialty'=>$data['specialty'],
-        //             'slmc_no'=>$data['slmc_no'],
-        //             'base_hospital'=>$data['base_hospital'],
-        //         ]);
-        //         }
-        //     } 
-        //     else {
-        //         $receptionist=Receptionist::where('user_id', $user->id);
-        //         $receptionist->delete();
-        //         if($user->role_id == 2){
-        //         Doctor::create([
-        //             'user_id'=>$user->id,
-        //             'first_name'=>$data['first_name'],
-        //             'last_name'=>$data['last_name'],
-        //             'dob'=>$data['dob'],
-        //             'mobile_number'=>$data['mobile_number'],
-        //             'nic'=>$data['nic'],
-        //             'gender'=>$data['gender'],
-        //             'address_lane_1'=>$data['address_lane_1'],
-        //             'address_lane_2'=>$data['address_lane_2'],
-        //             'city'=>$data['city'],
-        //             'consultation_id'=>$data['consultation_id'],
-        //             'specialty'=>$data['specialty'],
-        //             'slmc_no'=>$data['slmc_no'],
-        //             'base_hospital'=>$data['base_hospital'],
-        //         ]);
+        $user->update($data);
 
-        //         }
-        //         else{
-        //             Patient::create([
-        //                 'user_id'=>$user->id,
-        //                 'today_date'=>$data['today_date'],
-        //                 'first_name'=>$data['first_name'],
-        //                 'last_name'=>$data['last_name'],
-        //                 'dob'=>$data['dob'],
-        //                 'mobile_number'=>$data['mobile_number'],
-        //                 'nic'=>$data['nic'],
-        //                 'gender'=>$data['gender'],
-        //                 'address_lane_1'=>$data['address_lane_1'],
-        //                 'address_lane_2'=>$data['address_lane_2'],
-        //                 'city'=>$data['city'],
-        //             ]);
-        //         }
-        //     }
-
-        // }
         return redirect()->route('user.index')->with('updated', 'Post  details has been updated Successfully!');
     }
 
     public function destroy(User $user){
+        dd($user);
         $user->delete();
         return redirect()->route('user.index')->with('deleted', 'User details has been deleted Successfully!');
     }
