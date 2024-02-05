@@ -60,17 +60,17 @@ Route::group(['prefix' => 'dashboard', 'middleware' => 'auth'],function(){
 
     Route::group(['prefix' => 'doctorschedule',], function () {
     Route::get('/', [DoctorScheduleController::class, 'index'])->name('dschedule.index');
-    Route::get('/create',[DoctorScheduleController::class, 'create'])->name('dschedule.create');
     Route::post('/store',[DoctorScheduleController::class, 'store'])->name('dschedule.store');
+    Route::get('ajaxRequest',[DoctorScheduleController::class, 'getDay'])->name('get.day');
 
-    // Route::group(['prefix' => '{user}'], function () {
+     Route::group(['prefix' => '{doctor}'], function () {
     // Route::get('/show',[UserController::class, 'show'])->name('user.show');
-    // Route::get('/edit',[UserController::class, 'edit'])->name('user.edit');
-    // Route::patch('/',[UserController::class, 'update'])->name('user.update');
+     Route::get('/edit',[DoctorScheduleController::class, 'edit'])->name('dschedule.edit');
+    Route::patch('/',[DoctorScheduleController::class, 'update'])->name('dschedule.update');
     // Route::get('/delete',[UserController::class,'delete'])->name('user.delete');
     // Route::delete('/',[UserController::class,'destroy'])->name('user.destroy');
 
-    //     });
+     });
     });
 
 

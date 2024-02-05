@@ -20,39 +20,71 @@
             <div class="card">
                 <div class="card-header">
                     <h4 class="card-title">Make Appointment</h4>
-                    <button type="button" class="btn tp-btn btn-success" data-bs-toggle="modal" data-bs-target="#modalGrid">Click Here To View The Doctor Availability Schedule</button>
-                        <!-- Modal -->
-                        <div class="modal fade" id="modalGrid">
-                            <div class="modal-dialog" role="document">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title">Doctor Availability Schedule</h5>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal">
-                                        </button>
-                                    </div>
-                                    <div class="modal-body">
-                                        <div class="table-responsive">
-                                            <table id="example2" class="display" style="width:100%">
-                                                <thead>
+                    <button type="button" class="btn tp-btn btn-success" data-bs-toggle="modal" data-bs-target=".bd-example-modal-lg">Click Here To View The Doctor Availability Schedule</button>
+                    <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-hidden="true">
+                        <div class="modal-dialog modal-lg">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title">Doctor Availability Schedule</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal">
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="table-responsive">
+                                        <table class="table table-hover table-responsive-sm">
+                                            <thead>
+                                                <tr>
+                                                    <th>Specialist Doctor</th>
+                                                    <th>Name Of the Doctor</th>
+                                                    <th>Visit Date</th>
+                                                    <th>Time</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach ($doctors as $doctor)
                                                     <tr>
-                                                        <th>Specialist Doctor</th>
-                                                        <th>Name Of the Doctor</th>
-                                                        <th>Visit Date</th>
-                                                        <th>Time</th>
+                                                        @if($doctor->specialty != null)
+                                                        <td>{{ $doctor->consultation->name }} ( {{ $doctor->specialty }} )</td>
+                                                        @else
+                                                        <td>{{ $doctor->consultation->name }}</td>
+                                                        @endif
+                                                        <td>{{ $doctor->name }}</td>
+                                                        <td>
+                                                        @if ($doctor->doctor_schedules->count() !=7)
+                                                        @foreach($doctor->doctor_schedules as $index => $doctor_schedule)
+                                                            @if ($index>0)
+                                                                <br>
+                                                            @endif
+                                                            {{ $doctor_schedule->available_days }}
+                                                        @endforeach
+                                                        @else
+                                                        {{"Daily"}}
+                                                        @endif
+                                                        </td>
+                                                        <td>
+                                                        @if ($doctor->doctor_schedules->count() !=7)
+                                                        @foreach($doctor->doctor_schedules as $index => $doctor_schedule)
+                                                            @if ($index>0)
+                                                                <br>
+                                                            @endif
+                                                            {{ $doctor_schedule->time }}
+                                                        @endforeach
+                                                        @else
+                                                        {{ $doctor->doctor_schedules->first()->time }}
+                                                        @endif
+                                                        </td>
                                                     </tr>
-                                                </thead>
-                                                <tbody>
-                                                </tbody>
-                                            </table>
-                                        </div>
+                                                @endforeach
+                                            </tbody>
+                                        </table>
                                     </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
-                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-danger light" data-bs-dismiss="modal">Close</button>
                                 </div>
                             </div>
                         </div>
-
+                    </div>
                 </div>
                 <div class="card-body">
                     <div class="basic-form">

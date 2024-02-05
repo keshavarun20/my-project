@@ -16,7 +16,6 @@ return new class extends Migration
             $table->foreignId('user_id');
             $table->foreignId('doctor_id');
             $table->foreignId('consultation_id');
-            $table->enum('daily_available', ['Yes', 'No']);
             $table->longText('available_days');
             $table->string('time');
             $table->timestamps();

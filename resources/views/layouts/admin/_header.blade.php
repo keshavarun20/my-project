@@ -96,7 +96,7 @@
                                     <a class="all-notification" href="javascript:void(0);">See all notifications <i class="ti-arrow-end"></i></a>
                                 </div>
                             </li>
-							<li class="nav-item dropdown notification_dropdown">
+							{{-- <li class="nav-item dropdown notification_dropdown">
                                 <a class="nav-link bell-link " href="javascript:void(0);">
 								<svg width="28" height="28" viewbox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
 									<path d="M27.076 6.24662C26.962 5.48439 26.5787 4.78822 25.9955 4.28434C25.4123 3.78045 24.6679 3.50219 23.8971 3.5H4.10289C3.33217 3.50219 2.58775 3.78045 2.00456 4.28434C1.42137 4.78822 1.03803 5.48439 0.924011 6.24662L14 14.7079L27.076 6.24662Z" fill="#717579"></path>
@@ -104,7 +104,7 @@
 								</svg>
 									<span class="badge light text-white bg-danger rounded-circle">76</span>
                                 </a>
-							</li>	
+							</li>	 --}}
 							
 							
 							<li class="nav-item dropdown notification_dropdown">

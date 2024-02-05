@@ -17,8 +17,22 @@ class DoctorSchedule extends Model
         'available_days',
         'time',
     ];
+    
 
-    public function doctors(){
-        return $this->hasMany(Doctor::class,'doctor_schedule_id');
+    public function doctor(){
+        return $this->belongsTo(Doctor::class,'doctor_id');
     }
+
+
+    public function AvailableDays(){
+        $days = $this->attributes['available_days'];
+
+        if (count($days) === 7) {
+            return 'Daily';
+        }
+
+        return implode(', ', $days);
+    }
+
 }
+

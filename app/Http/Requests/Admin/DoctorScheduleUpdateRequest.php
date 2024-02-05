@@ -4,7 +4,7 @@ namespace App\Http\Requests\Admin;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class DoctorStoreRequest extends FormRequest
+class DoctorScheduleUpdateRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -23,8 +23,11 @@ class DoctorStoreRequest extends FormRequest
      */
     public function rules()
     {
+        //dd($this);
         return [
-        
+            'available_days'=>'required_if:daily_available, No',
+            'time'=>'required_if:daily_available , Yes',
+            'times'=>'required_if:daily_available , No',
 
         ];
     }

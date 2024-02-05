@@ -212,7 +212,7 @@ function deleteAllCookie(reload = true)
 				var optionData = getCookie(optionKey);
 				themeOptionArr[optionKey] = (optionData != '')?optionData:dlabSettingsOptions[optionKey];
 			});
-			console.log(themeOptionArr);
+			//console.log(themeOptionArr);
 			dlabSettingsOptions = themeOptionArr;
 			new dlabSettings(dlabSettingsOptions);
 			

@@ -20,13 +20,15 @@
 							<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="btn-close">
                             </button>
 						</div>
-                    @elseif(session('deleted'))
+                    @endif
+                    @if(session('deleted'))
                         <div class="alert alert-danger alert-dismissible fade show">
                         <svg viewbox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" class="me-2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
                         <strong>Success!</strong>{{ session('deleted') }}
                         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="btn-close"></button>
                         </div>
-                    @elseif(session('updated'))
+                    @endif
+                    @if(session('updated'))
                     <div class="alert alert-secondary alert-dismissible fade show">
                         <svg viewbox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" class="me-2"><path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3zM7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3"></path></svg>
                         <strong>Done!</strong> {{ session('updated') }}
@@ -66,9 +68,9 @@
                                     <td>
                                         <a href="{{ route('user.show',$user->id) }}" class="btn btn-info">View</a>
                                         <a href="{{ route('user.edit',$user->id) }}" class="btn btn-primary">Edit</a>
-                                        <button type="button" class="btn btn-danger mb-2" data-bs-toggle="modal" data-bs-target="#deleteModal">Delete</button>
+                                        <button type="button" class="btn btn-danger mb-2" data-bs-toggle="modal" data-bs-target="#deleteModal-{{$user->id}}">Delete</button>
                                         <!-- Delete User Modal -->
-                                        <div class="modal fade" id="deleteModal">
+                                        <div class="modal fade" id="deleteModal-{{$user->id}}">
                                             <div class="modal-dialog modal-dialog-centered" role="document">
                                                 <div class="modal-content">
                                                     <div class="modal-header">

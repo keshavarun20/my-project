@@ -26,9 +26,9 @@ class Doctor extends Model
         'base_hospital',
 
     ];
-    // protected $appends = [
-    //     'dname'
-    // ];
+    protected $appends = [
+        'name'
+    ];
 
     // protected function availabledays(){
     //     return Attribute::make( 
@@ -47,15 +47,15 @@ class Doctor extends Model
         return $this->belongsTo(Consultation::class, 'consultation_id');
     }
 
-    public function doctor_schedule(){
-        return $this->belongsTo(DoctorSchedule::class, 'doctor_schedule_id');
+    public function doctor_schedules(){
+        return $this->hasMany(DoctorSchedule::class, 'doctor_id');
     }
 
 
-    // public function getNameAttribute()
-    // {
-    //     // dd(1);
-    // return "Dr. " . $this->first_name . " " . $this->last_name . " - " . $this->consultations->name;
-    // }
+    public function getNameAttribute()
+    {
+        // dd(1);
+    return "Dr. " . $this->first_name . " " . $this->last_name ;
+    }
 
 }

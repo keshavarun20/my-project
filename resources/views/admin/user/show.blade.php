@@ -5,6 +5,12 @@
 
 <div class="content-body">
     <div class="container-fluid">
+    <div class="row page-titles">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item active"><a href="{{ route('user.index') }}">Home</a></li>
+                <li class="breadcrumb-item"><a href="{{ route('user.show' , [$user->id]) }}">User Details</a></li>
+            </ol>
+        </div>
         <div class="col-lg-12">
             <div class="card">
                 <div class="card-header">
@@ -59,7 +65,7 @@
                             <div class="mb-3 row">
                                 <label class="col-sm-3 col-form-label">Adress Lane 2</label>
                                 <div class="col-sm-9">
-                                    <input type="text" readonly="" class="form-control" value="{{ $user->doctor->Address_lane_2 }}">
+                                    <input type="text" readonly="" class="form-control" value="{{ $user->doctor->address_lane_2 }}">
                                 </div>
                             </div>
                             <div class="mb-3 row">

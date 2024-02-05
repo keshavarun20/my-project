@@ -21,7 +21,7 @@
 					</li>
 
 					<li><a href="{{ route('dschedule.index')}}" aria-expanded="false">
-							<i class="fas fa-user"></i>
+							<i class="fas fa-user-md"></i>
 							<span class="nav-text">Doctors</span>
 						</a>
 					</li>

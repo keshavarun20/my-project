@@ -30,7 +30,7 @@ class UserController extends Controller
     public function create(){
         $roles = Role::all();
         $consultations=Consultation::all();
-        return view('admin.user.create',compact('roles'),compact('consultations'));
+        return view('admin.user.create',compact('roles','consultations'));
     }
 
     public function store(UserStoreRequest $request){
@@ -63,8 +63,8 @@ class UserController extends Controller
             ]);
             //dd($request);
             if($request->input('daily_available') == 'No'){
-                $availableDays = $request->input('available_days', []);
                 $days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+                $availableDays = $request->input('available_days', []);
                 $times = $request->input('times', []);
 
                 $schedules = [];
@@ -86,7 +86,6 @@ class UserController extends Controller
                         'user_id'=>$user->id,
                         'doctor_id' => $doctor->id,
                         'consultation_id' => $doctor->consultation->id,
-                        'daily_available'=>$data['daily_available'],
                         'available_days' => $schedule['available_days'],
                         'time' => $schedule['time']
                     ]);
@@ -98,8 +97,8 @@ class UserController extends Controller
             $days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
 
                 $schedules = [];
-                foreach ($days as $index => $day) {
-                    $schedules[$index] = [
+                foreach ($days as $day) {
+                    $schedules[] = [
                         'available_days' => $day,
                         'time' => $request->input('time'),
                     ];
@@ -110,7 +109,6 @@ class UserController extends Controller
                     'user_id'=>$user->id,
                     'doctor_id' => $doctor->id,
                     'consultation_id' => $doctor->consultation->id,
-                    'daily_available'=>$data['daily_available'],
                     'available_days' => $schedule['available_days'],
                     'time' => $schedule['time']
                 ]);
@@ -281,8 +279,11 @@ class UserController extends Controller
             }
             
 
-        } else{
+        }
+         
+        else{
             if ($data['role_id'] == 2 ){
+            //dd($data);
             $doctor = Doctor::where('user_id', $user->id)->first();
             $doctor->update($data);
             }
@@ -302,7 +303,6 @@ class UserController extends Controller
     }
 
     public function destroy(User $user){
-        dd($user);
         $user->delete();
         return redirect()->route('user.index')->with('deleted', 'User details has been deleted Successfully!');
     }

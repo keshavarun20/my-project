@@ -4,9 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Models\Appointment;
 use App\Models\Doctor;
+use App\Models\DoctorSchedule;
 use App\Models\Patient;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
+use App\Http\Requests\Admin\UserStoreRequest;
 use Log;
 
 class AppointmentController extends Controller
@@ -19,11 +21,11 @@ class AppointmentController extends Controller
     public function create(){
         $user = Auth::user();
         $doctors=Doctor::all();
-        return view('appointment.create', compact('user'), compact('doctors'));
+        return view('appointment.create', compact('user','doctors'));
     }
 
     public function getUser(Request $request){
         $patient = Patient::where('nic',$request->nic)->first();
         return response()->json($patient);
     }
-}
+}     

@@ -300,10 +300,8 @@ $(document).ready(function() {
    $('input[name="daily_available"]').change(function() {
             var isDailyAvailable = $(this).val();
             if (isDailyAvailable == 'Yes') {
-                $('#availabilityDays').addClass('d-none');
                 $('#timeFieldsContainer').removeClass('d-none');
             } else {
-                $('#availabilityDays').removeClass('d-none');
                 $('#timeFieldsContainer').addClass('d-none');
             }
         });
