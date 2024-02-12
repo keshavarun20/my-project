@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Carbon;
 
 class DoctorSchedule extends Model
 {
@@ -23,16 +24,9 @@ class DoctorSchedule extends Model
         return $this->belongsTo(Doctor::class,'doctor_id');
     }
 
-
-    public function AvailableDays(){
-        $days = $this->attributes['available_days'];
-
-        if (count($days) === 7) {
-            return 'Daily';
-        }
-
-        return implode(', ', $days);
-    }
-
+    //  function getTimeAttribute($value)
+    // {
+    //     return Carbon::createFromFormat('H:i', $value)->format('g:i A');
+    // }
 }
 

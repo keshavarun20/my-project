@@ -13,15 +13,19 @@ return new class extends Migration
     {
         Schema::create('appointments', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id');
+            $table->foreignId('doctor_id');
+            $table->foreignId('patient_id')->nullable();
             $table->string('first_name');
             $table->string('last_name');
             $table->integer('age');
             $table->string('mobile_number', 10);
             $table->date('date');
+            $table->string('token_number');
+            $table->string('reference_number')->unique();
             $table->timestamps();
 
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('doctor_id')->references('id')->on('doctors')->onDelete('cascade');
+            $table->foreign('patient_id')->references('id')->on('patients')->onDelete('cascade');
 
         });
     }

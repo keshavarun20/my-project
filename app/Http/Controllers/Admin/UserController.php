@@ -72,7 +72,7 @@ class UserController extends Controller
                     foreach ($availableDays as $availableDay) {
                         if($availableDay == $day){
                             $schedules[] = [
-                                'user_id'=>$user->id,
+                                'doctor_id'=>$doctor->id,
                                 'available_days' => $day,
                                 'time' => $times[$index],
                             ];
@@ -83,9 +83,7 @@ class UserController extends Controller
                 //dd($schedules);
                 foreach ($schedules as $schedule) {
                     DoctorSchedule::create([
-                        'user_id'=>$user->id,
                         'doctor_id' => $doctor->id,
-                        'consultation_id' => $doctor->consultation->id,
                         'available_days' => $schedule['available_days'],
                         'time' => $schedule['time']
                     ]);
@@ -106,9 +104,7 @@ class UserController extends Controller
             
             foreach ($schedules as $schedule) {
                 DoctorSchedule::create([
-                    'user_id'=>$user->id,
                     'doctor_id' => $doctor->id,
-                    'consultation_id' => $doctor->consultation->id,
                     'available_days' => $schedule['available_days'],
                     'time' => $schedule['time']
                 ]);

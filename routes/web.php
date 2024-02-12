@@ -47,6 +47,8 @@ Route::group(['prefix' => 'dashboard', 'middleware' => 'auth'],function(){
     Route::get('/create',[AppointmentController::class, 'create'])->name('appointment.create');
     Route::get('ajaxRequest',[AppointmentController::class, 'getUser'])->name('get.user');
     Route::post('/store',[AppointmentController::class, 'store'])->name('appointment.store');
+    Route::get('ajaxRequest1',[AppointmentController::class, 'getAvailableDoctors'])->name('get.available.doctors');
+
 
     // Route::group(['prefix' => '{user}'], function () {
     // Route::get('/show',[UserController::class, 'show'])->name('user.show');
@@ -61,7 +63,6 @@ Route::group(['prefix' => 'dashboard', 'middleware' => 'auth'],function(){
     Route::group(['prefix' => 'doctorschedule',], function () {
     Route::get('/', [DoctorScheduleController::class, 'index'])->name('dschedule.index');
     Route::post('/store',[DoctorScheduleController::class, 'store'])->name('dschedule.store');
-    Route::get('ajaxRequest',[DoctorScheduleController::class, 'getDay'])->name('get.day');
 
      Route::group(['prefix' => '{doctor}'], function () {
     // Route::get('/show',[UserController::class, 'show'])->name('user.show');

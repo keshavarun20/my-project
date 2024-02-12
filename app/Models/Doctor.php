@@ -24,19 +24,13 @@ class Doctor extends Model
         'consultation_id',
         'slmc_no',
         'base_hospital',
+        'specialty',
 
     ];
     protected $appends = [
         'name'
     ];
 
-    // protected function availabledays(){
-    //     return Attribute::make( 
-    //         get: fn ($value) =>json_decode($value, true),
-    //         set: fn ($value) => json_encode($value),
-    //     );
-
-    // }
 
     public function user()
     {
@@ -50,7 +44,10 @@ class Doctor extends Model
     public function doctor_schedules(){
         return $this->hasMany(DoctorSchedule::class, 'doctor_id');
     }
-
+    public function appointments()
+    {
+        return $this->hasMany(Appointment::class, 'doctor_id');
+    }
 
     public function getNameAttribute()
     {

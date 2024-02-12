@@ -47,7 +47,6 @@ class UserStoreRequest extends FormRequest
             'available_days'=>'required_if:daily_available, No',
             'time'=>'required_if:daily_available , Yes',
             'times'=>'required_if:daily_available , No',
-
         ];
         
         }

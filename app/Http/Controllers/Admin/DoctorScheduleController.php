@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Doctor;
-use App\Models\User;
 use App\Models\DoctorSchedule;
 use Illuminate\Http\Request;
 use App\Http\Requests\Admin\DoctorScheduleUpdateRequest;
@@ -17,9 +16,9 @@ class DoctorScheduleController extends Controller
         
     }
 
-    public function edit(Doctor $doctor,){
+    public function edit(Doctor $doctor){
         
-        return view('admin.doctorschedule.edit', compact('doctor',));
+        return view('admin.doctorschedule.edit', compact('doctor'));
     
     }
     
@@ -38,7 +37,7 @@ class DoctorScheduleController extends Controller
                     foreach ($availableDays as $availableDay) {
                         if($availableDay == $day){
                             $schedules[] = [
-                                'user_id'=>$doctor->user->id,
+                                'doctor_id' => $doctor->id,
                                 'available_days' => $day,
                                 'time' => $times[$index],
                             ];
@@ -47,9 +46,7 @@ class DoctorScheduleController extends Controller
                 }
                 foreach ($schedules as $schedule) {
                     DoctorSchedule::updateOrCreate([
-                        'user_id'=>$doctor->user->id,
                         'doctor_id' => $doctor->id,
-                        'consultation_id' => $doctor->consultation->id,
                         'available_days' => $schedule['available_days'],
                         'time' => $schedule['time']
                     ]);
@@ -66,9 +63,7 @@ class DoctorScheduleController extends Controller
                 
                 foreach ($schedules as $schedule) {
                     DoctorSchedule::updateOrCreate([
-                        'user_id'=>$doctor->user->id,
                         'doctor_id' => $doctor->id,
-                        'consultation_id' => $doctor->consultation->id,
                         'available_days' => $schedule['available_days'],
                         'time' => $schedule['time']
                     ]);

@@ -8,14 +8,16 @@ use App\Models\DoctorSchedule;
 use App\Models\Patient;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
-use App\Http\Requests\Admin\UserStoreRequest;
+use App\Http\Requests\AppointmentStoreRequest;
+use Illuminate\Support\Carbon;
 use Log;
 
 class AppointmentController extends Controller
 {
     public function index(){
         $appointments = Appointment::all();
-        return view('appointment.index', compact('appointments'));
+        $appointmentBooked = Appointment::orderBy('id', 'desc')->first();
+        return view('appointment.index', compact('appointments' ,'appointmentBooked'));
         
     }
     public function create(){
@@ -28,4 +30,37 @@ class AppointmentController extends Controller
         $patient = Patient::where('nic',$request->nic)->first();
         return response()->json($patient);
     }
+
+    public function getAvailableDoctors(Request $request)
+{
+    $selectedDate = $request->input('date');
+    $day = Carbon::parse($selectedDate)->format('l'); 
+    $availableDoctors = DoctorSchedule::where('available_days', 'LIKE', "%$day%")->pluck('doctor_id')->toArray();
+    $doctors = Doctor::whereIn('id', $availableDoctors)->get();
+    return response()->json($doctors);
+}
+
+public function store(Doctor $doctor, Patient $patient, AppointmentStoreRequest $request) {
+    $data = $request->validated();
+
+    $appointmentCount = Appointment::where('doctor_id', $doctor->id)->count();
+    $tokenNumber = $appointmentCount + 1;
+
+    $referenceNumber = uniqid('#HCC');
+
+    Appointment::create([
+        'doctor_id' => $data['doctor_id'],
+        'patient_id' => $patient->id,
+        'first_name' => $data['first_name'],
+        'last_name' => $data['last_name'],
+        'age' => $data['age'],
+        'mobile_number' => $data['mobile_number'],
+        'date' => $data['date'],
+        'token_number' => $tokenNumber,
+        'reference_number' => $referenceNumber,
+    ]);
+
+    return redirect()->route('appointment.index')->with('appointmentBooked', true);
+}
+
 }     

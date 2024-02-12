@@ -13,16 +13,12 @@ return new class extends Migration
     {
         Schema::create('doctor_schedules', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id');
             $table->foreignId('doctor_id');
-            $table->foreignId('consultation_id');
             $table->longText('available_days');
             $table->string('time');
             $table->timestamps();
 
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->foreign('doctor_id')->references('id')->on('doctors')->onDelete('cascade');
-            $table->foreign('consultation_id')->references('id')->on('consultations')->onDelete('cascade');
 
         });
     }

@@ -63,10 +63,6 @@ class User extends Authenticatable
         return $this->hasOne(Receptionist::class, 'user_id');
     }
     
-    public function appointments()
-    {
-    return $this->hasMany(Appointment::class, 'user_id');
-    }
 
     
 
