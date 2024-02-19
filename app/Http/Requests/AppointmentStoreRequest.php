@@ -31,6 +31,7 @@ class AppointmentStoreRequest extends FormRequest
             'mobile_number'=>['required'],
             'age'=>['required'],
             'date'=>['required'],
+            'nic'=>['required'],
 
         ];
     }

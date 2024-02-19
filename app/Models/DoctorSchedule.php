@@ -18,15 +18,17 @@ class DoctorSchedule extends Model
         'available_days',
         'time',
     ];
-    
+    protected $append =[
+        'show_time'
+    ];
 
     public function doctor(){
         return $this->belongsTo(Doctor::class,'doctor_id');
     }
 
-    //  function getTimeAttribute($value)
-    // {
-    //     return Carbon::createFromFormat('H:i', $value)->format('g:i A');
-    // }
+     function getshowTimeAttribute()
+    {
+        return Carbon::createFromFormat('H:i',$this->time)->format('g:i A');
+    }
 }
 

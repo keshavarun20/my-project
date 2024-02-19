@@ -40,17 +40,17 @@ class AppointmentController extends Controller
     return response()->json($doctors);
 }
 
-public function store(Doctor $doctor, Patient $patient, AppointmentStoreRequest $request) {
+public function store(AppointmentStoreRequest $request) {
     $data = $request->validated();
-
-    $appointmentCount = Appointment::where('doctor_id', $doctor->id)->count();
+    $appointmentCount = Appointment::where('doctor_id', $data['doctor_id'])->count();
     $tokenNumber = $appointmentCount + 1;
+    $patient =Patient::where('nic',$data['nic'])->value('id');
 
     $referenceNumber = uniqid('#HCC');
 
     Appointment::create([
         'doctor_id' => $data['doctor_id'],
-        'patient_id' => $patient->id,
+        'patient_id' => $patient,
         'first_name' => $data['first_name'],
         'last_name' => $data['last_name'],
         'age' => $data['age'],

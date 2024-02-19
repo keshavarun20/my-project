@@ -1,5 +1,5 @@
 @extends('layouts.admin.master')
-@section('title', 'User List')
+@section('title', 'HCC : Users')
 @section('header', 'Users')
 @section('content')
 

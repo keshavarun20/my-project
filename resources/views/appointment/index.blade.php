@@ -25,6 +25,7 @@
                                         <th scope="col">Appointment Date</th>
                                         <th scope="col">Doctor Name</th>
                                         <th scope="col">Token Number</th>
+                                        <th scope="col">Referance Number</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -34,6 +35,7 @@
                                             <td>{{ $appointment->date }}</td>
                                             <td>{{ $appointment->doctor->name }}</td>
                                             <td>{{ $appointment->token_number }}</td>
+                                            <td>{{ $appointment->reference_number }}</td>
                                         </tr>
                                     @endforeach
                                 </tbody>

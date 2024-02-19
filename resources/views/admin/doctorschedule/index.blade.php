@@ -62,10 +62,10 @@
                                             @if ($index>0)
                                                 <br>
                                             @endif
-                                            {{ $doctor_schedule->time }}
+                                            {{ $doctor_schedule->show_time }}
                                         @endforeach
                                         @else
-                                        {{ $doctor->doctor_schedules->first()->time }}
+                                        {{ $doctor->doctor_schedules->first()->show_time }}
                                         @endif
                                         </td>
                                         <td>
