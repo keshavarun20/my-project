@@ -25,6 +25,21 @@
 							<span class="nav-text">Doctors</span>
 						</a>
 					</li>
+					<li><a href="{{ route('patient.index')}}" aria-expanded="false">
+							<i class="fas fa-hospital-user"></i>
+							<span class="nav-text">Patients</span>
+						</a>
+					</li>
+					<li><a href="javascript:void()" aria-expanded="false">
+							<i class="fas fa-file-invoice-dollar"></i>
+							<span class="nav-text">Billing and Invoice</span>
+						</a>
+                        <ul aria-expanded="false">
+							<li><a href="{{ route('billing.index')}}">Billing</a></li>
+							<li><a href="#">Dashboard Dark</a></li>	
+						</ul>
+
+                    </li>
 				</ul>
 			</div>
         </div>

@@ -1,5 +1,6 @@
 {{-- Paitent Information --}}
-<div class="mb-3 col-md-6">NIC</label>
+<div class="mb-3 col-md-6">
+ <label class="form-label" for="nic">NIC</label>
     <input type="text" id="nic" name="nic" class="form-control" placeholder="NIC">
     @error('nic')
         <div class="alert alert-danger">{{ $message }}</div>

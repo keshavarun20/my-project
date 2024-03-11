@@ -1,6 +1,6 @@
 <div class="nav-header">
             <a href="{{ route('dashboard') }}" class="brand-logo">
-				<img src="/icons/new-icons/navlogo.png" alt="New Icon" width="40" height="45">
+				<img src="/icons/new-icons/logo1.png" alt="New Icon" width="70" height="70">
 				<div class="brand-title">
 					<h2 class="">HCC</h2>
 					<span class="brand-sub-title">Hatton Consultation Centre</span>

@@ -1,10 +1,12 @@
 <?php
 
+use App\Http\Controllers\Admin\BillingController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\DoctorScheduleController;
 use App\Http\Controllers\AppointmentController;
+use App\Http\Controllers\Admin\PatientController;
 
 /*
 |--------------------------------------------------------------------------
@@ -74,7 +76,31 @@ Route::group(['prefix' => 'dashboard', 'middleware' => 'auth'],function(){
      });
     });
 
+    Route::group(['prefix' => 'patient',], function () {
+    Route::get('/', [PatientController::class, 'index'])->name('patient.index');
+    //Route::post('/store',[DoctorScheduleController::class, 'store'])->name('dschedule.store');
 
+     Route::group(['prefix' => '{patient}'], function () {
+     Route::get('/profile',[PatientController::class, 'profile'])->name('patient.profile');
+     Route::post('/upload-pdf', [PatientController::class,'uploadPdf'])->name('patient.uploadPdf');
+
+    
+
+     });
+    });
+    Route::group(['prefix' => 'billing',], function () {
+    Route::get('/', [BillingController::class, 'billing'])->name('billing.index');
+    Route::post('ajaxRequest', [BillingController::class, 'calculateTotals'])->name('get.yser');
+    //Route::post('/store',[DoctorScheduleController::class, 'store'])->name('dschedule.store');
+
+    //  Route::group(['prefix' => '{patient}'], function () {
+    //  Route::get('/profile',[PatientController::class, 'profile'])->name('patient.profile');
+    //  Route::post('/upload-pdf', [PatientController::class,'uploadPdf'])->name('patient.uploadPdf');
+
+    
+
+    //  });
+    });
 
 
 
