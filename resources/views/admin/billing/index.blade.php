@@ -15,7 +15,7 @@
             <div class="card">
                 <div class="card-body">
                     <div class="basic-form">
-                        <form method="post" action="{{ route('user.store') }}" enctype="multipart/form-data">
+                        <form method="post" action="{{ route('billing.store') }}" enctype="multipart/form-data">
                             @csrf
                             <div class="row">
                                 <div class="col-md-12">
@@ -24,7 +24,7 @@
                                             <div class="input-group mb-3 input-primary"><input type="text" id="nic" name="nic" class="form-control" placeholder="NIC"></div>
                                         </div>
                                         <div class="mb-3 col-xl-6">
-                                            <div class="input-group mb-3 input-primary"><input type="text" id="date" name="date" class="datepicker-default form-control" placeholder="Bill Date"></div>
+                                            <div class="input-group mb-3 input-primary"><input type="date" id="date" name="date" class="form-control" placeholder="Bill Date"></div>
                                         </div>
                                     </div>
                                     <div class="row">
@@ -58,22 +58,22 @@
                                             </td>
                                             <td>
                                                 <div class="input-group mb-3 input-primary">
-                                                    <input type="text" id="description" name="description" class="form-control" placeholder="Description">
+                                                    <input type="text" id="description" name="description[]" class="form-control" placeholder="Description">
                                                 </div>
                                             </td>
                                             <td>
                                                 <div class="input-group mb-3 input-primary">
-                                                    <input type="text" id="rate" name="rate" class="form-control" placeholder="RATE">
+                                                    <input type="text" id="rate" name="rate[]" class="form-control" placeholder="RATE">
                                                 </div>
                                             </td>
                                             <td>
                                                 <div class="input-group mb-3 input-primary">
-                                                    <input type="text" id="qty" name="qty" class="form-control" placeholder="QTY/HRS">
+                                                    <input type="text" id="qty" name="qty[]" class="form-control" placeholder="QTY/HRS">
                                                 </div>
                                             </td>
                                             <td>
                                                 <div class="input-group mb-3 input-primary">
-                                                    <input type="total" id="total" name="total" class="form-control" placeholder="SUB TOTAL" disabled>
+                                                    <input type="total" id="subtotal" name="subtotal[]" class="form-control" placeholder="SUB TOTAL" readonly>
                                                 </div>
                                             </td>
                                         </tr>
@@ -84,10 +84,10 @@
                                 <div class="row">
                                     <div class="col-xl-4">
                                         <label class="me-sm-2">Payment Method</label>
-                                        <select class="me-sm-2 default-select form-control wide " id="inlineFormCustomSelect">
+                                        <select class="me-sm-2 default-select form-control wide " id="inlineFormCustomSelect" name="payment_method">
                                             <option selected="">Select Option</option>
-                                            <option value="1">Cash</option>
-                                            <option value="2">Cheque</option>
+                                            <option value="Cash">Cash</option>
+                                            <option value="Cheque">Cheque</option>
                                         </select>
                                        <div>
                                             <label class="me-sm-2">Cheque No.</label>
@@ -98,7 +98,7 @@
                                         <div>
                                             <label class="me-sm-2">Reference No.</label>
                                             <div class="input-group mb-3 input-primary">
-                                                <input type="text" id="reference" name="reference" class="form-control" placeholder="Reference No.">
+                                                <input type="text" id="reference_no" name="reference_no" class="form-control" placeholder="Reference No.">
                                             </div>
                                         </div>
                                     </div>
@@ -116,7 +116,7 @@
                                                         <td>Total</td>
                                                         <td>
                                                             <div class="input-group mb-3 input-primary">
-                                                                <input type="text" id="total1" name="total1" class="form-control" placeholder="0.00" disabled>
+                                                                <input type="text" id="total" name="total" class="form-control" placeholder="0.00" readonly>
                                                             </div>
                                                         </td>
                                                     </tr>
@@ -148,7 +148,7 @@
                                                         <td>Payable</td>
                                                         <td>
                                                             <div class="input-group mb-3 input-primary">
-                                                                <input type="text" id="payable" name="payable"class="form-control" placeholder="0.00" disabled>
+                                                                <input type="text" id="payable" name="payable"class="form-control" placeholder="0.00" readonly>
                                                             </div>
                                                         </td>
                                                     </tr>
@@ -181,7 +181,7 @@ $(document).ready(function() {
         var rate = parseFloat(row.find('#rate').val()) || 0;
         var qty = parseFloat(row.find('#qty').val()) || 0;
         var subtotal = rate * qty;
-        row.find('#total').val(subtotal.toFixed(2));
+        row.find('#subtotal').val(subtotal.toFixed(2));
     }
 
     function calculateTotal() {
@@ -196,7 +196,7 @@ $(document).ready(function() {
         var discount_percent = parseFloat($('#discount_percent').val()) || 0;
         var tax_percent = parseFloat($('#tax_percent').val()) || 0;
 
-        $('#total1').val(total.toFixed(2));
+        $('#total').val(total.toFixed(2));
 
         var discount = (total * discount_percent) / 100;
         $('#discount').val(discount.toFixed(2));
@@ -220,7 +220,7 @@ $(document).ready(function() {
     $(document).on("click", "#addButton", function() {
         var newRow = $(this).closest("tr").clone(true);
         newRow.find("input[type='text']").val("");
-        newRow.find("#total").val("0.00");
+        newRow.find("#subtotal").val("0.00");
         $("#invoiceItems").append(newRow);
         calculateTotal();
     });
@@ -236,15 +236,17 @@ $(document).ready(function() {
             if (nic) {
                 $.ajax({
                     type: "GET",
-                    url: "{{ route('get.user') }}?nic=" + nic,
+                    url: "{{ route('get.patient') }}?nic=" + nic,
                     success: function(res) {
                         console.log(res);
                         if (res) {
                             $("#name").val(res['name']);
                             $("#mobile_number").val(res['mobile_number']);
+                             $("#patient_id").val(res['id']);
                         } else {
                             $("#name").val('');
                             $("#mobile_number").val('');
+                            $("#patient_id").val('');
 
                         }
                     }

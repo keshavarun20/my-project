@@ -36,7 +36,7 @@
 						</a>
                         <ul aria-expanded="false">
 							<li><a href="{{ route('billing.index')}}">Billing</a></li>
-							<li><a href="#">Dashboard Dark</a></li>	
+							<li><a href="{{ route('billing.invoice')}}">Invoice</a></li>	
 						</ul>
 
                     </li>

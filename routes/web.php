@@ -90,8 +90,9 @@ Route::group(['prefix' => 'dashboard', 'middleware' => 'auth'],function(){
     });
     Route::group(['prefix' => 'billing',], function () {
     Route::get('/', [BillingController::class, 'billing'])->name('billing.index');
-    Route::post('ajaxRequest', [BillingController::class, 'calculateTotals'])->name('get.yser');
-    //Route::post('/store',[DoctorScheduleController::class, 'store'])->name('dschedule.store');
+    Route::get('ajaxRequest2', [BillingController::class, 'calculateTotals'])->name('get.patient');
+    Route::post('/store',[BillingController::class, 'store'])->name('billing.store');
+    Route::get('/invoice',[BillingController::class, 'invoice'])->name('billing.invoice');
 
     //  Route::group(['prefix' => '{patient}'], function () {
     //  Route::get('/profile',[PatientController::class, 'profile'])->name('patient.profile');

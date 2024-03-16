@@ -5,15 +5,15 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Billing extends Model
+class Payment extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'payment_id',
-        'description',
-        'rate',
-        'qty',
-        'subtotal',
+        'patient_id',
+        'nic',
+        'date',
+        'name',
+        'mobile_number',
         'payment_method',
         'cheque_no',
         'reference_no',
@@ -25,10 +25,8 @@ class Billing extends Model
         'payable'
     ];
 
-
-    public function payment()
+    public function billings()
     {
-        return $this->belongsTo(Payment::class, 'payment_id');
+        return $this->hasMany(Billing::class, 'payment_id');
     }
 }
-

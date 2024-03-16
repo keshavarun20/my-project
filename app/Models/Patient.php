@@ -36,6 +36,7 @@ class Patient extends Model implements HasMedia
         return $this->belongsTo(User::class, 'user_id');
     }
 
+
     public function getAgeAttribute()
     {
         return Carbon::parse($this->attributes['dob'])->age;
