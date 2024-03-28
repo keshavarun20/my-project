@@ -63,4 +63,22 @@ public function store(AppointmentStoreRequest $request) {
     return redirect()->route('appointment.index')->with('appointmentBooked', true);
 }
 
+ public function filter(Request $request)
+    {
+    $appointments = Appointment::query();
+    //Log::debug($appointments);
+    $filterType = $request->input('filterType');
+    //Log::debug($filterType);
+    $filterValue = $request->input('filterValue');
+    //Log::debug($filterValue);
+
+    if ($filterType == 'name'  && $filterValue) {
+        $appointments->where('first_name', 'like', '%'.$filterValue.'%')->orWhere('last_name', 'like', '%'.$filterValue.'%');
+    } if ($filterType == 'date'  && $filterValue) {
+        $appointments->where('date', $filterValue);
+    }
+
+    return response()->json($appointments->get());
+    }
+
 }     

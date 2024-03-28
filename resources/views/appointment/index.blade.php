@@ -14,11 +14,25 @@
                 <div class="card">
                     <div class="card-header">
                         <h4 class="card-title">Appointments</h4>
-                        <a href="{{ route('appointment.create') }}" class="btn btn-rounded btn-success btn-lg">Book Now</a>
+                        <div class="btn-group">
+                            <select class=" form-control custom-select" id="filterSelect">
+                                <option value="">Filter</option>
+                                <option value="name">Filter by Name</option>
+                                <option value="date">Filter by Date</option>
+                            </select>
+                        <div id="filterByName" class="dropdown-item-filter d-none">
+                            <input id="filterValueName" type="text" class="form-control filter-input" placeholder="Enter name">
+                        </div>
+
+                        <div id="filterByDate" class="dropdown-item-filter d-none">
+                            <input id="filterValueDate" type="date" class="form-control filter-input">
+                        </div>
+                        </div>
+                        <a href="{{ route('appointment.create') }}" class="btn btn-rounded btn-success btn-lg">Book Now</a>   
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">
-                            <table class="table table-bordered table-striped verticle-middle table-responsive-sm">
+                            <table class="table table-bordered table-striped verticle-middle table-responsive-sm" id="data-table">
                                 <thead>
                                     <tr>
                                         <th scope="col">Name</th>
@@ -90,11 +104,70 @@
 
 
 @section('js')
-    @if (session('appointmentBooked'))
-        <script>
-            $(document).ready(function() {
-                $('#appointmentConfirmationModal').modal('show');
-            });
-        </script>
-    @endif
+@if (session('appointmentBooked'))
+    <script>
+        $(document).ready(function() {
+            $('#appointmentConfirmationModal').modal('show');
+        });
+    </script>
+@endif
+<script>
+    $(document).ready(function() {
+        var originalData = {!! json_encode($appointments) !!};
+
+        $('#filterSelect').change(function() {
+            var filterType = $(this).val();
+            if (filterType === 'name') {
+                $('#filterByName').removeClass('d-none');
+                $('#filterByDate').addClass('d-none');
+            } else if (filterType === 'date') {
+                $('#filterByDate').removeClass('d-none');
+                $('#filterByName').addClass('d-none');
+            } else {
+                $('#filterByName').addClass('d-none');
+                $('#filterByDate').addClass('d-none');
+            }
+        });
+
+        $('.filter-input').on('input', function() {
+            var filterType = $('#filterSelect').val();
+            var filterValue = $(this).val();
+            if (filterType && filterValue) {
+                $.ajax({
+                    type: "GET",
+                    url: "{{ route('appointment.filter') }}?filterType=" + filterType + "&filterValue=" + filterValue,
+                    success: function(res) {
+                        console.log(res);
+                        $('#data-table tbody').empty();
+                        if (res.length > 0) {
+                            $.each(res, function(index, data) {
+                                $('#data-table tbody').append('<tr>' +
+                                    '<td>' + data.name + '</td>' +
+                                    '<td>' + data.date + '</td>' +
+                                    '<td>' + data.doctorName + '</td>' +
+                                    '<td>' + data.token_number + '</td>' +
+                                    '<td>' + data.reference_number + '</td>' +
+                                    '</tr>');
+                            });
+                        } else {
+                            $('#data-table tbody').append('<tr><td colspan="5">No result</td></tr>');
+                        }
+                    }
+                });
+            } else {
+                $('#data-table tbody').empty();
+                $.each(originalData, function(index, data) {
+                    $('#data-table tbody').append('<tr>' +
+                        '<td>' + data.name + '</td>' +
+                        '<td>' + data.date + '</td>' +
+                        '<td>' + data.doctorName + '</td>' +
+                        '<td>' + data.token_number + '</td>' +
+                        '<td>' + data.reference_number + '</td>' +
+                        '</tr>');
+                });
+            }
+        });
+    });
+</script>
 @endsection
+

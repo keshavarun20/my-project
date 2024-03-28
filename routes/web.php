@@ -49,6 +49,7 @@ Route::group(['prefix' => 'dashboard', 'middleware' => 'auth'],function(){
 
     Route::group(['prefix' => 'appointments',], function () {
     Route::get('/', [AppointmentController::class, 'index'])->name('appointment.index');
+    Route::get('/filter', [AppointmentController::class, 'filter'])->name('appointment.filter');
     Route::get('/create',[AppointmentController::class, 'create'])->name('appointment.create');
     Route::get('ajaxRequest',[AppointmentController::class, 'getUser'])->name('get.user');
     Route::post('/store',[AppointmentController::class, 'store'])->name('appointment.store');
