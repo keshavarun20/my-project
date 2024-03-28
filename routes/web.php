@@ -32,11 +32,14 @@ Route::group(['prefix' => 'dashboard', 'middleware' => 'auth'],function(){
     Route::group(['prefix' => 'users',], function () {
     Route::get('/', [UserController::class, 'index'])->name('user.index');
     Route::get('/create',[UserController::class, 'create'])->name('user.create');
+    Route::get('/search',[UserController::class, 'search'])->name('search');
     Route::post('/store',[UserController::class, 'store'])->name('user.store');
 
     Route::group(['prefix' => '{user}'], function () {
     Route::get('/show',[UserController::class, 'show'])->name('user.show');
+    Route::get('/profile',[UserController::class, 'profile'])->name('user.profile');
     Route::get('/edit',[UserController::class, 'edit'])->name('user.edit');
+    Route::post('/profile_picture',[UserController::class, 'profilePicture'])->name('user.profile_picture');
     Route::patch('/',[UserController::class, 'update'])->name('user.update');
     //Route::get('/delete',[UserController::class,'delete'])->name('user.delete');
     Route::delete('/',[UserController::class,'destroy'])->name('user.destroy');
@@ -78,6 +81,7 @@ Route::group(['prefix' => 'dashboard', 'middleware' => 'auth'],function(){
 
     Route::group(['prefix' => 'patient',], function () {
     Route::get('/', [PatientController::class, 'index'])->name('patient.index');
+    Route::get('/filter', [PatientController::class, 'filter'])->name('patient.filter');
     //Route::post('/store',[DoctorScheduleController::class, 'store'])->name('dschedule.store');
 
      Route::group(['prefix' => '{patient}'], function () {
@@ -93,14 +97,14 @@ Route::group(['prefix' => 'dashboard', 'middleware' => 'auth'],function(){
     Route::get('ajaxRequest2', [BillingController::class, 'calculateTotals'])->name('get.patient');
     Route::post('/store',[BillingController::class, 'store'])->name('billing.store');
     Route::get('/invoice',[BillingController::class, 'invoice'])->name('billing.invoice');
+    
 
-    //  Route::group(['prefix' => '{patient}'], function () {
-    //  Route::get('/profile',[PatientController::class, 'profile'])->name('patient.profile');
-    //  Route::post('/upload-pdf', [PatientController::class,'uploadPdf'])->name('patient.uploadPdf');
+     Route::group(['prefix' => '{payment}'], function () {
+     Route::get('generate-pdf', [BillingController::class, 'generatePdf'])->name('generate.pdf');
 
     
 
-    //  });
+     });
     });
 
 

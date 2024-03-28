@@ -28,7 +28,8 @@ class Patient extends Model implements HasMedia
     ];
     protected $appends = [
         'age',
-        'name'
+        'name',
+        'email'
     ];
 
     public function user()
@@ -43,9 +44,23 @@ class Patient extends Model implements HasMedia
     }
      public function getNameAttribute()
     {
-    return  $this->first_name . " " . $this->last_name ;
+        return  $this->first_name . " " . $this->last_name ;
+    }
+
+     public function appointments()
+    {
+        return $this->hasMany(Appointment::class, 'patient_id');
     }
     
+    public function lastAppointment()
+    {
+        return $this->hasOne(Appointment::class, 'patient_id')->latest();
+    }
+
+    public function getEmailAttribute()
+    {
+        return  $this->user->email ;
+    }
     
 }
 

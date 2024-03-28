@@ -12,20 +12,25 @@
     </div>
         <div class="col-lg-12">
             <div class="card">
-                    @if(session('updated'))
-                    <div class="alert alert-secondary alert-dismissible fade show">
-                        <svg viewbox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" class="me-2"><path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3zM7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3"></path></svg>
-                        <strong>Done!</strong> {{ session('updated') }}
-                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="btn-close">
-                        </button>
-                    </div>
-                    @endif
                 <div class="card-header">
                     <h4 class="card-title">Patients Lists</h4>
+                   <div class="btn-group">
+                        <select class="form-control" id="filterSelect">
+                            <option value="filter">Filter</option>
+                            <option value="name">Filter by Name</option>
+                            <option value="date">Filter by Date</option>
+                        </select>
+                        <div id="filterByName" class="dropdown-item-filter d-none mt-2">
+                            <input id="filterValueName" type="text" class="form-control filter-input" placeholder="Enter name">
+                        </div>
+                        <div id="filterByDate" class="dropdown-item-filter d-none mt-2">
+                            <input id="filterValueDate" type="date" class="form-control filter-input">
+                        </div>
+                    </div>
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
-                        <table class="table table-responsive-md">
+                        <table class="table table-responsive-md" id="data-table">
                             <thead>
                                 <tr>
                                     <th scope="col">ID</th>
@@ -46,22 +51,41 @@
                                     <td>{{$patient->mobile_number}}</td>
                                     <td>{{$patient->today_date}}</td>
                                     <td>
-                                        @if($patient->status == 'active')
+                                         @php
+                                            $isActive = true;
+                                            if ($patient->lastAppointment) {
+                                                $daysSinceAppointment = Carbon\Carbon::parse($patient->lastAppointment->date)->diffInDays(now());
+                                                if ($daysSinceAppointment > 100) {
+                                                    $isActive = false;
+                                                }
+                                            }
+                                        @endphp
+                                        @if ($isActive)
                                             <span class="badge bg-success">Active</span>
                                         @else
                                             <span class="badge bg-danger">Inactive</span>
                                         @endif
                                     </td>
                                     <td>
-                                    <div class="dropdown ms-auto">
-											<a href="#" class="btn btn-primary light sharp" data-bs-toggle="dropdown" aria-expanded="true"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="18px" height="18px" viewbox="0 0 24 24" version="1.1"><g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"><rect x="0" y="0" width="24" height="24"></rect><circle fill="#000000" cx="5" cy="12" r="2"></circle><circle fill="#000000" cx="12" cy="12" r="2"></circle><circle fill="#000000" cx="19" cy="12" r="2"></circle></g></svg></a>
-											<ul class="dropdown-menu dropdown-menu-end">
-												<a href="{{ route('patient.profile', $patient->id)}}"><li class="dropdown-item"><i class="fa fa-user-circle text-primary me-2"></i>View profile</li></a>
-											</ul>
-										</div>
+                                        <div class="dropdown ms-auto">
+                                            <a href="#" class="btn btn-primary light sharp" data-bs-toggle="dropdown" aria-expanded="true">
+                                                <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="18px" height="18px" viewbox="0 0 24 24" version="1.1">
+                                                    <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                                        <rect x="0" y="0" width="24" height="24"></rect>
+                                                        <circle fill="#000000" cx="5" cy="12" r="2"></circle>
+                                                        <circle fill="#000000" cx="12" cy="12" r="2"></circle>
+                                                        <circle fill="#000000" cx="19" cy="12" r="2"></circle>
+                                                    </g>
+                                                </svg>
+                                            </a>
+                                            <ul class="dropdown-menu dropdown-menu-end">
+                                                <a href="{{ route('patient.profile',$patient->id )}}" class="dropdown-item">
+                                                    <i class="fa fa-user-circle text-primary me-2"></i>View profile
+                                                </a>
+                                            </ul>
+                                        </div>
                                     </td>
                                 </tr>
-                                   
                                @endforeach
                             </tbody>
                         </table>
@@ -72,4 +96,68 @@
     </div>
 </div>
 
+@endsection
+@section('js')
+<script>
+    $(document).ready(function() {
+        var originalData = {!! json_encode($patients) !!};
+                $('#filterSelect').change(function() {
+            var filterType = $(this).val();
+            if (filterType === 'name') {
+                $('#filterByName').removeClass('d-none');
+                $('#filterByDate').addClass('d-none');
+            } else if (filterType === 'date') {
+                $('#filterByName').addClass('d-none');
+                $('#filterByDate').removeClass('d-none');
+            } else{
+                $('#filterByName').addClass('d-none');
+                $('#filterByDate').addClass('d-none');
+            }
+        });
+
+             $('.filter-input').on('input', function() {
+                var filterType = $('#filterSelect').val();
+                var filterValue = $(this).val();
+                if (filterType && filterValue) {
+                    $.ajax({
+                        type: "GET",
+                        url: "{{ route('patient.filter') }}?filterType=" + filterType + "&filterValue=" + filterValue,
+                        success: function(res) {
+                            console.log(res);
+                            $('#data-table tbody').empty();
+                            if (res.length > 0) {
+                                $.each(res, function(index, data) {
+                                    $('#data-table tbody').append('<tr>' +
+                                        '<td>' + data.id + '</td>' +
+                                        '<td>' + data.name + '</td>' +
+                                        '<td>' + data.email + '</td>' +
+                                        '<td>' + data.mobile_number + '</td>' +
+                                        '<td>' + data.today_date + '</td>' +
+                                        '<td>' + (data.isActive ? '<span class="badge bg-success">Active</span>' : '<span class="badge bg-danger">Inactive</span>') + '</td>' +
+                                        '<td><div class="dropdown ms-auto"><a href="#" class="btn btn-primary light sharp" data-bs-toggle="dropdown" aria-expanded="true"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="18px" height="18px" viewbox="0 0 24 24" version="1.1"><g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"><rect x="0" y="0" width="24" height="24"></rect><circle fill="#000000" cx="5" cy="12" r="2"></circle><circle fill="#000000" cx="12" cy="12" r="2"></circle><circle fill="#000000" cx="19" cy="12" r="2"></circle></g></svg></a><ul class="dropdown-menu dropdown-menu-end"><a href="{{ route('patient.profile', 'data.id')}}" class="dropdown-item"><i class="fa fa-user-circle text-primary me-2"></i>View profile</a></ul></div></td>' +
+                                        '</tr>');
+                                });
+                            } else {
+                                $('#data-table tbody').append('<tr><td colspan="7">No result</td></tr>');
+                            }
+                        }
+                    });
+                        } else {
+                            $('#data-table tbody').empty();
+                            $.each(originalData, function(index, data) {
+                                $('#data-table tbody').append('<tr>' +
+                                    '<td>' + data.id + '</td>' +
+                                    '<td>' + data.name + '</td>' +
+                                    '<td>' + data.email + '</td>' +
+                                    '<td>' + data.mobile_number + '</td>' +
+                                    '<td>' + data.today_date + '</td>' +
+                                    '<td>' + (data.isActive ? '<span class="badge bg-success">Active</span>' : '<span class="badge bg-danger">Inactive</span>') + '</td>' +
+                                    '<td><div class="dropdown ms-auto"><a href="#" class="btn btn-primary light sharp" data-bs-toggle="dropdown" aria-expanded="true"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="18px" height="18px" viewbox="0 0 24 24" version="1.1"><g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"><rect x="0" y="0" width="24" height="24"></rect><circle fill="#000000" cx="5" cy="12" r="2"></circle><circle fill="#000000" cx="12" cy="12" r="2"></circle><circle fill="#000000" cx="19" cy="12" r="2"></circle></g></svg></a><ul class="dropdown-menu dropdown-menu-end"><a href="{{ route('patient.profile', $patient->id)}}" class="dropdown-item"><i class="fa fa-user-circle text-primary me-2"></i>View profile</a></ul></div></td>' +
+                                    '</tr>');
+                });
+                            
+                        }
+            });
+ });
+</script>
 @endsection

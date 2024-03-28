@@ -53,7 +53,21 @@
                     @endif
                     <div class="card-header">
                         <h4 class="card-title">User List</h4>
-                        <a href="{{ route('user.create') }}" class="btn btn-success">Create</a>
+                        <div>
+                            <form method="get" action="{{ route('search') }}">
+                                <div class="d-flex align-items-center">
+                                    <div class="input-group search-area">
+                                        <input type="text" name="search" class="form-control" placeholder="Search here..."
+                                            value="{{ isset($q) ? $q : '' }}">
+                                        <span class="input-group-text">
+                                            <button type="submit" style="border: none; background-color: transparent;"><i
+                                                    class="flaticon-381-search-2"></i></button>
+                                        </span>
+                                    </div>
+                                    <a href="{{ route('user.create') }}" class="btn btn-success ms-2">Create</a>
+                                </div>
+                            </form>
+                        </div>
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">

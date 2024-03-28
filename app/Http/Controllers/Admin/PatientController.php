@@ -7,12 +7,13 @@ use App\Http\Controllers\Controller;
 use App\Models\Appointment;
 use App\Models\Patient;
 use Carbon\Carbon;
-
+use Log;
 class PatientController extends Controller
 {
     public function index(){
-        $patients=Patient::all();
-        return view('admin.patient.index', compact('patients'));
+        $patients = Patient::all();
+
+    return view('admin.patient.index', compact('patients'));
         
     }
 
@@ -31,7 +32,25 @@ class PatientController extends Controller
         return redirect()->back()->with('success', 'PDF file uploaded successfully.');
     }
 
-   
+    public function filter(Request $request)
+    {
+    $patients = Patient::query();
+    //Log::debug($patients);
+    $filterType = $request->input('filterType');
+    //Log::debug($filterType);
+    $filterValue = $request->input('filterValue');
+    //Log::debug($filterValue);
+
+    if ($filterType == 'name'  && $filterValue) {
+        $patients->where('first_name', 'like', '%'.$filterValue.'%')->orWhere('last_name', 'like', '%'.$filterValue.'%');
+    } if ($filterType == 'date'  && $filterValue) {
+        $patients->where('today_date', $filterValue);
+    }
+
+    return response()->json($patients->get());
+    }
+
+
     
     
 

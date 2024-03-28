@@ -302,4 +302,36 @@ class UserController extends Controller
         $user->delete();
         return redirect()->route('user.index')->with('deleted', 'User details has been deleted Successfully!');
     }
+
+    public function profile(User $user){
+    return view('admin.user.profile', compact('user'));
+    }
+    public function profilePicture(User $user ,Request $request){
+        $user->clearMediaCollection('profile_picture');
+        $user->addMedia($request->file('profile_picture'))->toMediaCollection('profile_picture');
+
+        return redirect()->back()->with('success', 'Profile Picture Details Uploaded successfully.');
+    }
+
+    public function search(Request $request){
+        $q=$request->search;
+
+        $users = User::whereHas('patient', function($query) use ($q) {
+            $query->where('first_name', 'like', "%$q%");
+        })
+        ->orWhereHas('doctor', function($query) use ($q) {
+            $query->where('first_name', 'like', "%$q%");
+        })
+        ->orWhereHas('receptionist', function($query) use ($q) {
+            $query->where('first_name', 'like', "%$q%");
+        })
+        ->get();
+
+
+
+        return view('admin.user.index', compact('users','q'));
+
+    }
+
+
 }

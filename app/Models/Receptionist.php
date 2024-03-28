@@ -22,8 +22,17 @@ class Receptionist extends Model
         'city',
     ];
 
+     protected $appends = [
+        'name'
+    ];
+
     public function user()
     {
         return $this->belongsTo(User::class, 'user_id');
+    }
+
+    public function getNameAttribute()
+    {
+    return  $this->first_name . " " . $this->last_name ;
     }
 }

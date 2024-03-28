@@ -8,6 +8,7 @@ use App\Models\Billing;
 use App\Models\Patient;
 use App\Models\Payment;
 use Illuminate\Http\Request;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class BillingController extends Controller
 {
@@ -69,4 +70,20 @@ class BillingController extends Controller
 
        return view('admin.billing.invoice', compact('payments'));
     }
+
+    public function generatePdf(Payment $payment){
+
+    
+    $payment = Payment::where('id', $payment->id)->first();
+    //dd($payment->billings);
+
+    $data = [
+        'payment' => $payment,
+    ];
+
+    $pdf = PDF::loadView('admin.billing.invoice-pdf', $data);
+    return $pdf->download($payment->name.'-invoice'.'.pdf');
+
+}
+    
 }
