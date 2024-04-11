@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\LoginRequest;
+use App\Models\ActivityLog;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -28,6 +29,12 @@ class AuthenticatedSessionController extends Controller
         $request->authenticate();
 
         $request->session()->regenerate();
+
+        ActivityLog::create([
+            'user_id' => Auth::user()->id,
+            'description' => 'Logged in',
+            'action_type' => 'login',
+        ]);
 
         return redirect()->intended(RouteServiceProvider::HOME);
     }

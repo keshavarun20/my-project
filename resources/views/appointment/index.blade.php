@@ -117,10 +117,10 @@
 
         $('#filterSelect').change(function() {
             var filterType = $(this).val();
-            if (filterType === 'name') {
+            if (filterType == 'name') {
                 $('#filterByName').removeClass('d-none');
                 $('#filterByDate').addClass('d-none');
-            } else if (filterType === 'date') {
+            } else if (filterType == 'date') {
                 $('#filterByDate').removeClass('d-none');
                 $('#filterByName').addClass('d-none');
             } else {
@@ -129,7 +129,7 @@
             }
         });
 
-        $('.filter-input').on('input', function() {
+        $('.filter-input').on('input', function() { console.log(1);
             var filterType = $('#filterSelect').val();
             var filterValue = $(this).val();
             if (filterType && filterValue) {
@@ -137,7 +137,6 @@
                     type: "GET",
                     url: "{{ route('appointment.filter') }}?filterType=" + filterType + "&filterValue=" + filterValue,
                     success: function(res) {
-                        console.log(res);
                         $('#data-table tbody').empty();
                         if (res.length > 0) {
                             $.each(res, function(index, data) {

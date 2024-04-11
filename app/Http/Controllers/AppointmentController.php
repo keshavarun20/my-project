@@ -69,7 +69,7 @@ public function store(AppointmentStoreRequest $request) {
     //Log::debug($appointments);
     $filterType = $request->input('filterType');
     //Log::debug($filterType);
-    $filterValue = $request->input('filterValue');
+    $filterValue = $request->has('filterValue') ? $request->input('filterValue') : null ;
     //Log::debug($filterValue);
 
     if ($filterType == 'name'  && $filterValue) {

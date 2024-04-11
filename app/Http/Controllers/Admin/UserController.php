@@ -15,6 +15,7 @@ use App\Models\Patient;
 use App\Models\Receptionist;
 use App\Http\Requests\Admin\UserStoreRequest;
 use App\Http\Requests\Admin\UserUpdateRequest;
+use App\Models\ActivityLog;
 
 class UserController extends Controller
 {
@@ -35,6 +36,7 @@ class UserController extends Controller
 
     public function store(UserStoreRequest $request){
         $data = $request->validated();
+        $admin = Auth::user();
         //dd($data);
         $user=User::create([
             'email' => $data['email'],
@@ -111,8 +113,14 @@ class UserController extends Controller
                 }
             }
 
+            ActivityLog::create([
+                'user_id' => $admin->id,
+                'description' => ' Created a Doctor'. '' .'('.$doctor->name.')',
+                'action_type' => 'create_doctor',
+            ]);
+
         } else if($data['role_id'] == 3){
-            Patient::create([
+            $patient=Patient::create([
                 'user_id'=>$user->id,
                 'today_date'=>$data['today_date'],
                 'first_name'=>$data['first_name'],
@@ -125,9 +133,15 @@ class UserController extends Controller
                 'address_lane_2'=>$data['address_lane_2'],
                 'city'=>$data['city'],
             ]);
+
+             ActivityLog::create([
+                'user_id' => $admin->id,
+                'description' => ' Created a Patient'. '' .'('.$patient->name.')',
+                'action_type' => 'create_patient',
+            ]);
             
         } else {
-              Receptionist::create([
+             $receptionist= Receptionist::create([
                 'user_id'=>$user->id,
                 'first_name'=>$data['first_name'],
                 'last_name'=>$data['last_name'],
@@ -138,6 +152,12 @@ class UserController extends Controller
                 'address_lane_1'=>$data['address_lane_1'],
                 'address_lane_2'=>$data['address_lane_2'],
                 'city'=>$data['city'],
+            ]);
+
+            ActivityLog::create([
+                'user_id' => $admin->id,
+                'description' => ' Created a Receptionist'. '' .'('.$receptionist->name.')',
+                'action_type' => 'create_receptionist',
             ]);
         }
 
@@ -159,6 +179,7 @@ class UserController extends Controller
 
     public function update(User $user,UserUpdateRequest $request){
         $data = $request->validated();
+        $admin = Auth::user();
         if($request->input('password')){
             $data['password'] = Hash::make($request->input('password'));
         }else{$data['password'] = $user->password;}
@@ -282,14 +303,32 @@ class UserController extends Controller
             //dd($data);
             $doctor = Doctor::where('user_id', $user->id)->first();
             $doctor->update($data);
+
+             ActivityLog::create([
+                'user_id' => $admin->id,
+                'description' => ' Updated a Doctor'. '' .'('.$doctor->name.')',
+                'action_type' => 'update_doctor',
+            ]);
             }
             if ($data['role_id'] == 3 ){
             $patient = Patient::where('user_id', $user->id)->first();
             $patient->update($data);
+
+            ActivityLog::create([
+                'user_id' => $admin->id,
+                'description' => ' Updated a Patient'. '' .'('.$patient->name.')',
+                'action_type' => 'update_patient',
+            ]);
             }
             if($data['role_id'] == 1 ){
             $receptionist = Receptionist::where('user_id', $user->id)->first();
             $receptionist->update($data);
+
+            ActivityLog::create([
+                'user_id' => $admin->id,
+                'description' => ' Updated a Receptionist'. '' .'('.$receptionist->name.')',
+                'action_type' => ' Update_receptionist',
+            ]);
             }
         }
 
@@ -304,7 +343,8 @@ class UserController extends Controller
     }
 
     public function profile(User $user){
-    return view('admin.user.profile', compact('user'));
+        $logs = ActivityLog::with('user')->where('user_id', Auth::id())->orderBy('created_at', 'desc')->get();
+        return view('admin.user.profile', compact('user','logs'));
     }
     public function profilePicture(User $user ,Request $request){
         $user->clearMediaCollection('profile_picture');
