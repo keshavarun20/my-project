@@ -15,21 +15,24 @@
             <div class="alert alert-primary left-icon-big alert-dismissible fade show">
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="btn-close"><span><i class="mdi mdi-btn-close"></i></span>
                 </button>
-                <div class="media">
+               <div class="media">
                     <div class="alert-left-icon-big">
                         <span><i class="mdi mdi-email-alert"></i></span>
                     </div>
                     <div class="media-body">
-                        <h6 class="mt-1 mb-2">Welcome to your account, Dear
-                            @if (Auth::user()->role->name == 'Doctor')
-                                {{ Auth::user()->doctor->name }}
-                            @elseif(Auth::user()->role->name == 'Patient')
-                                {{ Auth::user()->patient->name }}
-                            @else
-                                {{ Auth::user()->receptionist->name }}
-                            @endif
-                            !
-                        </h6>
+                        @if(session('success'))
+                            <h6 class="mt-1 mb-2">
+                                {{ session('success') }}
+                                @if (Auth::user()->role->name == 'Doctor')
+                                    {{ Auth::user()->doctor->name }}
+                                @elseif(Auth::user()->role->name == 'Patient')
+                                    {{ Auth::user()->patient->name }}
+                                @else
+                                    {{ Auth::user()->receptionist->name }}
+                                @endif
+                                !
+                            </h6>
+                        @endif
                     </div>
                 </div>
             </div>
@@ -47,11 +50,9 @@
                             </span>
                             <div class="media-body text-white text-end">
                                 <p class="mb-1">Total Patients</p>
-                                <h3 class="text-white">@php
-                                    use App\Models\Patient;
-                                    $totalPatients = Patient::count();
-                                    echo $totalPatients;
-                                @endphp</h3>
+                                <h3 class="text-white">
+                                     {{$totalPatients}}
+                                </h3>
                             </div>
                         </div>
                     </div>

@@ -734,7 +734,7 @@ video {
             <tr>
               <td class="w-full align-top">
                 <div>
-                  <img src="\icons\new-icons\logo.png" class="h-12" />
+                  <img src="data:image/png;base64,{{ base64_encode(file_get_contents(public_path('/icons/new-icons/logo.png'))) }}" class="h-12" />
                 </div>
               </td>
 

@@ -72,7 +72,7 @@
 						<div class="card-body">
 							<div class="profile-statistics">
 								<div class="text-center">
-									<div class="row">
+									<div class="row overflow-auto" style="max-height: 200px;">
 										@foreach($logs as $log)
 											<p>{{ $log->description }} - {{ $log->created_at }}</p>
 										@endforeach
