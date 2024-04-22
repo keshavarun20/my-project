@@ -6,6 +6,7 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\DoctorScheduleController;
+use App\Http\Controllers\Doctor\DoctorController;
 use App\Http\Controllers\AppointmentController;
 use App\Http\Controllers\Admin\PatientController;
 
@@ -91,6 +92,18 @@ Route::group(['prefix' => 'dashboard', 'middleware' => 'auth'],function(){
     
 
      });
+    });
+    Route::group(['prefix' => 'doctor',], function () {
+        Route::get('/', [DoctorController::class, 'index'])->name('patient.index');
+        Route::get('/filter', [DoctorController::class, 'filter'])->name('patient.filter');
+        Route::get('/filter1', [DoctorController::class, 'filter1'])->name('patient.filter1');
+        Route::get('/appointment', [DoctorController::class, 'appointment'])->name('patient.appointment');
+        
+        Route::group(['prefix' => '{patient}'], function () {
+            Route::get('/profile', [DoctorController::class, 'profile'])->name('patient.profile');
+            Route::post('/upload-pdf', [DoctorController::class, 'uploadPdf'])->name('patient.uploadPdf');
+        });
+
     });
     Route::group(['prefix' => 'billing',], function () {
     Route::get('/', [BillingController::class, 'billing'])->name('billing.index');

@@ -65,7 +65,7 @@
                 @break
 
             @case('Doctor')
-                @include('layouts.admin.sidebar._sidebar')
+                @include('layouts.admin.sidebar._doctorsidebar')
                 @break
         @endswitch
         <!--**********************************
