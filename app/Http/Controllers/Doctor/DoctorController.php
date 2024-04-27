@@ -69,13 +69,16 @@ class DoctorController extends Controller
 
     public function appointment(){
         $loggedInDoctorId = auth()->user()->doctor->id;
-        $patients = Patient::query();
 
-        $patients = $patients->whereHas('appointments', function ($query) use ($loggedInDoctorId) {
-            $query->where('doctor_id', $loggedInDoctorId);
+        $patients = Patient::whereHas('appointments', function ($query) use ($loggedInDoctorId) {
+            $query->where('doctor_id', $loggedInDoctorId)->where('date', '>=', now());
         })->get();
 
-        return view('doctor.appointment', compact('patients'));
+        $patientsOld = Patient::whereHas('appointments', function ($query) use ($loggedInDoctorId) {
+            $query->where('doctor_id', $loggedInDoctorId)->where('date', '<', now());
+        })->get();
+
+        return view('doctor.appointment', compact('patients' , 'patientsOld'));
     }
 
     public function filter1(Request $request)

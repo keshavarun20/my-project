@@ -29,31 +29,79 @@
                     </div>
                 </div>
                 <div class="card-body">
-                    <div class="table-responsive">
-                        <table class="table table-responsive-md" id="data-table">
-                            <thead>
-                                <tr>
-                                    <th scope="col">ID</th>
-                                    <th scope="col">Name</th>
-                                    <th scope="col">Mobile</th>
-                                    <th scope="col">Token Number</th>
-                                    <th scope="col">Date</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                               @foreach ($patients as $patient)
-                                @foreach ($patient->appointments as $appointment)
-                                <tr>
-                                    <td>{{$appointment->id}}</td>
-                                    <td>{{$appointment->name}}</td>
-                                    <td>{{$appointment->mobile_number}}</td>
-                                    <td>{{$appointment->token_number}}</td>
-                                    <td>{{$appointment->date}}</td>
-                                </tr>
-                                @endforeach
-                               @endforeach
-                            </tbody>
-                        </table>
+                    <div class="default-tab">
+                        <ul class="nav nav-tabs" role="tablist">
+                            <li class="nav-item">
+                                <a class="nav-link active" data-bs-toggle="tab" href="#home"><i class="fas fa-calendar-alt me-2"></i> Upcoming Appointments</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" data-bs-toggle="tab" href="#profile"><i class="fas fa-calendar-minus me-2"></i> Previous Appointments</a>
+                            </li>
+                        </ul>
+                        <div class="tab-content">
+                            <div class="tab-pane fade show active" id="home" role="tabpanel">
+                                    @if($patients->isEmpty())
+                                        <div id="noAppointments" class="text-danger text-center" >
+                                            There are no upcoming appointments.
+                                        </div>
+                                    @else
+                                    <div class="table-responsive">
+                                    <table class="table table-striped table-responsive-sm" id="data-table">
+                                        <thead>
+                                            <tr>
+                                                <th scope="col">ID</th>
+                                                <th scope="col">Name</th>
+                                                <th scope="col">Mobile</th>
+                                                <th scope="col">Token Number</th>
+                                                <th scope="col">Date</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                        @foreach ($patients as $patient)
+                                            @foreach ($patient->appointments as $appointment)
+                                            <tr>
+                                                <td>{{$appointment->id}}</td>
+                                                <td>{{$appointment->name}}</td>
+                                                <td>{{$appointment->mobile_number}}</td>
+                                                <td>{{$appointment->token_number}}</td>
+                                                <td>{{$appointment->date}}</td>
+                                            </tr>
+                                            @endforeach
+                                        @endforeach
+                                        </tbody>
+                                    </table>
+                                </div>
+                                    @endif
+                            </div>
+                            <div class="tab-pane fade" id="profile">
+                                 <div class="table-responsive">
+                                    <table class="table table-striped table-responsive-sm" id="data-table">
+                                        <thead>
+                                            <tr>
+                                                <th scope="col">ID</th>
+                                                <th scope="col">Name</th>
+                                                <th scope="col">Mobile</th>
+                                                <th scope="col">Token Number</th>
+                                                <th scope="col">Date</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                        @foreach ($patientsOld as $patient)
+                                            @foreach ($patient->appointments as $appointment)
+                                            <tr>
+                                                <td>{{$appointment->id}}</td>
+                                                <td>{{$appointment->name}}</td>
+                                                <td>{{$appointment->mobile_number}}</td>
+                                                <td>{{$appointment->token_number}}</td>
+                                                <td>{{$appointment->date}}</td>
+                                            </tr>
+                                            @endforeach
+                                        @endforeach
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -79,6 +127,17 @@
             } else {
                 $('#filterByName').addClass('d-none');
                 $('#filterByDate').addClass('d-none');
+
+                $('#data-table tbody').empty();
+                $.each(originalData, function(index, data) {
+                    $('#data-table tbody').append('<tr>' +
+                    '<td>' + data.id + '</td>' +
+                    '<td>' + data.name + '</td>' +
+                    '<td>' + data.mobile_number + '</td>' +
+                    '<td>' + data.token_number + '</td>' +
+                    '<td>' + data.date + '</td>' + '</tr>');
+                });
+    
             }
         });
 
