@@ -9,8 +9,9 @@ use App\Models\Patient;
 class DashboardController extends Controller
 {
    public function index() {
-    $totalPatients = Patient::count();                           
-    if (url()->previous() !== url()->current()) {
+    $totalPatients = Patient::count();
+    //dd(env('APP_URL'));                         
+    if (url()->previous() == env('APP_URL').'/login') {
         session()->flash('success', 'Welcome to your account, Dear');
     }
 
