@@ -122,26 +122,87 @@
                 <div class="col-lg-12">
                     <div class="card">
                         <div class="card-body">
-                            <div class="row">
-                                <div class="col-sm-2">
-                                    <div class="nav flex-column nav-pills mb-2">
-                                        <a href="#v-pills-home" data-bs-toggle="pill" class="nav-link active show">Medical History</a>
-                                        <a href="#v-pills-profile" data-bs-toggle="pill" class="nav-link">Vital Signs</a>
-                                        <a href="#v-pills-messages" data-bs-toggle="pill" class="nav-link">Clinical Notes</a>
-                                        <a href="#v-pills-settings" data-bs-toggle="pill" class="nav-link">Lab Results</a>
-                                    </div>
-                                </div>
-                                <div class="col-sm-8">
-                                    <div class="tab-content">
+                            <div class="nav nav-pills mb-4">
+                                <a href="#v-pills-home" data-bs-toggle="pill" class="nav-link active show">Presenting Complaint</a>
+                                <a href="#v-pills-profile" data-bs-toggle="pill" class="nav-link">History of Presenting Complaint</a>
+                                <a href="#v-pills-messages" data-bs-toggle="pill" class="nav-link">Medical History</a>
+                                <a href="#v-pills-settings" data-bs-toggle="pill" class="nav-link">Surgical History</a>
+                                <a href="#v-pills-allergic" data-bs-toggle="pill" class="nav-link">Allergic History</a>
+                                <a href="#v-pills-family" data-bs-toggle="pill" class="nav-link">Family History</a>
+                                <a href="#v-pills-socail" data-bs-toggle="pill" class="nav-link">Social History</a>
+                            </div>
+                            <div class="col-sm-8">
+                                <div class="tab-content">
+                                    <form method="POST" action="/submit">
+                                        @csrf
                                         <div id="v-pills-home" class="tab-pane fade active show">
+                                        <div class="d-none" id="home">
+                                            <div class="row" id="row1" >
+                                                <div class="mb-3 col-md-5 input-primary">
+                                                    <label for="symptom1">Symptom</label>
+                                                    <input type="text" name="symptoms[]" class="form-control symptom" id="symptom1" placeholder="Symptom">
+                                                </div>
+                                                <div class="mb-3 col-md-5 input-primary">
+                                                    <label for="duration1">Duration</label>
+                                                    <input type="text" name="durations[]" class="form-control duration" id="duration1" placeholder="Duration">
+                                                </div>
+                                                <div class="mb-3 col-md-2">
+                                                    <label>&nbsp;</label>
+                                                    <br>
+                                                    <button type="button" class="btn btn-primary add-button">Add</button>
+                                                </div>
+                                            </div>
+                                        </div>
                                         </div>
                                         <div id="v-pills-profile" class="tab-pane fade">
+                                            <div class="d-none" id="profile">
+                                                <div class="row">
+                                                    <div class="input-primary">
+                                                        <label for="treatment">Treatment for this Disease</label>
+                                                        <textarea name="treatment" class="form-control " id="treatment" placeholder="Treatment for this Disease"></textarea>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="input-primary">
+                                                        <label for="medication">Medication for this Disease</label>
+                                                        <textarea name="medication" class="form-control" id="medication" placeholder="Medication for this Disease"></textarea>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
                                         <div id="v-pills-messages" class="tab-pane fade">
+                                            <div class="d-none input-primary" id="messages">
+                                                <label for="medical_history">Medical History</label>
+                                                <textarea name="medical_history" class="form-control" id="medical_history" placeholder="Medical History"></textarea>
+                                            </div>
                                         </div>
                                         <div id="v-pills-settings" class="tab-pane fade">
+                                            <div class="d-none input-primary" id="settings">
+                                                <label for="surgical_history">Surgical History</label>
+                                                <textarea name="surgical_history" class="form-control" id="surgical_history" placeholder="Surgical History"></textarea>
+                                            </div>
                                         </div>
-                                    </div>
+                                        <div id="v-pills-allergic" class="tab-pane fade">
+                                            <div class="d-none" id="allergic">
+                                                <div class="input-primary">
+                                                    <label for="food">Food</label>
+                                                    <input type="text" name="food" class="form-control" id="food" placeholder="Food">
+                                                </div>
+                                                <div class="input-primary">
+                                                    <label for="drugs">Drugs</label>
+                                                    <input type="text" name="drugs" class="form-control" id="drugs" placeholder="Drugs">
+                                                </div>
+                                                <div class="input-primary">
+                                                    <label for="plaster">Plaster</label>
+                                                    <input type="text" name="plaster" class="form-control" id="plaster" placeholder="Plaster">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div id="v-pills-family" class="tab-pane fade">
+                                        </div>
+                                        <div id="v-pills-socail" class="tab-pane fade">
+                                        </div>
+                                    </form>
                                 </div>
                             </div>
                         </div>
@@ -176,5 +237,70 @@
     </div>
 </div>
 
+@endsection
+
+@section('js')
+<script>
+    $(document).ready(function() {
+        $('#home').removeClass('d-none');
+
+        $('.nav-link').on('click', function() {
+            let targetId = $(this).attr('href')
+            if(targetId == '#v-pills-home'){
+                $('#home').removeClass('d-none');
+                $('#profile').addClass('d-none');
+                $('#messages').addClass('d-none');
+                $('#settings').addClass('d-none');
+                $('#allergic').addClass('d-none');
+            }
+
+            if(targetId == '#v-pills-profile'){
+                $('#profile').removeClass('d-none');
+                $('#home').addClass('d-none');
+                $('#settings').addClass('d-none');
+                $('#messages').addClass('d-none');
+                $('#allergic').addClass('d-none');
+            }
+
+            if(targetId == '#v-pills-messages'){
+                $('#messages').removeClass('d-none');
+                $('#home').addClass('d-none');
+                $('#settings').addClass('d-none');
+                $('#profile').addClass('d-none');
+                $('#allergic').addClass('d-none');
+            }
+            if(targetId == '#v-pills-settings'){
+                $('#settings').removeClass('d-none');
+                $('#messages').addClass('d-none');
+                $('#home').addClass('d-none');
+                $('#profile').addClass('d-none');
+                $('#allergic').addClass('d-none');
+            }
+            if(targetId == '#v-pills-allergic'){
+                $('#allergic').removeClass('d-none');
+                $('#settings').addClass('d-none');
+                $('#messages').addClass('d-none');
+                $('#home').addClass('d-none');
+                $('#profile').addClass('d-none');
+            }
+        
+        });
+
+        let rowCount = 1;
+
+        $(document).on('click', '.add-button', function() {
+            rowCount++;
+            let newRow = $('#row1').clone();
+            newRow.attr('id', 'row' + rowCount);
+            newRow.find('.symptom, .duration').val('');
+            newRow.find('.add-button').text('Remove').removeClass('btn-primary add-button').addClass('btn-danger remove-button');
+            $('#row1').parent().append(newRow);
+        });
+
+       $(document).on('click', '.remove-button', function() {
+            $(this).closest('.row').remove();
+        });
+    });
+</script>
 @endsection
 

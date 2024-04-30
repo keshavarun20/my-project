@@ -25,7 +25,7 @@
 							<span class="nav-text">Doctors</span>
 						</a>
 					</li>
-					<li><a href="{{ route('patient.index')}}" aria-expanded="false">
+					<li><a href="{{ route('patient.info')}}" aria-expanded="false">
 							<i class="fas fa-hospital-user"></i>
 							<span class="nav-text">Patients</span>
 						</a>

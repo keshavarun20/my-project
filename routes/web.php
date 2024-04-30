@@ -81,12 +81,12 @@ Route::group(['prefix' => 'dashboard', 'middleware' => 'auth'],function(){
     });
 
     Route::group(['prefix' => 'patient',], function () {
-    Route::get('/', [PatientController::class, 'index'])->name('patient.index');
+    Route::get('/', [PatientController::class, 'index'])->name('patient.info');
     Route::get('/filter', [PatientController::class, 'filter'])->name('patient.filter');
     //Route::post('/store',[DoctorScheduleController::class, 'store'])->name('dschedule.store');
 
      Route::group(['prefix' => '{patient}'], function () {
-     Route::get('/profile',[PatientController::class, 'profile'])->name('patient.profile');
+     Route::get('/profile',[PatientController::class, 'profile'])->name('patient.profileinfo');
      Route::post('/upload-pdf', [PatientController::class,'uploadPdf'])->name('patient.uploadPdf');
 
     

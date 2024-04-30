@@ -79,7 +79,7 @@
                                                 </svg>
                                             </a>
                                             <ul class="dropdown-menu dropdown-menu-end">
-                                                <a href="{{ route('patient.profile',$patient->id )}}" class="dropdown-item">
+                                                <a href="{{ route('patient.profileinfo',$patient->id )}}" class="dropdown-item">
                                                     <i class="fa fa-user-circle text-primary me-2"></i>View profile
                                                 </a>
                                             </ul>

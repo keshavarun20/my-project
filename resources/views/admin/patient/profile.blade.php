@@ -20,7 +20,7 @@
             <div class="row page-titles">
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item active"><a href="{{ route('patient.index') }}">Patients Lists</a></li>
-                    <li class="breadcrumb-item"><a href="{{ route('patient.profile', $patient->id) }}">Patients Profile</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('patient.profileinfo', $patient->id) }}">Patients Profile</a></li>
                 </ol>
             </div>
             <div class="row">
