@@ -116,7 +116,7 @@
                                 <a href="#v-pills-settings" data-bs-toggle="pill" class="nav-link">Surgical History</a>
                                 <a href="#v-pills-allergic" data-bs-toggle="pill" class="nav-link">Allergic History</a>
                                 <a href="#v-pills-family" data-bs-toggle="pill" class="nav-link">Family History</a>
-                                <a href="#v-pills-socail" data-bs-toggle="pill" class="nav-link">Social History</a>
+                                <a href="#v-pills-social" data-bs-toggle="pill" class="nav-link">Social History</a>
                                 <a href="#v-pills-signs" data-bs-toggle="pill" class="nav-link">Signs</a>
                             </div>
                             <div class="col-sm-8">
@@ -187,8 +187,54 @@
                                             </div>
                                         </div>
                                         <div id="v-pills-family" class="tab-pane fade">
+                                        <div class="d-none" id="family">
+                                            <div class="row">
+                                                <div class="input-primary">
+                                                    <label for="treatment">Family History of Chronic illnesses</label>
+                                                    <textarea name="family_hostory" class="form-control " id="family_hostory" placeholder="Family History of Chronic illnesses"></textarea>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <fieldset class="mb-3 col-md-6">
+                                                        <label class="col-form-label">Consanguineous Marriage</label>
+                                                        <div class="col-sm-9">
+                                                            <div class="form-check">
+                                                                <input class="form-check-input" type="radio" name="consanguineous_marriage" value="Yes">
+                                                                <label class="form-check-label">
+                                                                    Yes
+                                                                </label>
+                                                            </div>
+                                                            <div class="form-check">
+                                                                <input class="form-check-input" type="radio" name="consanguineous_marriage" value="No"
+                                                                    data-bs-toggle="modal" data-bs-target="#modalGrid">
+                                                                <label class="form-check-label">
+                                                                    No
+                                                                </label>
+                                                            </div>
+                                                        </div>
+                                                    </fieldset>
+                                                </div>
+                                            </div>
                                         </div>
-                                        <div id="v-pills-socail" class="tab-pane fade">
+                                        <div id="v-pills-social" class="tab-pane fade">
+                                            <div class="d-none" id="social">
+                                                <div class="input-primary">
+                                                    <label for="occupation">Occupation</label>
+                                                    <input type="text" name="occupation" class="form-control" id="occupation" placeholder="Occupation">
+                                                </div>
+                                                <div class="input-primary">
+                                                    <label for="monthly_income">Monthly Income</label>
+                                                    <input type="text" name="monthly_income" class="form-control" id="monthly_income" placeholder="Monthly Income">
+                                                </div>
+                                                <div class="input-primary">
+                                                    <label for="nearest_hospital">Nearest Hospital</label>
+                                                    <input type="text" name="nearest_hospital" class="form-control" id="nearest_hospital" placeholder="Nearest Hospital">
+                                                </div>
+                                                <div class="input-primary">
+                                                    <label for="water_source">Water Source</label>
+                                                    <input type="text" name="water_source" class="form-control" id="water_source" placeholder="Water Source">
+                                                </div>
+                                            </div>
                                         </div>
                                         <div id="v-pills-signs" class="tab-pane fade">
                                         </div>
@@ -242,6 +288,8 @@
                 $('#messages').addClass('d-none');
                 $('#settings').addClass('d-none');
                 $('#allergic').addClass('d-none');
+                $('#family').addClass('d-none');
+                $('#social').addClass('d-none');
             }
 
             if(targetId == '#v-pills-profile'){
@@ -249,6 +297,8 @@
                 $('#home').addClass('d-none');
                 $('#settings').addClass('d-none');
                 $('#messages').addClass('d-none');
+                $('#family').addClass('d-none');
+                $('#social').addClass('d-none');
                 $('#allergic').addClass('d-none');
             }
 
@@ -257,6 +307,8 @@
                 $('#home').addClass('d-none');
                 $('#settings').addClass('d-none');
                 $('#profile').addClass('d-none');
+                $('#family').addClass('d-none');
+                $('#social').addClass('d-none');
                 $('#allergic').addClass('d-none');
             }
             if(targetId == '#v-pills-settings'){
@@ -264,10 +316,32 @@
                 $('#messages').addClass('d-none');
                 $('#home').addClass('d-none');
                 $('#profile').addClass('d-none');
+                $('#family').addClass('d-none');
+                $('#social').addClass('d-none');
                 $('#allergic').addClass('d-none');
             }
             if(targetId == '#v-pills-allergic'){
                 $('#allergic').removeClass('d-none');
+                $('#settings').addClass('d-none');
+                $('#messages').addClass('d-none');
+                $('#home').addClass('d-none');
+                $('#family').addClass('d-none');
+                $('#social').addClass('d-none');
+                $('#profile').addClass('d-none');
+            }
+            if(targetId == '#v-pills-family'){
+                $('#family').removeClass('d-none');
+                $('#allergic').addClass('d-none');
+                $('#settings').addClass('d-none');
+                $('#messages').addClass('d-none');
+                $('#home').addClass('d-none');
+                $('#social').addClass('d-none');
+                $('#profile').addClass('d-none');
+            }
+            if(targetId == '#v-pills-social'){
+                $('#social').removeClass('d-none');
+                $('#family').addClass('d-none');
+                $('#allergic').addClass('d-none');
                 $('#settings').addClass('d-none');
                 $('#messages').addClass('d-none');
                 $('#home').addClass('d-none');
