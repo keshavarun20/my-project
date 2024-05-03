@@ -42,6 +42,9 @@ class Appointment extends Model
     }
 
     public function getDoctorNameAttribute(){
-        return $this->doctor->name;
+        if($this->doctor()->exists())
+            return $this->doctor->name;
+        else
+            return null;
     }
 }

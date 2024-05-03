@@ -83,8 +83,8 @@ class DoctorController extends Controller
 
     public function filter1(Request $request)
     {
-        $doctor = auth()->user()->doctor->id;
-        $appointments = Appointment::query()->where('doctor_id', $doctor);
+        $doctor = $request->input('userId');
+        $appointments = Appointment::query()->select('id','mobile_number','token_number','date','first_name','last_name')->where('doctor_id', $doctor);
         
         $filterType = $request->input('filterType');
     

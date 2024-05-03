@@ -118,6 +118,7 @@
                                 <a href="#v-pills-family" data-bs-toggle="pill" class="nav-link">Family History</a>
                                 <a href="#v-pills-social" data-bs-toggle="pill" class="nav-link">Social History</a>
                                 <a href="#v-pills-signs" data-bs-toggle="pill" class="nav-link">Signs</a>
+                                <a href="#v-pills-plan" data-bs-toggle="pill" class="nav-link">Management Plan</a>
                             </div>
                             <div class="col-sm-8">
                                 <div class="tab-content">
@@ -237,6 +238,78 @@
                                             </div>
                                         </div>
                                         <div id="v-pills-signs" class="tab-pane fade">
+                                            <div class="d-none" id="signs">
+                                                <div class="input-primary">
+                                                    <label for="general_sign">General Sign</label>
+                                                    <input type="text" name="general_sign" class="form-control" id="general_sign" placeholder="General Sign">
+                                                </div>
+                                                <div class="input-primary">
+                                                    <label for="abdominal">Abdominal</label>
+                                                    <input type="text" name="abdominal" class="form-control" id="abdominal" placeholder="Abdominal">
+                                                </div>
+                                                <div class="input-primary">
+                                                    <label for="cardiovascular_system">Cardiovascular System</label>
+                                                    <input type="text" name="cardiovascular_system" class="form-control" id="cardiovascular_system" placeholder="Cardiovascular System">
+                                                </div>
+                                                <div class="input-primary">
+                                                    <label for="respiratory_system">Respiratory System</label>
+                                                    <input type="text" name="respiratory_system" class="form-control" id="respiratory_system" placeholder="Respiratory System">
+                                                </div>
+                                                <div class="row input-primary">
+                                                    <div class="mb-3 col-md-3">
+                                                        <label for="height">Height (meters):</label>
+                                                        <input type="number" class="form-control" id="height" name="height" step="0.01"  placeholder="Height">
+                                                    </div>
+                                                    <div class="mb-3 col-md-3">
+                                                        <label for="weight">Weight (kg):</label>
+                                                        <input type="number" id="weight" class="form-control" name="weight" step="0.01"  placeholder="Weight'">
+                                                    </div>
+                                                    <div class="mb-3 col-md-3">
+                                                        <label for="bmi">BMI:</label>
+                                                        <input type="number" class="form-control" id="bmi" name="bmi" readonly placeholder="BMI">
+                                                    </div>
+                                                    <div class="mb-3 col-md-3">
+                                                        <label for="temperature">Temperature (°C):</label>
+                                                        <input type="number" class="form-control" id="temperature" name="temperature" step="0.01" placeholder="Temperature">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div id="v-pills-plan" class="tab-pane fade">
+                                            <div class="d-none" id="plan">
+                                                <div class="input-primary">
+                                                    <label for="diagnosis">Diagnosis</label>
+                                                    <input type="text" name="diagnosis" class="form-control" id="diagnosis" placeholder="Diagnosis">
+                                                </div>
+                                                <div class="row input-primary" id="ro1">
+                                                    <div class="mb-3 col-md-3">
+                                                        <label for="drug_name">Drug Name:</label>
+                                                        <input type="text" name="drug_name[]" id="drug_name" class="form-control" placeholder="Drug Name">
+                                                    </div>
+                                                    <div class="mb-3 col-md-2">
+                                                        <label for="dose">Dose:</label>
+                                                        <input type="text" name="dose[]" id="dose" class="form-control" placeholder="Dose">
+                                                    </div>
+                                                    
+                                                    <div class="mb-3 col-md-2">
+                                                        <label for="route">Route:</label>
+                                                        <input type="text" name="route[]" id="route" class="form-control" placeholder="Route">
+                                                    </div>
+                                                    
+                                                    <div class="mb-3 col-md-3">
+                                                        <label for="frequency">Frequency:</label>
+                                                        <input type="text" name="frequency[]" id="frequency" class="form-control" placeholder="Frequency">
+                                                    </div>
+                                                    <div class="mb-3 col-md-2">
+                                                        <label>&nbsp;</label>
+                                                        <br>
+                                                        <button type="button" class="btn btn-primary add">Add</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-8">
+                                                <button type="submit" class="btn btn-primary">Save</button>
+                                            </div>
                                         </div>
                                     </form>
                                 </div>
@@ -290,6 +363,8 @@
                 $('#allergic').addClass('d-none');
                 $('#family').addClass('d-none');
                 $('#social').addClass('d-none');
+                $('#signs').addClass('d-none');
+                $('#plan').addClass('d-none');
             }
 
             if(targetId == '#v-pills-profile'){
@@ -299,6 +374,8 @@
                 $('#messages').addClass('d-none');
                 $('#family').addClass('d-none');
                 $('#social').addClass('d-none');
+                $('#signs').addClass('d-none');
+                $('#plan').addClass('d-none');
                 $('#allergic').addClass('d-none');
             }
 
@@ -309,6 +386,8 @@
                 $('#profile').addClass('d-none');
                 $('#family').addClass('d-none');
                 $('#social').addClass('d-none');
+                $('#signs').addClass('d-none');
+                $('#plan').addClass('d-none');
                 $('#allergic').addClass('d-none');
             }
             if(targetId == '#v-pills-settings'){
@@ -318,6 +397,8 @@
                 $('#profile').addClass('d-none');
                 $('#family').addClass('d-none');
                 $('#social').addClass('d-none');
+                $('#signs').addClass('d-none');
+                $('#plan').addClass('d-none');
                 $('#allergic').addClass('d-none');
             }
             if(targetId == '#v-pills-allergic'){
@@ -327,6 +408,8 @@
                 $('#home').addClass('d-none');
                 $('#family').addClass('d-none');
                 $('#social').addClass('d-none');
+                $('#signs').addClass('d-none');
+                $('#plan').addClass('d-none');
                 $('#profile').addClass('d-none');
             }
             if(targetId == '#v-pills-family'){
@@ -336,10 +419,36 @@
                 $('#messages').addClass('d-none');
                 $('#home').addClass('d-none');
                 $('#social').addClass('d-none');
+                $('#signs').addClass('d-none');
+                $('#plan').addClass('d-none');
                 $('#profile').addClass('d-none');
             }
             if(targetId == '#v-pills-social'){
                 $('#social').removeClass('d-none');
+                $('#family').addClass('d-none');
+                $('#allergic').addClass('d-none');
+                $('#settings').addClass('d-none');
+                $('#messages').addClass('d-none');
+                $('#home').addClass('d-none');
+                $('#signs').addClass('d-none');
+                $('#plan').addClass('d-none');
+                $('#profile').addClass('d-none');
+            }
+            if(targetId == '#v-pills-signs'){
+                $('#signs').removeClass('d-none');
+                $('#social').addClass('d-none');
+                $('#family').addClass('d-none');
+                $('#allergic').addClass('d-none');
+                $('#settings').addClass('d-none');
+                $('#messages').addClass('d-none');
+                $('#home').addClass('d-none');
+                $('#plan').addClass('d-none');
+                $('#profile').addClass('d-none');
+            }
+             if(targetId == '#v-pills-plan'){
+                $('#plan').removeClass('d-none');
+                $('#signs').addClass('d-none');
+                $('#social').addClass('d-none');
                 $('#family').addClass('d-none');
                 $('#allergic').addClass('d-none');
                 $('#settings').addClass('d-none');
@@ -362,6 +471,27 @@
         });
 
        $(document).on('click', '.remove-button', function() {
+            $(this).closest('.row').remove();
+        });
+
+        $('#height, #weight').on('input', function() {
+        var height = parseFloat($('#height').val());
+        var weight = parseFloat($('#weight').val());
+        var bmi = weight / (height * height);
+        $('#bmi').val(bmi.toFixed(2));
+        });
+
+        let rowNo = 1;
+
+        $(document).on('click', '.add', function() {
+            rowNo++;
+            let newRow = $('#ro1').clone();
+            newRow.attr('id', 'ro' + rowNo);
+            newRow.find('#drug_name,#dose,#route,#frequency').val('');
+            newRow.find('.add').text('Remove').removeClass('btn-primary add').addClass('btn-danger remove');
+            $('#ro1').parent().append(newRow);
+        });
+        $(document).on('click', '.remove', function() {
             $(this).closest('.row').remove();
         });
     });

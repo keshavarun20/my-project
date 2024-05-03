@@ -114,6 +114,7 @@
 @section('js')
 <script>
     $(document).ready(function() {
+        var userId = {!! json_encode(auth()->user()->doctor->id) !!};
         var originalData = {!! json_encode($patients) !!};
 
         $('#filterSelect').change(function() {
