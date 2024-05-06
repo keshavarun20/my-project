@@ -7,7 +7,7 @@ use App\Models\Appointment;
 use App\Models\Patient;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
-
+use Log;
 class DoctorController extends Controller
 {
     public function index()
@@ -84,6 +84,7 @@ class DoctorController extends Controller
     public function filter1(Request $request)
     {
         $doctor = $request->input('userId');
+        Log::debug($doctor);
         $appointments = Appointment::query()->select('id','mobile_number','token_number','date','first_name','last_name')->where('doctor_id', $doctor);
         
         $filterType = $request->input('filterType');

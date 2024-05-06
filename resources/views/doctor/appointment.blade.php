@@ -73,7 +73,7 @@
                                 </div>
                                     @endif
                             </div>
-                            <div class="tab-pane fade" id="profile">
+                            <div class="tab-pane fade old" id="profile">
                                  <div class="table-responsive">
                                     <table class="table table-striped table-responsive-sm" id="data-table">
                                         <thead>
@@ -115,8 +115,10 @@
 <script>
     $(document).ready(function() {
         var userId = {!! json_encode(auth()->user()->doctor->id) !!};
-        var originalData = {!! json_encode($patients) !!};
-
+        var originalData = {!! json_encode($patientsOld) !!};
+        var originalData1 = {!! json_encode($patients) !!};
+        
+        
         $('#filterSelect').change(function() {
             var filterType = $(this).val();
             if (filterType === 'name') {
@@ -130,14 +132,31 @@
                 $('#filterByDate').addClass('d-none');
 
                 $('#data-table tbody').empty();
-                $.each(originalData, function(index, data) {
-                    $('#data-table tbody').append('<tr>' +
-                    '<td>' + data.id + '</td>' +
-                    '<td>' + data.name + '</td>' +
-                    '<td>' + data.mobile_number + '</td>' +
-                    '<td>' + data.token_number + '</td>' +
-                    '<td>' + data.date + '</td>' + '</tr>');
-                });
+                if($('#profile')){
+                    $.each(originalData, function(index, patient) {
+                        $.each(patient.appointments, function(index, appointment) {
+                            $('#data-table tbody').append('<tr>' +
+                                '<td>' + appointment.id + '</td>' +
+                                '<td>' + appointment.name + '</td>' +
+                                '<td>' + appointment.mobile_number + '</td>' +
+                                '<td>' + appointment.token_number + '</td>' +
+                                '<td>' + appointment.date + '</td>' +
+                                '</tr>');
+                        });
+                    });
+                }else{
+                    $.each(originalData1, function(index, patient) {
+                        $.each(patient.appointments, function(index, appointment) {
+                            $('#data-table tbody').append('<tr>' +
+                                '<td>' + appointment.id + '</td>' +
+                                '<td>' + appointment.name + '</td>' +
+                                '<td>' + appointment.mobile_number + '</td>' +
+                                '<td>' + appointment.token_number + '</td>' +
+                                '<td>' + appointment.date + '</td>' +
+                                '</tr>');
+                        });
+                    });
+                }
     
             }
         });
@@ -148,7 +167,7 @@
             if (filterType && filterValue) {
                 $.ajax({
                     type: "GET",
-                    url: "{{ route('patient.filter1') }}?filterType=" + filterType + "&filterValue=" + filterValue,
+                    url: "{{ route('patient.filter1') }}?filterType=" + filterType + "&filterValue=" + filterValue + "&userId=" + userId,
                     success: function(res) {
                         $('#data-table tbody').empty();
                         if (res.length > 0) {
@@ -165,17 +184,33 @@
                         }
                     }
                 });
-            } else {
+            }else {
                 $('#data-table tbody').empty();
-                $.each(originalData, function(index, data) {
-                    $('#data-table tbody').append('<tr>' +
-                        '<td>' + data.id + '</td>' +
-                        '<td>' + data.name + '</td>' +
-                        '<td>' + data.mobile_number + '</td>' +
-                        '<td>' + data.token_number + '</td>' +
-                        '<td>' + data.date + '</td>' + '</tr>');
-
-                });
+                if($('#profile')){
+                    $.each(originalData, function(index, patient) {
+                        $.each(patient.appointments, function(index, appointment) {
+                            $('#data-table tbody').append('<tr>' +
+                                '<td>' + appointment.id + '</td>' +
+                                '<td>' + appointment.name + '</td>' +
+                                '<td>' + appointment.mobile_number + '</td>' +
+                                '<td>' + appointment.token_number + '</td>' +
+                                '<td>' + appointment.date + '</td>' +
+                                '</tr>');
+                        });
+                    });
+                }else{
+                    $.each(originalData1, function(index, patient) {
+                        $.each(patient.appointments, function(index, appointment) {
+                            $('#data-table tbody').append('<tr>' +
+                                '<td>' + appointment.id + '</td>' +
+                                '<td>' + appointment.name + '</td>' +
+                                '<td>' + appointment.mobile_number + '</td>' +
+                                '<td>' + appointment.token_number + '</td>' +
+                                '<td>' + appointment.date + '</td>' +
+                                '</tr>');
+                        });
+                    });
+                }
             }
         });
     });
