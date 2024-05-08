@@ -57,7 +57,7 @@ class DoctorController extends Controller
         $filterValue = $request->input('filterValue');
         //Log::debug($filterValue);
 
-        if ($filterType == 'name'  && $filterValue) {
+        if ($filterType == 'name' && $filterValue) {
             $patients->where('first_name', 'like', '%' . $filterValue . '%')->orWhere('last_name', 'like', '%' . $filterValue . '%');
         }
         if ($filterType == 'date'  && $filterValue) {
@@ -84,7 +84,6 @@ class DoctorController extends Controller
     public function filter1(Request $request)
     {
         $doctor = $request->input('userId');
-        Log::debug($doctor);
         $appointments = Appointment::query()->select('id','mobile_number','token_number','date','first_name','last_name')->where('doctor_id', $doctor);
         
         $filterType = $request->input('filterType');
