@@ -14,8 +14,7 @@ return new class extends Migration
         Schema::create('medicals', function (Blueprint $table) {
             $table->id();
             $table->foreignId('patient_id');
-            $table->longText('symptoms');
-            $table->longText('durations');
+            $table->longText('presenting_complaint');
             $table->text('treatment');
             $table->text('medication');
             $table->text('medical_history');
@@ -38,10 +37,7 @@ return new class extends Migration
             $table->decimal('bmi', 5, 2);
             $table->decimal('temperature', 5, 2);
             $table->text('diagnosis');
-            $table->longText('drug_name');
-            $table->longText('dose');
-            $table->longText('route');
-            $table->longText('frequency');
+            $table->longText('management_plan');
             $table->timestamps();
 
             $table->foreign('patient_id')->references('id')->on('patients')->onDelete('cascade');

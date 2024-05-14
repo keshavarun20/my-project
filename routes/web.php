@@ -9,6 +9,7 @@ use App\Http\Controllers\Admin\DoctorScheduleController;
 use App\Http\Controllers\Doctor\DoctorController;
 use App\Http\Controllers\AppointmentController;
 use App\Http\Controllers\Admin\PatientController;
+use App\Http\Controllers\MedicalController;
 
 /*
 |--------------------------------------------------------------------------
@@ -101,6 +102,7 @@ Route::group(['prefix' => 'dashboard', 'middleware' => 'auth'],function(){
         
         Route::group(['prefix' => '{patient}'], function () {
             Route::get('/profile', [DoctorController::class, 'profile'])->name('patient.profile');
+            Route::post('/store', [MedicalController::class, 'store'])->name('medical.store');
             Route::post('/upload-pdf', [DoctorController::class, 'uploadPdf'])->name('patient.uploadPdf');
         });
 

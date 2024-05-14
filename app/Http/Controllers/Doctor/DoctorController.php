@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Doctor;
 
 use App\Http\Controllers\Controller;
 use App\Models\Appointment;
+use App\Models\Medical;
 use App\Models\Patient;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -37,8 +38,10 @@ class DoctorController extends Controller
             ->paginate(10);
 
         $pdfFiles = $patient->getMedia('pdf')->sortByDesc('created_at')->take(5);
+        
+        $medicals = Medical::all();
 
-        return view('doctor.patient.profile', compact('patient', 'pastAppointments', 'futureAppointments', 'pdfFiles'));
+        return view('doctor.patient.profile', compact('patient', 'pastAppointments', 'futureAppointments', 'pdfFiles','medicals'));
     }
 
     public function uploadPdf(Request $request, Patient $patient)
