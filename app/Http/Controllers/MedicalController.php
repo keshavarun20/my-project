@@ -12,15 +12,28 @@ class MedicalController extends Controller
         //dd(1);
         $data = $request->validated();
         $patientId = $request->route('patient');
-            
-        //dd($data);
+
+        $presentingComplaint = [];
+        foreach ($data['symptoms'] as $i => $symptom) {
+            $presentingComplaint[] = [
+                'symptom' => $symptom,
+                'duration' => $data['durations'][$i],
+            ];
+        }
+        $managementPlan = [];
+        
+        foreach ($data['drug_name'] as $j=> $drug_name) {
+            $managementPlan[] = [
+                'drug_name' => $drug_name,
+                'dose' => $data['dose'][$j],
+                'route' => $data['route'][$j],
+                'frequency' => $data['frequency'][$j],
+            ];
+        }
         
         Medical::create([
             'patient_id' => $patientId,
-            'presenting_complaint'=>[
-                'symptoms' => $data['symptoms'],
-                'durations' => $data['durations']  
-            ],
+            'presenting_complaint'=> $presentingComplaint,
             'medication' => $data['medication'],
             'treatment' => $data['treatment'],
             'medical_history' => $data['medical_history'],
@@ -43,13 +56,7 @@ class MedicalController extends Controller
             'bmi' => $data['bmi'],
             'temperature' => $data['temperature'],
             'diagnosis' => $data['diagnosis'],
-            'management_plan'=>[
-                'drug_name' => $data['drug_name'],
-                'dose' => $data['dose'],
-                'route' => $data['route'],
-                'frequency' => $data['frequency'],
-            ]
-            
+            'management_plan'=> $managementPlan,
 
         ]);
 

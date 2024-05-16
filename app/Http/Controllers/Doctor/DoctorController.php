@@ -39,7 +39,7 @@ class DoctorController extends Controller
 
         $pdfFiles = $patient->getMedia('pdf')->sortByDesc('created_at')->take(5);
         
-        $medicals = Medical::all();
+        $medicals = Medical::where('patient_id',$patient->id)->get();
 
         return view('doctor.patient.profile', compact('patient', 'pastAppointments', 'futureAppointments', 'pdfFiles','medicals'));
     }

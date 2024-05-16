@@ -13,7 +13,6 @@ class Medical extends Model
     protected $fillable = [
         'patient_id',
         'management_plan',
-        'medication',
         'treatment',
         'medication',
         'medical_history',
@@ -43,6 +42,7 @@ class Medical extends Model
         'presenting_complaint' => 'array',
         'management_plan' => 'array',
     ];
+    
    
 
     protected function presenting_complaint(): Attribute
