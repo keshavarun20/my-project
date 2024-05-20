@@ -20,19 +20,21 @@
                                 <option value="name">Filter by Name</option>
                                 <option value="date">Filter by Date</option>
                             </select>
-                        <div id="filterByName" class="dropdown-item-filter d-none">
-                            <input id="filterValueName" type="text" class="form-control filter-input" placeholder="Enter name">
-                        </div>
+                            <div id="filterByName" class="dropdown-item-filter d-none">
+                                <input id="filterValueName" type="text" class="form-control filter-input"
+                                    placeholder="Enter name">
+                            </div>
 
-                        <div id="filterByDate" class="dropdown-item-filter d-none">
-                            <input id="filterValueDate" type="date" class="form-control filter-input">
+                            <div id="filterByDate" class="dropdown-item-filter d-none">
+                                <input id="filterValueDate" type="date" class="form-control filter-input">
+                            </div>
                         </div>
-                        </div>
-                        <a href="{{ route('appointment.create') }}" class="btn btn-rounded btn-success btn-lg">Book Now</a>   
+                        <a href="{{ route('appointment.create') }}" class="btn btn-rounded btn-success btn-lg">Book Now</a>
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">
-                            <table class="table table-bordered table-striped verticle-middle table-responsive-sm" id="data-table">
+                            <table class="table table-bordered table-striped verticle-middle table-responsive-sm"
+                                id="data-table">
                                 <thead>
                                     <tr>
                                         <th scope="col">Name</th>
@@ -71,27 +73,30 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <p>Your doctor appointment is successfully booked.</p>
-                    <p>Please be advised to arrive at least 10 minutes before the scheduled time.</p>
-
-                    @if(isset($appointmentBooked))
-                    <div class="appointment-details">
-                        <p><strong>Name:</strong> {{ $appointmentBooked->name }}</p>
-                        <p><strong>Appointment Date:</strong> {{ $appointmentBooked->date }}</p>
-                        <p><strong>Doctor Name:</strong> {{ $appointmentBooked->doctor->name }}</p>
-
-                        @if (auth()->user()->role->name == 'Admin')
-                        <p><strong>Your token number :</strong> {{ $appointmentBooked->token_number }}</p>
-                        <p><strong>Your reference number for payment:</strong> {{ $appointmentBooked->reference_number }}</p>
-                        @endif
-                    </div>
+                    @if (Auth::user()->role->name == 'Patient')
+                        <p>Your doctor appointment is successfully booked.</p>
+                        <p>Please be advised to arrive at least 10 minutes before the scheduled time.</p>
                     @endif
 
-                    <p>For further details, please contact us:</p>
-                    <ul class="contact-details">
-                        <li>Email: support@hcc.com</li>
-                        <li>Phone: 051-2223218 / 051-2052441</li>
-                    </ul>
+                    @if (isset($appointmentBooked))
+                        <div class="appointment-details">
+                            <p><strong>Name:</strong> {{ $appointmentBooked->name }}</p>
+                            <p><strong>Appointment Date:</strong> {{ $appointmentBooked->date }}</p>
+                            <p><strong>Doctor Name:</strong> {{ $appointmentBooked->doctor->name }}</p>
+
+                            <p><strong>Your token number :</strong> {{ $appointmentBooked->token_number }}</p>
+                            <p><strong>Your reference number for payment:</strong>
+                                {{ $appointmentBooked->reference_number }}</p>
+                        </div>
+                    @endif
+
+                    @if (Auth::user()->role->name == 'Patient')
+                        <p>For further details, please contact us:</p>
+                        <ul class="contact-details">
+                            <li>Email: support@hcc.com</li>
+                            <li>Phone: 051-2223218 / 051-2052441</li>
+                        </ul>
+                    @endif
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-danger light" data-bs-dismiss="modal">Close</button>
@@ -104,69 +109,71 @@
 
 
 @section('js')
-@if (session('appointmentBooked'))
+    @if (session('appointmentBooked'))
+        <script>
+            $(document).ready(function() {
+                $('#appointmentConfirmationModal').modal('show');
+            });
+        </script>
+    @endif
     <script>
         $(document).ready(function() {
-            $('#appointmentConfirmationModal').modal('show');
+            var originalData = {!! json_encode($appointments) !!};
+
+            $('#filterSelect').change(function() {
+                var filterType = $(this).val();
+                if (filterType == 'name') {
+                    $('#filterByName').removeClass('d-none');
+                    $('#filterByDate').addClass('d-none');
+                } else if (filterType == 'date') {
+                    $('#filterByDate').removeClass('d-none');
+                    $('#filterByName').addClass('d-none');
+                } else {
+                    $('#filterByName').addClass('d-none');
+                    $('#filterByDate').addClass('d-none');
+                }
+            });
+
+            $('.filter-input').on('input', function() {
+                console.log(1);
+                var filterType = $('#filterSelect').val();
+                var filterValue = $(this).val();
+                if (filterType && filterValue) {
+                    $.ajax({
+                        type: "GET",
+                        url: "{{ route('appointment.filter') }}?filterType=" + filterType +
+                            "&filterValue=" + filterValue,
+                        success: function(res) {
+                            $('#data-table tbody').empty();
+                            if (res.length > 0) {
+                                $.each(res, function(index, data) {
+                                    $('#data-table tbody').append('<tr>' +
+                                        '<td>' + data.name + '</td>' +
+                                        '<td>' + data.date + '</td>' +
+                                        '<td>' + data.doctorName + '</td>' +
+                                        '<td>' + data.token_number + '</td>' +
+                                        '<td>' + data.reference_number + '</td>' +
+                                        '</tr>');
+                                });
+                            } else {
+                                $('#data-table tbody').append(
+                                    '<tr><td colspan="5">No result</td></tr>');
+                            }
+                        }
+                    });
+                } else {
+                    $('#data-table tbody').empty();
+                    $.each(originalData, function(index, data) {
+                        $('#data-table tbody').append('<tr>' +
+                            '<td>' + data.name + '</td>' +
+                            '<td>' + data.date + '</td>' +
+                            '<td>' + data.doctorName + '</td>' +
+                            '<td>' + data.token_number + '</td>' +
+                            '<td>' + data.reference_number + '</td>' +
+                            '</tr>');
+                    });
+                }
+            });
         });
     </script>
-@endif
-<script>
-    $(document).ready(function() {
-        var originalData = {!! json_encode($appointments) !!};
-
-        $('#filterSelect').change(function() {
-            var filterType = $(this).val();
-            if (filterType == 'name') {
-                $('#filterByName').removeClass('d-none');
-                $('#filterByDate').addClass('d-none');
-            } else if (filterType == 'date') {
-                $('#filterByDate').removeClass('d-none');
-                $('#filterByName').addClass('d-none');
-            } else {
-                $('#filterByName').addClass('d-none');
-                $('#filterByDate').addClass('d-none');
-            }
-        });
-
-        $('.filter-input').on('input', function() { console.log(1);
-            var filterType = $('#filterSelect').val();
-            var filterValue = $(this).val();
-            if (filterType && filterValue) {
-                $.ajax({
-                    type: "GET",
-                    url: "{{ route('appointment.filter') }}?filterType=" + filterType + "&filterValue=" + filterValue,
-                    success: function(res) {
-                        $('#data-table tbody').empty();
-                        if (res.length > 0) {
-                            $.each(res, function(index, data) {
-                                $('#data-table tbody').append('<tr>' +
-                                    '<td>' + data.name + '</td>' +
-                                    '<td>' + data.date + '</td>' +
-                                    '<td>' + data.doctorName + '</td>' +
-                                    '<td>' + data.token_number + '</td>' +
-                                    '<td>' + data.reference_number + '</td>' +
-                                    '</tr>');
-                            });
-                        } else {
-                            $('#data-table tbody').append('<tr><td colspan="5">No result</td></tr>');
-                        }
-                    }
-                });
-            } else {
-                $('#data-table tbody').empty();
-                $.each(originalData, function(index, data) {
-                    $('#data-table tbody').append('<tr>' +
-                        '<td>' + data.name + '</td>' +
-                        '<td>' + data.date + '</td>' +
-                        '<td>' + data.doctorName + '</td>' +
-                        '<td>' + data.token_number + '</td>' +
-                        '<td>' + data.reference_number + '</td>' +
-                        '</tr>');
-                });
-            }
-        });
-    });
-</script>
 @endsection
-

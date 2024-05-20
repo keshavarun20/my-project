@@ -75,9 +75,11 @@
                     <div class="card text-center">
                         <div class="card-header">
                             <h5 class="card-title">Document</h5>
-                            <a href="#" class="btn light btn-light" data-bs-toggle="modal"
-                                data-bs-target="#uploadDocumentModal"><i class="fas fa-file-upload me-2"></i>Upload
-                                Document</a>
+                            @if (Auth::user()->role->name == 'Doctor')
+                                <a href="#" class="btn light btn-light" data-bs-toggle="modal"
+                                    data-bs-target="#uploadDocumentModal"><i class="fas fa-file-upload me-2"></i>Upload
+                                    Document</a>
+                            @endif
                         </div>
                         <div class="custom-tab-1">
                             <ul class="nav nav-tabs">
@@ -357,248 +359,260 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-12">
-                    <div class="card">
-                        <div class="card-body">
-                            <div class="nav nav-pills mb-4">
-                                <a href="#v-pills-home" data-bs-toggle="pill" class="nav-link active show">Presenting
-                                    Complaint</a>
-                                <a href="#v-pills-profile" data-bs-toggle="pill" class="nav-link">History of Presenting
-                                    Complaint</a>
-                                <a href="#v-pills-messages" data-bs-toggle="pill" class="nav-link">Medical History</a>
-                                <a href="#v-pills-settings" data-bs-toggle="pill" class="nav-link">Surgical History</a>
-                                <a href="#v-pills-allergic" data-bs-toggle="pill" class="nav-link">Allergic History</a>
-                                <a href="#v-pills-family" data-bs-toggle="pill" class="nav-link">Family History</a>
-                                <a href="#v-pills-social" data-bs-toggle="pill" class="nav-link">Social History</a>
-                                <a href="#v-pills-signs" data-bs-toggle="pill" class="nav-link">Signs</a>
-                                <a href="#v-pills-plan" data-bs-toggle="pill" class="nav-link">Management Plan</a>
-                            </div>
-                            <div class="col-sm-8">
-                                <div class="tab-content">
-                                    <form method="POST" action="{{ route('medical.store', $patient->id) }}">
-                                        @csrf
-                                        <div id="v-pills-home" class="tab-pane fade active show">
-                                            <div class="d-none" id="home">
-                                                <div class="row" id="row1">
-                                                    <div class="mb-3 col-md-5 input-primary">
-                                                        <label for="symptom1">Symptom</label>
-                                                        <input type="text" name="symptoms[]"
-                                                            class="form-control symptom" id="symptom1"
-                                                            placeholder="Symptom">
-                                                    </div>
-                                                    <div class="mb-3 col-md-5 input-primary">
-                                                        <label for="duration1">Duration</label>
-                                                        <input type="text" name="durations[]"
-                                                            class="form-control duration" id="duration1"
-                                                            placeholder="Duration">
-                                                    </div>
-                                                    <div class="mb-3 col-md-2">
-                                                        <label>&nbsp;</label>
-                                                        <br>
-                                                        <button type="button"
-                                                            class="btn btn-primary add-button">Add</button>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div id="v-pills-profile" class="tab-pane fade">
-                                            <div class="d-none" id="profile">
-                                                <div class="row">
-                                                    <div class="input-primary">
-                                                        <label for="treatment">Treatment for this Disease</label>
-                                                        <textarea name="treatment" class="form-control " id="treatment" placeholder="Treatment for this Disease"></textarea>
-                                                    </div>
-                                                </div>
-                                                <div class="row">
-                                                    <div class="input-primary">
-                                                        <label for="medication">Medication for this Disease</label>
-                                                        <textarea name="medication" class="form-control" id="medication" placeholder="Medication for this Disease"></textarea>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div id="v-pills-messages" class="tab-pane fade">
-                                            <div class="d-none input-primary" id="messages">
-                                                <label for="medical_history">Medical History</label>
-                                                <textarea name="medical_history" class="form-control" id="medical_history" placeholder="Medical History"></textarea>
-                                            </div>
-                                        </div>
-                                        <div id="v-pills-settings" class="tab-pane fade">
-                                            <div class="d-none input-primary" id="settings">
-                                                <label for="surgical_history">Surgical History</label>
-                                                <textarea name="surgical_history" class="form-control" id="surgical_history" placeholder="Surgical History"></textarea>
-                                            </div>
-                                        </div>
-                                        <div id="v-pills-allergic" class="tab-pane fade">
-                                            <div class="d-none" id="allergic">
-                                                <div class="input-primary">
-                                                    <label for="food">Food</label>
-                                                    <input type="text" name="food" class="form-control"
-                                                        id="food" placeholder="Food">
-                                                </div>
-                                                <div class="input-primary">
-                                                    <label for="drugs">Drugs</label>
-                                                    <input type="text" name="drugs" class="form-control"
-                                                        id="drugs" placeholder="Drugs">
-                                                </div>
-                                                <div class="input-primary">
-                                                    <label for="plaster">Plaster</label>
-                                                    <input type="text" name="plaster" class="form-control"
-                                                        id="plaster" placeholder="Plaster">
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div id="v-pills-family" class="tab-pane fade">
-                                            <div class="d-none" id="family">
-                                                <div class="row">
-                                                    <div class="input-primary">
-                                                        <label for="treatment">Family History of Chronic illnesses</label>
-                                                        <textarea name="family_history" class="form-control " id="family_history"
-                                                            placeholder="Family History of Chronic illnesses"></textarea>
-                                                    </div>
-                                                </div>
-                                                <div class="row">
-                                                    <fieldset class="mb-3 col-md-6">
-                                                        <label class="col-form-label">Consanguineous Marriage</label>
-                                                        <div class="col-sm-9">
-                                                            <div class="form-check">
-                                                                <input class="form-check-input" type="radio"
-                                                                    name="consanguineous_marriage" value="Yes">
-                                                                <label class="form-check-label">
-                                                                    Yes
-                                                                </label>
-                                                            </div>
-                                                            <div class="form-check">
-                                                                <input class="form-check-input" type="radio"
-                                                                    name="consanguineous_marriage" value="No"
-                                                                    data-bs-toggle="modal" data-bs-target="#modalGrid">
-                                                                <label class="form-check-label">
-                                                                    No
-                                                                </label>
-                                                            </div>
+                @if (Auth::user()->role->name == 'Doctor')
+                    <div class="col-lg-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="nav nav-pills mb-4">
+                                    <a href="#v-pills-home" data-bs-toggle="pill" class="nav-link active show">Presenting
+                                        Complaint</a>
+                                    <a href="#v-pills-profile" data-bs-toggle="pill" class="nav-link">History of
+                                        Presenting
+                                        Complaint</a>
+                                    <a href="#v-pills-messages" data-bs-toggle="pill" class="nav-link">Medical
+                                        History</a>
+                                    <a href="#v-pills-settings" data-bs-toggle="pill" class="nav-link">Surgical
+                                        History</a>
+                                    <a href="#v-pills-allergic" data-bs-toggle="pill" class="nav-link">Allergic
+                                        History</a>
+                                    <a href="#v-pills-family" data-bs-toggle="pill" class="nav-link">Family History</a>
+                                    <a href="#v-pills-social" data-bs-toggle="pill" class="nav-link">Social History</a>
+                                    <a href="#v-pills-signs" data-bs-toggle="pill" class="nav-link">Signs</a>
+                                    <a href="#v-pills-plan" data-bs-toggle="pill" class="nav-link">Management Plan</a>
+                                </div>
+                                <div class="col-sm-8">
+                                    <div class="tab-content">
+                                        <form method="POST" action="{{ route('medical.store', $patient->id) }}">
+                                            @csrf
+                                            <div id="v-pills-home" class="tab-pane fade active show">
+                                                <div class="d-none" id="home">
+                                                    <div class="row" id="row1">
+                                                        <div class="mb-3 col-md-5 input-primary">
+                                                            <label for="symptom1">Symptom</label>
+                                                            <input type="text" name="symptoms[]"
+                                                                class="form-control symptom" id="symptom1"
+                                                                placeholder="Symptom">
                                                         </div>
-                                                    </fieldset>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div id="v-pills-social" class="tab-pane fade">
-                                            <div class="d-none" id="social">
-                                                <div class="input-primary">
-                                                    <label for="occupation">Occupation</label>
-                                                    <input type="text" name="occupation" class="form-control"
-                                                        id="occupation" placeholder="Occupation">
-                                                </div>
-                                                <div class="input-primary">
-                                                    <label for="monthly_income">Monthly Income</label>
-                                                    <input type="number" name="monthly_income" class="form-control"
-                                                        id="monthly_income" placeholder="Monthly Income">
-                                                </div>
-                                                <div class="input-primary">
-                                                    <label for="nearest_hospital">Nearest Hospital</label>
-                                                    <input type="text" name="nearest_hospital" class="form-control"
-                                                        id="nearest_hospital" placeholder="Nearest Hospital">
-                                                </div>
-                                                <div class="input-primary">
-                                                    <label for="water_source">Water Source</label>
-                                                    <input type="text" name="water_source" class="form-control"
-                                                        id="water_source" placeholder="Water Source">
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div id="v-pills-signs" class="tab-pane fade">
-                                            <div class="d-none" id="signs">
-                                                <div class="input-primary">
-                                                    <label for="general_sign">General Sign</label>
-                                                    <input type="text" name="general_sign" class="form-control"
-                                                        id="general_sign" placeholder="General Sign">
-                                                </div>
-                                                <div class="input-primary">
-                                                    <label for="abdominal">Abdominal</label>
-                                                    <input type="text" name="abdominal" class="form-control"
-                                                        id="abdominal" placeholder="Abdominal">
-                                                </div>
-                                                <div class="input-primary">
-                                                    <label for="cardiovascular_system">Cardiovascular System</label>
-                                                    <input type="text" name="cardiovascular_system"
-                                                        class="form-control" id="cardiovascular_system"
-                                                        placeholder="Cardiovascular System">
-                                                </div>
-                                                <div class="input-primary">
-                                                    <label for="respiratory_system">Respiratory System</label>
-                                                    <input type="text" name="respiratory_system" class="form-control"
-                                                        id="respiratory_system" placeholder="Respiratory System">
-                                                </div>
-                                                <div class="row input-primary">
-                                                    <div class="mb-3 col-md-3">
-                                                        <label for="height">Height (meters):</label>
-                                                        <input type="number" class="form-control" id="height"
-                                                            name="height" step="0.01" placeholder="Height">
-                                                    </div>
-                                                    <div class="mb-3 col-md-3">
-                                                        <label for="weight">Weight (kg):</label>
-                                                        <input type="number" id="weight" class="form-control"
-                                                            name="weight" step="0.01" placeholder="Weight'">
-                                                    </div>
-                                                    <div class="mb-3 col-md-3">
-                                                        <label for="bmi">BMI:</label>
-                                                        <input type="number" class="form-control" id="bmi"
-                                                            name="bmi" readonly placeholder="BMI">
-                                                    </div>
-                                                    <div class="mb-3 col-md-3">
-                                                        <label for="temperature">Temperature (°C):</label>
-                                                        <input type="number" class="form-control" id="temperature"
-                                                            name="temperature" step="0.01" placeholder="Temperature">
+                                                        <div class="mb-3 col-md-5 input-primary">
+                                                            <label for="duration1">Duration</label>
+                                                            <input type="text" name="durations[]"
+                                                                class="form-control duration" id="duration1"
+                                                                placeholder="Duration">
+                                                        </div>
+                                                        <div class="mb-3 col-md-2">
+                                                            <label>&nbsp;</label>
+                                                            <br>
+                                                            <button type="button"
+                                                                class="btn btn-primary add-button">Add</button>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                        <div id="v-pills-plan" class="tab-pane fade">
-                                            <div class="d-none" id="plan">
-                                                <div class="input-primary">
-                                                    <label for="diagnosis">Diagnosis</label>
-                                                    <input type="text" name="diagnosis" class="form-control"
-                                                        id="diagnosis" placeholder="Diagnosis">
+                                            <div id="v-pills-profile" class="tab-pane fade">
+                                                <div class="d-none" id="profile">
+                                                    <div class="row">
+                                                        <div class="input-primary">
+                                                            <label for="treatment">Treatment for this Disease</label>
+                                                            <textarea name="treatment" class="form-control " id="treatment" placeholder="Treatment for this Disease"></textarea>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="input-primary">
+                                                            <label for="medication">Medication for this Disease</label>
+                                                            <textarea name="medication" class="form-control" id="medication" placeholder="Medication for this Disease"></textarea>
+                                                        </div>
+                                                    </div>
                                                 </div>
-                                                <div class="row input-primary" id="ro1">
-                                                    <div class="mb-3 col-md-3">
-                                                        <label for="drug_name">Drug Name:</label>
-                                                        <input type="text" name="drug_name[]" id="drug_name"
-                                                            class="form-control" placeholder="Drug Name">
+                                            </div>
+                                            <div id="v-pills-messages" class="tab-pane fade">
+                                                <div class="d-none input-primary" id="messages">
+                                                    <label for="medical_history">Medical History</label>
+                                                    <textarea name="medical_history" class="form-control" id="medical_history" placeholder="Medical History"></textarea>
+                                                </div>
+                                            </div>
+                                            <div id="v-pills-settings" class="tab-pane fade">
+                                                <div class="d-none input-primary" id="settings">
+                                                    <label for="surgical_history">Surgical History</label>
+                                                    <textarea name="surgical_history" class="form-control" id="surgical_history" placeholder="Surgical History"></textarea>
+                                                </div>
+                                            </div>
+                                            <div id="v-pills-allergic" class="tab-pane fade">
+                                                <div class="d-none" id="allergic">
+                                                    <div class="input-primary">
+                                                        <label for="food">Food</label>
+                                                        <input type="text" name="food" class="form-control"
+                                                            id="food" placeholder="Food">
                                                     </div>
-                                                    <div class="mb-3 col-md-2">
-                                                        <label for="dose">Dose:</label>
-                                                        <input type="text" name="dose[]" id="dose"
-                                                            class="form-control" placeholder="Dose">
+                                                    <div class="input-primary">
+                                                        <label for="drugs">Drugs</label>
+                                                        <input type="text" name="drugs" class="form-control"
+                                                            id="drugs" placeholder="Drugs">
                                                     </div>
+                                                    <div class="input-primary">
+                                                        <label for="plaster">Plaster</label>
+                                                        <input type="text" name="plaster" class="form-control"
+                                                            id="plaster" placeholder="Plaster">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div id="v-pills-family" class="tab-pane fade">
+                                                <div class="d-none" id="family">
+                                                    <div class="row">
+                                                        <div class="input-primary">
+                                                            <label for="treatment">Family History of Chronic
+                                                                illnesses</label>
+                                                            <textarea name="family_history" class="form-control " id="family_history"
+                                                                placeholder="Family History of Chronic illnesses"></textarea>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <fieldset class="mb-3 col-md-6">
+                                                            <label class="col-form-label">Consanguineous Marriage</label>
+                                                            <div class="col-sm-9">
+                                                                <div class="form-check">
+                                                                    <input class="form-check-input" type="radio"
+                                                                        name="consanguineous_marriage" value="Yes">
+                                                                    <label class="form-check-label">
+                                                                        Yes
+                                                                    </label>
+                                                                </div>
+                                                                <div class="form-check">
+                                                                    <input class="form-check-input" type="radio"
+                                                                        name="consanguineous_marriage" value="No"
+                                                                        data-bs-toggle="modal"
+                                                                        data-bs-target="#modalGrid">
+                                                                    <label class="form-check-label">
+                                                                        No
+                                                                    </label>
+                                                                </div>
+                                                            </div>
+                                                        </fieldset>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div id="v-pills-social" class="tab-pane fade">
+                                                <div class="d-none" id="social">
+                                                    <div class="input-primary">
+                                                        <label for="occupation">Occupation</label>
+                                                        <input type="text" name="occupation" class="form-control"
+                                                            id="occupation" placeholder="Occupation">
+                                                    </div>
+                                                    <div class="input-primary">
+                                                        <label for="monthly_income">Monthly Income</label>
+                                                        <input type="number" name="monthly_income" class="form-control"
+                                                            id="monthly_income" placeholder="Monthly Income">
+                                                    </div>
+                                                    <div class="input-primary">
+                                                        <label for="nearest_hospital">Nearest Hospital</label>
+                                                        <input type="text" name="nearest_hospital"
+                                                            class="form-control" id="nearest_hospital"
+                                                            placeholder="Nearest Hospital">
+                                                    </div>
+                                                    <div class="input-primary">
+                                                        <label for="water_source">Water Source</label>
+                                                        <input type="text" name="water_source" class="form-control"
+                                                            id="water_source" placeholder="Water Source">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div id="v-pills-signs" class="tab-pane fade">
+                                                <div class="d-none" id="signs">
+                                                    <div class="input-primary">
+                                                        <label for="general_sign">General Sign</label>
+                                                        <input type="text" name="general_sign" class="form-control"
+                                                            id="general_sign" placeholder="General Sign">
+                                                    </div>
+                                                    <div class="input-primary">
+                                                        <label for="abdominal">Abdominal</label>
+                                                        <input type="text" name="abdominal" class="form-control"
+                                                            id="abdominal" placeholder="Abdominal">
+                                                    </div>
+                                                    <div class="input-primary">
+                                                        <label for="cardiovascular_system">Cardiovascular System</label>
+                                                        <input type="text" name="cardiovascular_system"
+                                                            class="form-control" id="cardiovascular_system"
+                                                            placeholder="Cardiovascular System">
+                                                    </div>
+                                                    <div class="input-primary">
+                                                        <label for="respiratory_system">Respiratory System</label>
+                                                        <input type="text" name="respiratory_system"
+                                                            class="form-control" id="respiratory_system"
+                                                            placeholder="Respiratory System">
+                                                    </div>
+                                                    <div class="row input-primary">
+                                                        <div class="mb-3 col-md-3">
+                                                            <label for="height">Height (meters):</label>
+                                                            <input type="number" class="form-control" id="height"
+                                                                name="height" step="0.01" placeholder="Height">
+                                                        </div>
+                                                        <div class="mb-3 col-md-3">
+                                                            <label for="weight">Weight (kg):</label>
+                                                            <input type="number" id="weight" class="form-control"
+                                                                name="weight" step="0.01" placeholder="Weight'">
+                                                        </div>
+                                                        <div class="mb-3 col-md-3">
+                                                            <label for="bmi">BMI:</label>
+                                                            <input type="number" class="form-control" id="bmi"
+                                                                name="bmi" readonly placeholder="BMI">
+                                                        </div>
+                                                        <div class="mb-3 col-md-3">
+                                                            <label for="temperature">Temperature (°C):</label>
+                                                            <input type="number" class="form-control" id="temperature"
+                                                                name="temperature" step="0.01"
+                                                                placeholder="Temperature">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div id="v-pills-plan" class="tab-pane fade">
+                                                <div class="d-none" id="plan">
+                                                    <div class="input-primary">
+                                                        <label for="diagnosis">Diagnosis</label>
+                                                        <input type="text" name="diagnosis" class="form-control"
+                                                            id="diagnosis" placeholder="Diagnosis">
+                                                    </div>
+                                                    <div class="row input-primary" id="ro1">
+                                                        <div class="mb-3 col-md-3">
+                                                            <label for="drug_name">Drug Name:</label>
+                                                            <input type="text" name="drug_name[]" id="drug_name"
+                                                                class="form-control" placeholder="Drug Name">
+                                                        </div>
+                                                        <div class="mb-3 col-md-2">
+                                                            <label for="dose">Dose:</label>
+                                                            <input type="text" name="dose[]" id="dose"
+                                                                class="form-control" placeholder="Dose">
+                                                        </div>
 
-                                                    <div class="mb-3 col-md-2">
-                                                        <label for="route">Route:</label>
-                                                        <input type="text" name="route[]" id="route"
-                                                            class="form-control" placeholder="Route">
-                                                    </div>
+                                                        <div class="mb-3 col-md-2">
+                                                            <label for="route">Route:</label>
+                                                            <input type="text" name="route[]" id="route"
+                                                                class="form-control" placeholder="Route">
+                                                        </div>
 
-                                                    <div class="mb-3 col-md-3">
-                                                        <label for="frequency">Frequency:</label>
-                                                        <input type="text" name="frequency[]" id="frequency"
-                                                            class="form-control" placeholder="Frequency">
-                                                    </div>
-                                                    <div class="mb-3 col-md-2">
-                                                        <label>&nbsp;</label>
-                                                        <br>
-                                                        <button type="button" class="btn btn-primary add">Add</button>
+                                                        <div class="mb-3 col-md-3">
+                                                            <label for="frequency">Frequency:</label>
+                                                            <input type="text" name="frequency[]" id="frequency"
+                                                                class="form-control" placeholder="Frequency">
+                                                        </div>
+                                                        <div class="mb-3 col-md-2">
+                                                            <label>&nbsp;</label>
+                                                            <br>
+                                                            <button type="button"
+                                                                class="btn btn-primary add">Add</button>
+                                                        </div>
                                                     </div>
                                                 </div>
+                                                <div class="col-md-8">
+                                                    <button type="submit" class="btn btn-primary">Save</button>
+                                                </div>
                                             </div>
-                                            <div class="col-md-8">
-                                                <button type="submit" class="btn btn-primary">Save</button>
-                                            </div>
-                                        </div>
-                                    </form>
+                                        </form>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
+                @endif
             </div>
         </div>
     </div>

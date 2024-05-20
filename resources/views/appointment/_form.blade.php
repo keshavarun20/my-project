@@ -1,7 +1,8 @@
 {{-- Paitent Information --}}
 <div class="mb-3 col-md-6">
- <label class="form-label" for="nic">NIC</label>
-    <input type="text" id="nic" name="nic" class="form-control" placeholder="NIC">
+    <label class="form-label" for="nic">NIC</label>
+    <input type="text" id="nic" name="nic" class="form-control" placeholder="NIC"
+        @if (Auth::check() && Auth::user()->role->name == 'Patient') value="{{ Auth::user()->patient->nic }}" readonly @endif>
     @error('nic')
         <div class="alert alert-danger">{{ $message }}</div>
     @enderror
@@ -10,14 +11,14 @@
 <div class="row">
     <div class="mb-3 col-md-6">
         <label class="form-label" for="name">First Name</label>
-        <input type="text" id="first_name" name="first_name" class="form-control" placeholder="First Name">
+        <input type="text" id="first_name" name="first_name" class="form-control" placeholder="First Name"  @if (Auth::check() && Auth::user()->role->name == 'Patient') value="{{ Auth::user()->patient->first_name }}" readonly @endif>
         @error('first_name')
             <div class="alert alert-danger">{{ $message }}</div>
         @enderror
     </div>
     <div class="mb-3 col-md-6">
         <label class="form-label">Last Name</label>
-        <input type="text" name="last_name" id="last_name" class="form-control" placeholder="Last Name">
+        <input type="text" name="last_name" id="last_name" class="form-control" placeholder="Last Name"  @if (Auth::check() && Auth::user()->role->name == 'Patient') value="{{ Auth::user()->patient->last_name }}" readonly @endif>
         @error('last_name')
             <div class="alert alert-danger">{{ $message }}</div>
         @enderror
@@ -26,14 +27,14 @@
 <div class="row">
     <div class="mb-3 col-md-6">
         <label class="form-label" for="age">Age</label>
-        <input type="number" name="age" id="age" class=" form-control" placeholder="Age">
+        <input type="number" name="age" id="age" class=" form-control" placeholder="Age"  @if (Auth::check() && Auth::user()->role->name == 'Patient') value="{{ Auth::user()->patient->age }}" readonly @endif>
         @error('age')
             <div class="alert alert-danger">{{ $message }}</div>
         @enderror
     </div>
     <div class="mb-3 col-md-6">
         <label class="form-label" for="mobilenumber">Mobile Number</label>
-        <input type="text" name="mobile_number" id="mobile_number" class=" form-control" placeholder="0761122761">
+        <input type="text" name="mobile_number" id="mobile_number" class=" form-control" placeholder="0761122761"  @if (Auth::check() && Auth::user()->role->name == 'Patient') value="{{ Auth::user()->patient->mobile_number }}" readonly @endif>
         @error('mobile_number')
             <div class="alert alert-danger">{{ $message }}</div>
         @enderror
@@ -114,9 +115,11 @@
                         success: function(res) {
                             if (res) {
                                 $("#doctor_id").empty();
-                                $("#doctor_id").append('<option value="">Select Your Consultant</option>');
+                                $("#doctor_id").append(
+                                    '<option value="">Select Your Consultant</option>');
                                 $.each(res, function(key, value) {
-                                    $("#doctor_id").append('<option value="' + value.id + '">' + value.name + '</option>');
+                                    $("#doctor_id").append('<option value="' + value
+                                        .id + '">' + value.name + '</option>');
                                 });
 
                             } else {

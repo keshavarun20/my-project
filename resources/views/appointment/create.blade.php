@@ -8,7 +8,7 @@
         @if($user->role->name == 'Admin')
             <ol class="breadcrumb">
                 <li class="breadcrumb-item active"><a href="{{ route('appointment.index') }}">Appointments</a></li>
-                <li class="breadcrumb-item"><a href="{{ route('appointment.create') }}">Make Appointmetn</a></li>
+                <li class="breadcrumb-item"><a href="{{ route('appointment.create') }}">Make Appointmet</a></li>
             </ol>
         @else
             <ol class="breadcrumb">

@@ -25,6 +25,7 @@ class DoctorController extends Controller
 
     public function profile(Request $request, Patient $patient)
     {
+        if(auth()->user()->role->name == 'Doctor'){
         $loggedInDoctorId = auth()->user()->doctor->id;
 
         $pastAppointments = Appointment::where('patient_id', $patient->id)
@@ -42,6 +43,25 @@ class DoctorController extends Controller
         $medicals = Medical::where('patient_id',$patient->id)->get();
 
         return view('doctor.patient.profile', compact('patient', 'pastAppointments', 'futureAppointments', 'pdfFiles','medicals'));
+        }
+
+         if(auth()->user()->role->name == 'Patient'){
+            $loggedInPatientId = auth()->user()->patient->id;
+
+            $pastAppointments = Appointment::where('patient_id', $loggedInPatientId)
+            ->whereDate('date', '<', Carbon::now())
+            ->paginate(10);
+
+            $futureAppointments = Appointment::where('patient_id', $loggedInPatientId)
+            ->whereDate('date', '>=', Carbon::now())
+            ->paginate(10);
+
+            $pdfFiles = auth()->user()->patient->getMedia('pdf')->sortByDesc('created_at')->take(5);
+
+            $medicals = Medical::where('patient_id', $loggedInPatientId)->get();
+
+            return view('doctor.patient.profile', compact('patient', 'pastAppointments', 'futureAppointments', 'pdfFiles', 'medicals'));
+         }
     }
 
     public function uploadPdf(Request $request, Patient $patient)

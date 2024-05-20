@@ -3,15 +3,20 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\MedicalStoreRequest;
+use Illuminate\Support\Facades\Auth;
+use App\Models\ActivityLog;
 use App\Models\Medical;
+use App\Models\Patient;
 use Illuminate\Http\Request;
 
 class MedicalController extends Controller
 {
     public function store(MedicalStoreRequest $request) {
+        $doctor=Auth::user();
         //dd(1);
         $data = $request->validated();
         $patientId = $request->route('patient');
+        $patient = Patient::find($patientId);
 
         $presentingComplaint = [];
         foreach ($data['symptoms'] as $i => $symptom) {
@@ -58,6 +63,12 @@ class MedicalController extends Controller
             'diagnosis' => $data['diagnosis'],
             'management_plan'=> $managementPlan,
 
+        ]);
+
+        ActivityLog::create([
+            'user_id' => $doctor->id,
+            'description' => ' Created a Medical Record ' . '' . '(' . $patient->name . ')',
+            'action_type' => 'Medical_Record',
         ]);
 
         return redirect()->back()->with('success', 'PDF file uploaded successfully.');

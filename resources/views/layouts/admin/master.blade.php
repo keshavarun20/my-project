@@ -61,7 +61,7 @@
                 @break
             
             @case('Patient')
-                @include('layouts.admin.sidebar._sidebar')
+                @include('layouts.admin.sidebar._patientsidebar')
                 @break
 
             @case('Doctor')
