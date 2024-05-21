@@ -10,6 +10,8 @@ use App\Http\Controllers\Doctor\DoctorController;
 use App\Http\Controllers\AppointmentController;
 use App\Http\Controllers\Admin\PatientController;
 use App\Http\Controllers\MedicalController;
+use App\Http\Controllers\VitalSignController;
+use App\Models\VitalSign;
 
 /*
 |--------------------------------------------------------------------------
@@ -120,6 +122,11 @@ Route::group(['prefix' => 'dashboard', 'middleware' => 'auth'],function(){
     
 
      });
+    });
+    Route::group(['prefix' => 'vital',], function () {
+        Route::get('/', [VitalSignController::class, 'index'])->name('vital.index');
+        Route::post('/store', [VitalSignController::class, 'store'])->name('vital.store');
+       
     });
 
 

@@ -4,6 +4,7 @@
 	<script src="{{asset('vendor/apexchart/apexchart.js')}}"></script>
 	<script src="{{asset('vendor/chart.js/Chart.bundle.min.js')}}"></script>
     <script src="{{asset('vendor/peity/jquery.peity.min.js')}}"></script>
+	<script src="{{asset('js/plugins-init/piety-init.js') }}"></script>
 	<script src="{{asset('js/dashboard/dashboard-1.js')}}"></script>
 	<script src="{{asset('vendor/owl-carousel/owl.carousel.js')}}"></script>
     <script src="{{asset('js/custom.min.js')}}"></script>
@@ -31,4 +32,12 @@
     <script src="{{ asset('vendor/ckeditor/ckeditor.js') }}"></script>
     <script src="{{ asset('js/plugins-init/datatables.init.js') }}"></script>
     <script src="{{ asset('vendor/datatables/js/jquery.dataTables.min.js') }}"></script>
-	{{-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script> --}}
+	<script src="{{ asset('js/plugins-init/sparkline-init.js') }}"></script>
+	<script src="{{ asset('vendor/jquery-sparkline/jquery.sparkline.min.js') }}"></script>
+	<script src="{{ asset('js/plugins-init/widgets-script-init.js') }}"></script><script src="{{ asset('vendor/flot/jquery.flot.js') }}"></script>
+    <script src="{{ asset('vendor/flot/jquery.flot.pie.js') }}"></script>
+    <script src="{{ asset('vendor/flot/jquery.flot.resize.js') }}"></script>
+    <script src="{{ asset('vendor/flot-spline/jquery.flot.spline.min.js') }}"></script>
+	<script src="{{ asset('vendor/chartist/js/chartist.min.js') }}"></script>
+    <script src="{{ asset('vendor/chartist-plugin-tooltips/js/chartist-plugin-tooltip.min.js') }}"></script>
+

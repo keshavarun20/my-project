@@ -16,6 +16,11 @@
 							<span class="nav-text">Medical Profile</span>
 						</a>
 					</li>
+					<li><a href="{{ route('vital.index')}}" aria-expanded="false">
+							<i class="fas fa-heartbeat"></i>
+							<span class="nav-text">Vital Signs</span>
+						</a>
+					</li>
 				</ul>
 			</div>
         </div>

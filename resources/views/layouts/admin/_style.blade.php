@@ -12,3 +12,4 @@
 <link href="{{ asset('vendor/clockpicker/css/bootstrap-clockpicker.min.css') }}" rel="stylesheet">
 <link href="{{ asset('vendor/jquery-asColorPicker/css/asColorPicker.min.css') }}" rel="stylesheet">
 <link rel="stylesheet" href="{{ asset('vendor/toastr/css/toastr.min.css') }}">
+<link rel="stylesheet" href="{{ asset('vendor/chartist/css/chartist.min.css') }}">
