@@ -53,14 +53,15 @@ class AppointmentController extends Controller
     public function store(AppointmentStoreRequest $request)
     {
         $data = $request->validated();
-        $currentDate = Carbon::now()->toDateString();
-        $appointmentCount = Appointment::where('doctor_id', $data['doctor_id'])->whereDate('created_at', $currentDate)->count();
+        $appointmentCount = Appointment::where('doctor_id', $data['doctor_id'])->where('date',$data['date'])->count();
+        //dd($appointmentCount);
         $tokenNumber = $appointmentCount + 1;
+        //dd($tokenNumber);
         $patient = Patient::where('nic', $data['nic'])->value('id');
         $patientN = Patient::find($patient);
 
         $referenceNumber = uniqid('#HCC');
-
+        //dd($tokenNumber);
         Appointment::create([
             'doctor_id' => $data['doctor_id'],
             'patient_id' => $patient,
