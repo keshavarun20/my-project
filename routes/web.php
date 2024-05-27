@@ -126,6 +126,12 @@ Route::group(['prefix' => 'dashboard', 'middleware' => 'auth'],function(){
     Route::group(['prefix' => 'vital',], function () {
         Route::get('/', [VitalSignController::class, 'index'])->name('vital.index');
         Route::post('/store', [VitalSignController::class, 'store'])->name('vital.store');
+        Route::get('/get-rbs-data', [VitalSignController::class, 'getRbsData'])->name('vital.rbs');
+        Route::get('/get-hr-data', [VitalSignController::class, 'getHrData'])->name('vital.hr');
+        Route::get('/get-bps-data', [VitalSignController::class, 'getBpsData'])->name('vital.bps');
+        Route::get('/get-bpd-data', [VitalSignController::class, 'getBpdData'])->name('vital.bpd');
+        Route::get('/get-rr-data', [VitalSignController::class, 'getRrData'])->name('vital.rr');
+        Route::get('/get-spo2-data', [VitalSignController::class, 'getSpo2Data'])->name('vital.spo2');
        
     });
 

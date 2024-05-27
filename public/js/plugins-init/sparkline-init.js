@@ -43,25 +43,35 @@
 	
 	var sparkLine8 = function(){
 		if(jQuery('#sparkline8').length > 0 ){	
-			$("#sparkline8").sparkline([79, 72, 29, 6, 52, 32, 73, 40, 14, 75, 77, 39, 9, 15, 10], {
-				type: "line",
-				//width: "100%",
-				width: getSparkLineGraphBlockSize('#sparkline8'),
-				height: "50",
-				lineColor: "#FFA7D7",
-				fillColor: "rgba(255,167,215,1)",
-				minSpotColor: "#FFA7D7",
-				maxSpotColor: "#FFA7D7",
-				highlightLineColor: "#FFA7D7",
-				highlightSpotColor: "#FFA7D7",
-				
+			$.ajax({
+                url: "vital/get-rbs-data",
+                method: "GET",
+                success: function (response) {
+
+                    $("#sparkline8").sparkline(response, {
+                        type: "line",
+                        //width: "100%",
+                        width: getSparkLineGraphBlockSize("#sparkline8"),
+                        height: "50",
+                        lineColor: "#FFA7D7",
+                        fillColor: "rgba(255,167,215,1)",
+                        minSpotColor: "#FFA7D7",
+                        maxSpotColor: "#FFA7D7",
+                        highlightLineColor: "#FFA7D7",
+                        highlightSpotColor: "#FFA7D7",
+                    });
+                }
 			});
 		}
 	}
 	
 	var sparkLine9 = function(){
-		if(jQuery('#sparkline9').length > 0 ){	
-			$("#sparkline9").sparkline([27, 31, 35, 28, 45, 52, 24, 4, 50, 11, 54, 49, 72, 59, 75], {
+		if(jQuery('#sparkline9').length > 0 ){
+			$.ajax({
+                url: "vital/get-rr-data",
+                method: "GET",
+                success: function (response) {	
+			$("#sparkline9").sparkline(response, {
 				type: "line",
 				//width: "100%",
 				width: getSparkLineGraphBlockSize('#sparkline9'),
@@ -74,31 +84,62 @@
 				highlightSpotColor: "#886cc0"
 			});
 		}
+			});
+		}
 	}
 
     // Bar Chart
 	var sparkBar = function(){
-		if(jQuery('#spark-bar').length > 0 ){	
-			$("#spark-bar").sparkline([33, 22, 68, 54, 8, 30, 74, 7, 36, 5, 41, 19, 43, 29, 38], {
-				type: "bar",
-				height: "200",
-				barWidth: 6,
-				barSpacing: 7,
-				barColor: "#ffaa2b"
-			});
+		if(jQuery('#spark-bar').length > 0 ){
+			$.ajax({
+                url: "vital/get-bpd-data",
+                method: "GET",
+                success: function (response) {	
+				$("#spark-bar").sparkline(response, {
+					type: "bar",
+					height: "200",
+					barWidth: 6,
+					barSpacing: 7,
+					barColor: "#ffaa2b"
+				});
+			}
+		});
 		}	
 	}
+	var sparkBar3 = function () {
+        if (jQuery("#spark-bar-3").length > 0) {
+            $.ajax({
+                url: "vital/get-bps-data",
+                method: "GET",
+                success: function (response) {
+                    $("#spark-bar-3").sparkline(response, {
+                        type: "bar",
+                        height: "90",
+                        barWidth: 6,
+                        barSpacing: 7,
+                        barColor: "#ffaa2b",
+                    });
+                },
+            });
+        }
+    };
 		
 	var sparkBar2 = function(){
 		if(jQuery('#spark-bar-2').length > 0 ){	
-			$("#spark-bar-2").sparkline([33, 22, 68, 54, 8, 30, 74, 7, 36, 5, 41, 19, 43, 29, 38], {
+			$.ajax({
+            url: "vital/get-spo2-data",
+            method: "GET",
+            success: function (response) {
+			$("#spark-bar-2").sparkline(response, {
 				type: "bar",
-				height: "140",
+				height: "90",
 				width: 100,
 				barWidth: 10,
 				barSpacing: 10,
 				barColor: "rgb(255, 206, 120)"
 			});
+		}
+	});
 		}	
 	}
 		
@@ -136,15 +177,22 @@
 	var compositeBar = function(){
 		// Composite
 		if(jQuery('#composite-bar').length > 0 ){
-			$("#composite-bar").sparkline([73, 53, 50, 67, 3, 56, 19, 59, 37, 32, 40, 26, 71, 19, 4, 53, 55, 31, 37], {
-				type: "bar",
-				height: "200",
-				barWidth: "10",
-				resize: true,
-				// barSpacing: "7",
-				barColor: "#FFA7D7", 
-				width: '100%',
-				
+			$.ajax({
+                url: "vital/get-hr-data",
+                method: "GET",
+                success: function (response) {
+                    
+					$("#composite-bar").sparkline(response, {
+						type: "bar",
+						height: "200",
+						barWidth: "10",
+						resize: true,
+						// barSpacing: "7",
+						barColor: "#FFA7D7", 
+						width: '100%',
+						
+					});
+				}
 			});
 		}	
 	}	
@@ -236,7 +284,8 @@
 				sparkLine8();
 				sparkLine9();	
 				sparkBar();	
-				sparkBar2();		
+				sparkBar2();
+				sparkBar3();		
 				stackedBarChart();
 				triState();
 				compositeBar();
@@ -253,6 +302,7 @@
 				sparkLine9();	
 				sparkBar();	
 				sparkBar2();		
+				sparkBar3();		
 				stackedBarChart();
 				triState();
 				compositeBar();
