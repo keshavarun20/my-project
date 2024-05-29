@@ -29,7 +29,13 @@
                         <div class="profile-head">
                             <div class="profile-info">
                                 <div class="profile-photo">
-                                    <img src="{{ asset('images/profile/profile.png')}}" class="img-fluid rounded-circle" alt="">
+                                    @if ($patient->user->getMedia('profile_picture')->count() > 0)
+                                        <img src="{{ $patient->user->getFirstMediaUrl('profile_picture') }}"
+                                            class="img-fluid rounded-circle" alt="">
+                                    @else
+                                        <img src="/images/default-profile-photo.jpg" class="img-fluid rounded-circle"
+                                            alt="">
+                                    @endif
                                 </div>
                                 <div class="profile-details">
                                     <div class="profile-name px-3 pt-2">
@@ -109,34 +115,6 @@
                                             <a href="{{ $media->getUrl() }}" target="_blank" class="list-group-item list-group-item-action">{{ $media->name }}</a><br>
                                         </div>
                                         @endforeach
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-12">
-                    <div class="card">
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col-sm-2">
-                                    <div class="nav flex-column nav-pills mb-2">
-                                        <a href="#v-pills-home" data-bs-toggle="pill" class="nav-link active show">Medical History</a>
-                                        <a href="#v-pills-profile" data-bs-toggle="pill" class="nav-link">Vital Signs</a>
-                                        <a href="#v-pills-messages" data-bs-toggle="pill" class="nav-link">Clinical Notes</a>
-                                        <a href="#v-pills-settings" data-bs-toggle="pill" class="nav-link">Lab Results</a>
-                                    </div>
-                                </div>
-                                <div class="col-sm-8">
-                                    <div class="tab-content">
-                                        <div id="v-pills-home" class="tab-pane fade active show">
-                                        </div>
-                                        <div id="v-pills-profile" class="tab-pane fade">
-                                        </div>
-                                        <div id="v-pills-messages" class="tab-pane fade">
-                                        </div>
-                                        <div id="v-pills-settings" class="tab-pane fade">
-                                        </div>
                                     </div>
                                 </div>
                             </div>

@@ -12,12 +12,13 @@ class VitalSignController extends Controller
 {
     public function index()
     {
-        $rbs= VitalSign::whereNotNull('rbs')->latest()->value('rbs');
-        $hr = VitalSign::whereNotNull('heart_rate')->latest()->value('heart_rate');
-        $bps = VitalSign::whereNotNull('blood_pressure_systolic')->latest()->value('blood_pressure_systolic');
-        $bpd = VitalSign::whereNotNull('blood_pressure_diastolic')->latest()->value('blood_pressure_diastolic');
-        $rr = VitalSign::whereNotNull('respiratory_rate')->latest()->value('respiratory_rate');
-        $spo2 = VitalSign::whereNotNull('spo2')->latest()->value('spo2');
+        $patientId = Auth::user()->patient->id;
+        $rbs= VitalSign::where('patient_id', $patientId)->whereNotNull('rbs')->latest()->value('rbs');
+        $hr = VitalSign::where('patient_id', $patientId)->whereNotNull('heart_rate')->latest()->value('heart_rate');
+        $bps = VitalSign::where('patient_id', $patientId)->whereNotNull('blood_pressure_systolic')->latest()->value('blood_pressure_systolic');
+        $bpd = VitalSign::where('patient_id', $patientId)->whereNotNull('blood_pressure_diastolic')->latest()->value('blood_pressure_diastolic');
+        $rr = VitalSign::where('patient_id', $patientId)->whereNotNull('respiratory_rate')->latest()->value('respiratory_rate');
+        $spo2 = VitalSign::where('patient_id', $patientId)->whereNotNull('spo2')->latest()->value('spo2');
         return view('patient.vitalsigns.index', compact('rbs','hr','bps','bpd','rr','spo2'));
     }
 
@@ -41,40 +42,43 @@ class VitalSignController extends Controller
 
     public function getRbsData()
     {
+        $patientId = auth()->user()->patient->id;
+        
+        $rbsData = VitalSign::where('patient_id', $patientId)->whereNotNull('rbs')->orderBy('created_at', 'desc')->pluck('rbs');
 
-        $rbsData = VitalSign::whereNotNull('rbs')->orderBy('created_at', 'desc')->pluck('rbs');
         return response()->json($rbsData);
     }
 
+
     public function getHrData()
     {
-
-        $hrData = VitalSign::whereNotNull('heart_rate')->orderBy('created_at', 'desc')->pluck('heart_rate');
+        $patientId = auth()->user()->patient->id;
+        $hrData = VitalSign::where('patient_id', $patientId)->whereNotNull('heart_rate')->orderBy('created_at', 'desc')->pluck('heart_rate');
         return response()->json($hrData);
     }
     public function getBpsData()
     {
-
-        $bpsData = VitalSign::whereNotNull('blood_pressure_systolic')->orderBy('created_at', 'desc')->pluck('blood_pressure_systolic');
+        $patientId = auth()->user()->patient->id;
+        $bpsData = VitalSign::where('patient_id', $patientId)->whereNotNull('blood_pressure_systolic')->orderBy('created_at', 'desc')->pluck('blood_pressure_systolic');
         return response()->json($bpsData);
     }
 
     public function getBpdData()
     {
-
-        $bpsData = VitalSign::whereNotNull('blood_pressure_diastolic')->orderBy('created_at', 'desc')->pluck('blood_pressure_diastolic');
+        $patientId = auth()->user()->patient->id;
+        $bpsData = VitalSign::where('patient_id', $patientId)->whereNotNull('blood_pressure_diastolic')->orderBy('created_at', 'desc')->pluck('blood_pressure_diastolic');
         return response()->json($bpsData);
     }
     public function getRrData()
     {
-
-        $rrData = VitalSign::whereNotNull('respiratory_rate')->orderBy('created_at', 'desc')->pluck('respiratory_rate');
+        $patientId = auth()->user()->patient->id;
+        $rrData = VitalSign::where('patient_id', $patientId)->whereNotNull('respiratory_rate')->orderBy('created_at', 'desc')->pluck('respiratory_rate');
         return response()->json($rrData);
     }
     public function getSpo2Data()
     {
-
-        $sp02Data = VitalSign::whereNotNull('spo2')->orderBy('created_at', 'desc')->pluck('spo2');
+        $patientId = auth()->user()->patient->id;
+        $sp02Data = VitalSign::where('patient_id', $patientId)->whereNotNull('spo2')->orderBy('created_at', 'desc')->pluck('spo2');
         return response()->json($sp02Data);
     }
 }

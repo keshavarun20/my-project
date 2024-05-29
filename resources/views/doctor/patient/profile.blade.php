@@ -18,7 +18,7 @@
                             <div class="profile-info">
                                 <div class="profile-photo">
                                     @if ($patient->user->getMedia('profile_picture')->count() > 0)
-                                        <img src="{{ $user->getFirstMediaUrl('profile_picture') }}"
+                                        <img src="{{ $patient->user->getFirstMediaUrl('profile_picture') }}"
                                             class="img-fluid rounded-circle" alt="">
                                     @else
                                         <img src="/images/default-profile-photo.jpg" class="img-fluid rounded-circle"

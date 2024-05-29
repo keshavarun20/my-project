@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Appointment;
 use App\Models\Patient;
+use App\Models\User;
 use Carbon\Carbon;
 use Log;
 class PatientController extends Controller
@@ -17,11 +18,11 @@ class PatientController extends Controller
         
     }
 
-    public function profile(Request $request ,Patient $patient){
+    public function profile(Request $request ,Patient $patient, User $user){
         $pastAppointments = Appointment::where('patient_id', $patient->id)->whereDate('date', '<', Carbon::now())->paginate(10);
         $futureAppointments = Appointment::where('patient_id', $patient->id)->whereDate('date', '>=', Carbon::now())->paginate(10);
         $pdfFiles = $patient->getMedia('pdf')->sortByDesc('created_at')->take(5);
-        return view('admin.patient.profile', compact('patient','pastAppointments','futureAppointments', 'pdfFiles'));
+        return view('admin.patient.profile', compact('patient','pastAppointments','futureAppointments', 'pdfFiles','user'));
         
     }
 

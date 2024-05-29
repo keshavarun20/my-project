@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Appointment;
 use App\Models\Medical;
 use App\Models\Patient;
+use App\Models\User;
 use App\Models\VitalSign;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -24,14 +25,14 @@ class DoctorController extends Controller
         return view('doctor.patient.index', compact('patients'));
     }
 
-    public function profile(Request $request, Patient $patient)
+    public function profile(Request $request, Patient $patient, User $user)
     {
-        $rbs = VitalSign::whereNotNull('rbs')->latest()->value('rbs');
-        $hr = VitalSign::whereNotNull('heart_rate')->latest()->value('heart_rate');
-        $bps = VitalSign::whereNotNull('blood_pressure_systolic')->latest()->value('blood_pressure_systolic');
-        $bpd = VitalSign::whereNotNull('blood_pressure_diastolic')->latest()->value('blood_pressure_diastolic');
-        $rr = VitalSign::whereNotNull('respiratory_rate')->latest()->value('respiratory_rate');
-        $spo2 = VitalSign::whereNotNull('spo2')->latest()->value('spo2');
+        $rbs = VitalSign::where('patient_id', $patient->id)->whereNotNull('rbs')->latest()->value('rbs');
+        $hr = VitalSign::where('patient_id', $patient->id)->whereNotNull('heart_rate')->latest()->value('heart_rate');
+        $bps = VitalSign::where('patient_id', $patient->id)->whereNotNull('blood_pressure_systolic')->latest()->value('blood_pressure_systolic');
+        $bpd = VitalSign::where('patient_id', $patient->id)->whereNotNull('blood_pressure_diastolic')->latest()->value('blood_pressure_diastolic');
+        $rr = VitalSign::where('patient_id', $patient->id)->whereNotNull('respiratory_rate')->latest()->value('respiratory_rate');
+        $spo2 = VitalSign::where('patient_id', $patient->id)->whereNotNull('spo2')->latest()->value('spo2');
 
         if(auth()->user()->role->name == 'Doctor'){
         $loggedInDoctorId = auth()->user()->doctor->id;
@@ -50,7 +51,7 @@ class DoctorController extends Controller
         
         $medicals = Medical::where('patient_id',$patient->id)->get();
 
-        return view('doctor.patient.profile', compact('patient', 'pastAppointments', 'futureAppointments', 'pdfFiles','medicals', 'rbs', 'hr', 'bps', 'bpd', 'rr', 'spo2'));
+        return view('doctor.patient.profile', compact('patient', 'pastAppointments', 'futureAppointments', 'pdfFiles','medicals','user', 'rbs', 'hr', 'bps', 'bpd', 'rr', 'spo2'));
         }
 
          if(auth()->user()->role->name == 'Patient'){
@@ -68,7 +69,7 @@ class DoctorController extends Controller
 
             $medicals = Medical::where('patient_id', $loggedInPatientId)->get();
 
-            return view('doctor.patient.profile', compact('patient', 'pastAppointments', 'futureAppointments', 'pdfFiles', 'medicals', 'rbs', 'hr', 'bps', 'bpd', 'rr', 'spo2'));
+            return view('doctor.patient.profile', compact('patient', 'pastAppointments', 'futureAppointments', 'pdfFiles', 'medicals','user', 'rbs', 'hr', 'bps', 'bpd', 'rr', 'spo2'));
          }
     }
 
