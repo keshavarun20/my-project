@@ -8,17 +8,6 @@
                             </div>
                         </div>
                         <ul class="navbar-nav header-right">
-						{{-- <li>
-							<div class="nav-item d-flex align-items-center">
-								@if (Auth::user()->role->name == 'Doctor')
-									<h4 >Hi, {{Auth::user()->doctor->name}}</h4>
-								@elseif(Auth::user()->role->name == 'Patient')
-									<h4>Hi, {{Auth::user()->patient->name}}</h4>
-								@else
-									<h4>Hi, {{Auth::user()->receptionist->name}}</h4>
-								@endif
-							</div>
-							</li> --}}
 							<li class="nav-item dropdown notification_dropdown">
                                 <a class="nav-link" href="javascript:void(0);" role="button" data-bs-toggle="dropdown">
 									<svg width="28" height="28" viewbox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">

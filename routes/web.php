@@ -106,6 +106,12 @@ Route::group(['prefix' => 'dashboard', 'middleware' => 'auth'],function(){
             Route::get('/profile', [DoctorController::class, 'profile'])->name('patient.profile');
             Route::post('/store', [MedicalController::class, 'store'])->name('medical.store');
             Route::post('/upload-pdf', [DoctorController::class, 'uploadPdf'])->name('patient.uploadPdf');
+            Route::get('/get-rbs-data', [DoctorController::class, 'getRbsData'])->name('vital.rbs');
+            Route::get('/get-hr-data', [DoctorController::class, 'getHrData'])->name('vital.hr');
+            Route::get('/get-bps-data', [DoctorController::class, 'getBpsData'])->name('vital.bps');
+            Route::get('/get-bpd-data', [DoctorController::class, 'getBpdData'])->name('vital.bpd');
+            Route::get('/get-rr-data', [DoctorController::class, 'getRrData'])->name('vital.rr');
+            Route::get('/get-spo2-data', [DoctorController::class, 'getSpo2Data'])->name('vital.spo2');
         });
 
     });
