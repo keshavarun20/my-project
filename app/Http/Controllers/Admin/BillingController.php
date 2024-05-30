@@ -75,14 +75,13 @@ class BillingController extends Controller
 
     
     $payment = Payment::where('id', $payment->id)->first();
-    //dd($payment->billings);
 
     $data = [
         'payment' => $payment,
     ];
 
     $pdf = PDF::loadView('admin.billing.invoice-pdf', $data);
-    return $pdf->download($payment->name.'-invoice'.'.pdf');
+    return $pdf->stream($payment->name . '-invoice' . '.pdf');
 
 }
     

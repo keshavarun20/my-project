@@ -862,16 +862,15 @@ video {
 
         <div class="px-14 py-10 text-sm text-neutral-700"></div>
         <div class="px-14 py-10 text-sm text-neutral-700"></div>
-        <div class="px-14 py-10 text-sm text-neutral-700"></div>
+        <div class="px-14 py-10 text-sm text-neutral-400"></div>
 
 
       <div class="px-14 py-10 text-xs text-neutral-400">
     <p class="text-main font-bold">Terms and Conditions:</p>
     <p class="italic text-slate-400">
         Payment for all services is due upon receipt of the invoice unless otherwise specified. 
-        Patients are responsible for providing accurate insurance information and ensuring any co-payments or deductibles are paid. 
-        Refunds or adjustments to invoices are subject to hospital policy and must be requested in writing within 7 days of the invoice date. 
-        Patients are responsible providing accurate personal information. 
+        Patients are responsible for providing accurate information and ensuring any co-payments or deductibles are paid. 
+        Refunds or adjustments to invoices are subject to hospital policy and must be requested in writing within 7 days of the invoice date. . 
         The hospital is committed to patient privacy and confidentiality. 
         Any disputes should be addressed to the receptionist. 
         The hospital reserves the right to change these terms and conditions at any time.

@@ -140,7 +140,7 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <a href="{{ route('generate.pdf' , $payment->id)}}" class="btn btn-primary">Generate PDF</a>
+                    <a href="{{ route('generate.pdf' , $payment->id)}}" class="btn btn-primary">Download</a>
                     <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
                 </div>
             </div>
