@@ -30,6 +30,7 @@ Route::get('/', function () {
 
 Route::group(['prefix' => 'dashboard', 'middleware' => 'auth'], function () {
     Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
+    Route::get('get-revenue', [DashboardController::class, 'getRevenue'])->name('dashboard.revenue');
 
 
     Route::group(['prefix' => 'users',], function () {

@@ -867,146 +867,116 @@
 	var chartWidget11 = function(){
 
 		//#chart_widget_11
-		if(jQuery('#chart_widget_11').length > 0 ){
-		const chart_widget_11 = document.getElementById("chart_widget_11").getContext('2d');
-		new Chart(chart_widget_11, {
-			type: "line",
-			data: {
-				labels: ["January", "February", "March", "April", "May", "June"],
-				datasets: [{
-					label: "Sales Stats",
-					backgroundColor: "rgba(98, 126, 234, .5)",
-					borderColor: '#ffaa2b',
-					pointBackgroundColor: '#ffaa2b',
-					pointBorderColor: '#ffaa2b',
-					pointHoverBackgroundColor: '#ffaa2b',
-					pointHoverBorderColor: '#ffaa2b',
-					data: [0, 18, 14, 24, 16, 30]
-				}]
-			},
-			options: {
-				title: {
-					display: !1
-				},
-				tooltips: {
-					intersect: !1,
-					mode: "nearest",
-					xPadding: 5,
-					yPadding: 5,
-					caretPadding: 5
-				},
-				legend: {
-					display: !1
-				},
-				responsive: !0,
-				maintainAspectRatio: !1,
-				hover: {
-					mode: "index"
-				},
-				scales: {
-					xAxes: [{
-						display: !1,
-						gridLines: !1,
-						scaleLabel: {
-							display: !0,
-							labelString: "Month"
-						}, 
-						ticks: {
-							max: 30, 
-							min: 0
-						}
-					}],
-					yAxes: [{
-						display: !1,
-						gridLines: !1,
-						scaleLabel: {
-							display: !0,
-							labelString: "Value"
-						},
-						ticks: {
-							beginAtZero: !0
-						}
-					}]
-				},
-				elements: {
-					line: {
-						tension: .15
-					},
-					point: {
-						radius: 2,
-						borderWidth: 1
-					}
-				},
-				layout: {
-					padding: {
-						left: 0,
-						right: 0,
-						top: 0,
-						bottom: 0
-					}
-				}
-			}
-		});
-		}
-	}
-	var chartWidget14 = function(){
-	
-		//#chart_widget_14
-		if(jQuery('#chart_widget_14').length > 0 ){
-		const chart_widget_14 = document.getElementById("chart_widget_14");
-		chart_widget_14.height = 200;
-		new Chart(chart_widget_14, {
-			type: 'line',
-			data: {
-				defaultFontFamily: 'Poppins',
-				labels: ["Jan", "Febr", "Mar", "Apr", "May", "Jun", "Jul"],
-				datasets: [
-					{
-						label: "My First dataset",
-						data: [55, 30, 90, 41, 86, 45, 80],
-						borderColor: '#3693FF',
-						borderWidth: "2",
-						backgroundColor: 'transparent',  
-						pointBackgroundColor: '#3693FF', 
-						pointRadius: 0
-					}
-				]
-			},
-			options: {
-				legend: false, 
-				responsive: true, 
-				maintainAspectRatio: false, 
-				scales: {
-					yAxes: [{
-						display: false, 
-						ticks: {
-							beginAtZero: true, 
-							max: 100, 
-							min: 0, 
-							stepSize: 20, 
-							padding: 0, 
-							display: false, 
-						}, 
-						gridLines: {
-							drawBorder: false, 
-							display: false
-						}
-					}],
-					xAxes: [{
-						display: false, 
-						ticks: {
-							padding: 0, 
-							display: false
-						}, 
-						gridLines: {
-							display: false, 
-							drawBorder: false
-						}
-					}]
-				}
-			}
-		});
-		}
+		if (jQuery('#chart_widget_11').length > 0) {
+    const chart_widget_11 = document.getElementById("chart_widget_11").getContext('2d');
+    $.ajax({
+        url: 'dashboard/get-revenue',
+        type: 'GET',
+        success: function (response) {
+            new Chart(chart_widget_11, {
+                type: "line",
+                data: {
+                    labels: [
+                        "January",
+                        "February",
+                        "March",
+                        "April",
+                        "May",
+                        "June",
+                        "July",
+                        "August",
+                        "September",
+                        "October",
+                        "November",
+                        "December",
+                    ],
+                    datasets: [
+                        {
+                            label: "Monthly revenue",
+                            backgroundColor: "rgba(98, 126, 234, .5)",
+                            borderColor: "#ffaa2b",
+                            pointBackgroundColor: "#ffaa2b",
+                            pointBorderColor: "#ffaa2b",
+                            pointHoverBackgroundColor: "#ffaa2b",
+                            pointHoverBorderColor: "#ffaa2b",
+                            data: response,
+                        },
+                    ],
+                },
+                options: {
+                    title: {
+                        display: !1,
+                    },
+                    tooltips: {
+                        intersect: !1,
+                        mode: "nearest",
+                        xPadding: 5,
+                        yPadding: 5,
+                        caretPadding: 5,
+                    },
+                    legend: {
+                        display: !1,
+                    },
+                    responsive: !0,
+                    maintainAspectRatio: !1,
+                    hover: {
+                        mode: "index",
+                    },
+                    scales: {
+                        xAxes: [
+                            {
+                                display: !1,
+                                gridLines: !1,
+                                scaleLabel: {
+                                    display: !0,
+                                    labelString: "Month",
+                                },
+                                ticks: {
+                                    max: 30,
+                                    min: 0,
+                                },
+                            },
+                        ],
+                        yAxes: [
+                            {
+                                display: !1,
+                                gridLines: !1,
+                                scaleLabel: {
+                                    display: !0,
+                                    labelString: "Value",
+                                },
+                                ticks: {
+                                    beginAtZero: !0,
+                                },
+                            },
+                        ],
+                    },
+                    elements: {
+                        line: {
+                            tension: 0.15,
+                        },
+                        point: {
+                            radius: 2,
+                            borderWidth: 1,
+                        },
+                    },
+                    layout: {
+                        padding: {
+                            left: 0,
+                            right: 0,
+                            top: 0,
+                            bottom: 0,
+                        },
+                    },
+                },
+            });
+        },
+        error: function (xhr, status, error) {
+            console.error(error);
+        }
+    });
+}
+
 	}
 	
 	var chartWidget15 = function(){
@@ -1323,7 +1293,6 @@
 				chartWidget9();
 				chartWidget10();
 				chartWidget11();
-				chartWidget14();
 				chartWidget15();
 				chartWidget16();
 				chartWidget17();

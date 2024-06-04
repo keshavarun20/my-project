@@ -39,31 +39,113 @@
                     </div>
                 @endif
             </div>
-            <div class="row">
-                <div class="col-xl-3 col-xxl-6 col-lg-6 col-sm-6">
-                    <div class="widget-stat card bg-info">
-                        <div class="card-body p-4">
-                            <div class="media">
-                                <span class="me-3">
-                                    <svg id="icon-customers" xmlns="http://www.w3.org/2000/svg" width="30"
-                                        height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                                        class="feather feather-user">
-                                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-                                        <circle cx="12" cy="7" r="4"></circle>
-                                    </svg>
-                                </span>
-                                <div class="media-body text-white text-end">
-                                    <p class="mb-1">Total Patients</p>
-                                    <h3 class="text-white">
-                                        {{ $totalPatients }}
-                                    </h3>
+            @if (auth()->user()->role->name == 'Admin')
+                <div class="row">
+                    <div class="col-xl-4 col-lg-12 col-sm-12">
+                        <div class="card">
+                            <div class="card-header border-0 pb-0">
+                                <h4>Recently Booked Appointments</h4> <a href="{{ route('appointment.create') }}"
+                                    class="btn btn-primary btn-sm">Book Now</a>
+                            </div>
+                            <div class="card-body pb-0">
+                                <div class="table-responsive">
+                                    <table class="table table-bordered table-striped table-sm" id="data-table">
+                                        <thead>
+                                            <tr>
+                                                <th scope="col">Name</th>
+                                                <th scope="col">Date</th>
+                                                <th scope="col">Doctor Name</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach ($appointments as $appointment)
+                                                <tr>
+                                                    <td>{{ $appointment->name }}</td>
+                                                    <td>{{ $appointment->date }}</td>
+                                                    <td>{{ $appointment->doctor->name }}</td>
+                                                </tr>
+                                            @endforeach
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="card-footer pt-0 pb-0 text-center">
+                                <div class="row">
+                                    <div class="col-6 pt-3 pb-3 border-end">
+                                        <h3 class="mb-1 text-primary">{{ $appointmentsToday }}</h3>
+                                        <span>Appointments today</span>
+                                    </div>
+                                    <div class="col-6 pt-3 pb-3">
+                                        <h3 class="mb-1 text-primary">{{ $upcomingAppointments }}</h3>
+                                        <span>Upcoming appointments</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-8 col-xxl-8 col-lg-12 col-sm-12">
+                        <div class="col-sm-12">
+                            <div class="card">
+                                <div class="row no-gutters">
+                                    <div class="col-5 p-0">
+                                        <div class="card-body">
+                                            <h6 class="fw-normal text-uppercase">Weekly sales</h6>
+                                            <h4>$ 14000</h4>
+                                            <div>
+                                                <span class="badge badge-light">60%</span>
+                                                <span>Higher</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-7 p-0">
+                                        <div class="chart-wrapper">
+                                            <canvas id="chart_widget_11"></canvas>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-3 col-xxl-6 col-lg-6 col-sm-6">
+                        <div class="widget-stat card bg-primary">
+                            <div class="card-body p-4">
+                                <div class="media">
+                                    <span class="me-3">
+                                        <i class="flaticon-381-user-7"></i>
+                                    </span>
+                                    <div class="media-body text-white text-end">
+                                        <p class="mb-1">Total Doctors</p>
+                                        <h3 class="text-white">{{ $totalDoctors }}</h3>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-3 col-xxl-6 col-lg-6 col-sm-6">
+                        <div class="widget-stat card bg-info">
+                            <div class="card-body p-4">
+                                <div class="media">
+                                    <span class="me-3">
+                                        <svg id="icon-customers" xmlns="http://www.w3.org/2000/svg" width="30"
+                                            height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                            class="feather feather-user">
+                                            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                                            <circle cx="12" cy="7" r="4"></circle>
+                                        </svg>
+                                    </span>
+                                    <div class="media-body text-white text-end">
+                                        <p class="mb-1">Total Patients</p>
+                                        <h3 class="text-white">
+                                            {{ $totalPatients }}
+                                        </h3>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
+            @endif
         </div>
     </div>
 @endsection
