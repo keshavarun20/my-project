@@ -14,27 +14,35 @@
 			}
 		}
 		
-		var donutChart = function(){
-			Morris.Donut({
-				element: 'morris_donught',
-				data: [{
-					label: "\xa0 \xa0 Download Sales \xa0 \xa0",
-					value: 12,
-
-				}, {
-					label: "\xa0 \xa0 In-Store Sales \xa0 \xa0",
-					value: 30
-				}, {
-					label: "\xa0 \xa0 Mail-Order Sales \xa0 \xa0",
-					value: 20
-				}],
-				resize: true,
-				redraw: true,
-				colors: ['#FFA7D7', 'rgb(255, 92, 0)', '#ffaa2b'],
-				//responsive:true,
-				
-			});
-		}
+		var donutChart = function () {
+            $.ajax({
+                url: "dashboard/get-vitalSign",
+                type: "GET",
+                success: function (response) {
+					console.log(response)
+                    Morris.Donut({
+                        element: "morris_donught",
+                        data: [
+                            {
+                                label: "\xa0 \xa0 Glucose Rate(mg/dl)\xa0 \xa0",
+                                value: response.rbs,
+                            },
+                            {
+                                label: "\xa0 \xa0 Pulse Rate(Per Min) \xa0 \xa0",
+                                value: response.heart_rate,
+                            },
+                            {
+                                label: "\xa0 \xa0 Respiratory Rate(breaths/min) \xa0 \xa0",
+                                value: response.respiratory_rate,
+                            },
+                        ],
+                        resize: true,
+                        redraw: true,
+                        colors: ["#FFA7D7", "rgb(255, 92, 0)", "#ffaa2b"],
+                    });
+                },
+            });
+        }
 		
 		var lineChart = function(){
 			//line chart

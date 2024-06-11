@@ -10,6 +10,7 @@ use App\Http\Controllers\Doctor\DoctorController;
 use App\Http\Controllers\AppointmentController;
 use App\Http\Controllers\Admin\PatientController;
 use App\Http\Controllers\MedicalController;
+use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\VitalSignController;
 use App\Models\VitalSign;
 
@@ -31,6 +32,7 @@ Route::get('/', function () {
 Route::group(['prefix' => 'dashboard', 'middleware' => 'auth'], function () {
     Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
     Route::get('get-revenue', [DashboardController::class, 'getRevenue'])->name('dashboard.revenue');
+    Route::get('get-vitalSign', [DashboardController::class, 'getVital'])->name('dashboard.vitalsign');
 
 
     Route::group(['prefix' => 'users',], function () {
@@ -135,6 +137,11 @@ Route::group(['prefix' => 'dashboard', 'middleware' => 'auth'], function () {
         Route::get('/get-bpd-data', [VitalSignController::class, 'getBpdData'])->name('vital.bpd');
         Route::get('/get-rr-data', [VitalSignController::class, 'getRrData'])->name('vital.rr');
         Route::get('/get-spo2-data', [VitalSignController::class, 'getSpo2Data'])->name('vital.spo2');
+    });
+    Route::group(['prefix'=> 'notifications',], function () {
+        Route::get('/send-notifications', [NotificationController::class, 'notification'])->name('send.notifications');
+        Route::get('/notifications', [NotificationController::class, 'showNotifications'])->name('notifications');
+
     });
 });
 

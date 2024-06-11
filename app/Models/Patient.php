@@ -61,6 +61,11 @@ class Patient extends Model implements HasMedia
     {
         return  $this->user->email ;
     }
+
+    public function notifications()
+    {
+        return $this->hasMany(Notification::class, 'patient_id');
+    }
     
 }
 

@@ -89,12 +89,7 @@
                                 <div class="row no-gutters">
                                     <div class="col-5 p-0">
                                         <div class="card-body">
-                                            <h6 class="fw-normal text-uppercase">Weekly sales</h6>
-                                            <h4>$ 14000</h4>
-                                            <div>
-                                                <span class="badge badge-light">60%</span>
-                                                <span>Higher</span>
-                                            </div>
+                                            <h6 class="fw-normal text-uppercase">Monthly Income</h6>
                                         </div>
                                     </div>
                                     <div class="col-7 p-0">
@@ -141,6 +136,96 @@
                                         </h3>
                                     </div>
                                 </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            @endif
+            @if (auth()->user()->role->name == 'Patient')
+                <div class="row">
+                    <div class="col-xl-4 col-lg-12 col-sm-12">
+                        <div class="card">
+                            <div class="card-header border-0 pb-0">
+                                <h4>Upcoming Appointments</h4>
+                            </div>
+                            <div class="card-body pb-0">
+                                <div class="table-responsive">
+                                    <table class="table table-bordered table-striped table-sm" id="data-table">
+                                        <thead>
+                                            <tr>
+                                                <th scope="col">Name</th>
+                                                <th scope="col">Date</th>
+                                                <th scope="col">Doctor Name</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach ($patientAppointments as $appointment)
+                                                <tr>
+                                                    <td>{{ $appointment->name }}</td>
+                                                    <td>{{ $appointment->date }}</td>
+                                                    <td>{{ $appointment->doctor->name }}</td>
+                                                </tr>
+                                            @endforeach
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-8 col-xxl-8 col-lg-12 col-sm-12">
+                        <div class="col-sm-12">
+                            <div class="card">
+                                <div class="row no-gutters">
+                                    <div class="col-5 p-0">
+                                        <div class="card-body">
+                                            <h6 class="fw-normal text-uppercase">Monthly Medical Expenses</h6>
+                                        </div>
+                                    </div>
+                                    <div class="col-7 p-0">
+                                        <div class="chart-wrapper">
+                                            <canvas id="chart_widget_11"></canvas>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-6 col-lg-12 col-sm-12">
+                        <div class="card">
+                            <div class="card-header border-0 pb-0">
+                                <h4>Recent Prescription</h4>
+                            </div>
+                            <div class="table-responsive">
+                                <table class="table primary-table-bordered">
+                                    <thead class="thead-primary">
+                                        <tr>
+                                            <th>Drug Name</th>
+                                            <th>Dose</th>
+                                            <th>Route</th>
+                                            <th>Frequency</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach ($medicals->management_plan as $record)
+                                            <tr class="table-primary">
+                                                <td>{{ $record['drug_name'] }}</td>
+                                                <td>{{ $record['dose'] }}</td>
+                                                <td>{{ $record['route'] }}</td>
+                                                <td>{{ $record['frequency'] }}</td>
+                                            </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-6 col-lg-6">
+                        <div class="card">
+                            <div class="card-header">
+                                <h4 class="card-title">Recent Vital Signs Overview</h4>
+                            </div>
+                            <div class="card-body">
+                                <div id="morris_donught" class="morris_chart_height"></div>
                             </div>
                         </div>
                     </div>

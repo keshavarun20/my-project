@@ -40,4 +40,7 @@
     <script src="{{ asset('vendor/flot-spline/jquery.flot.spline.min.js') }}"></script>
 	<script src="{{ asset('vendor/chartist/js/chartist.min.js') }}"></script>
     <script src="{{ asset('vendor/chartist-plugin-tooltips/js/chartist-plugin-tooltip.min.js') }}"></script>
+    <script src="{{ asset('vendor/raphael/raphael.min.js') }}"></script>
+    <script src="{{ asset('vendor/morris/morris.min.js') }}"></script>
+    <script src="{{ asset('js/plugins-init/morris-init.js') }}"></script>
 

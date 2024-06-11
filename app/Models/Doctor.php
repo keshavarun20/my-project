@@ -49,6 +49,11 @@ class Doctor extends Model
         return $this->hasMany(Appointment::class, 'doctor_id');
     }
 
+    public function notifications()
+    {
+        return $this->hasMany(Notification::class, 'doctor_id');
+    }
+
     public function getNameAttribute()
     {
         // dd(1);
