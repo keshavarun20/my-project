@@ -68,10 +68,10 @@ class MedicalController extends Controller
         ActivityLog::create([
             'user_id' => $doctor->id,
             'description' => ' Created a Medical Record ' . '' . '(' . $patient->name . ')',
-            'action_type' => 'Medical_Record',
+            'action_type' => 'medical_record',
         ]);
 
-        return redirect()->back()->with('success', 'PDF file uploaded successfully.');
+        return redirect()->back()->with('success', 'Medical Record Created Successfully.');
 
     }
 }

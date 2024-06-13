@@ -338,12 +338,16 @@ class UserController extends Controller
     }
 
     public function destroy(User $user){
+
+        if ($user->role->name =='Admin') {
+            return redirect()->route('user.index')->with('error', 'Admin user cannot be deleted!');
+        }
         $user->delete();
         return redirect()->route('user.index')->with('deleted', 'User details has been deleted Successfully!');
     }
 
     public function profile(User $user){
-        $logs = ActivityLog::with('user')->where('user_id', Auth::id())->orderBy('created_at', 'desc')->get();
+        $logs = ActivityLog::with('user')->where('user_id', auth()->user()->id)->orderBy('created_at', 'desc')->get();
         return view('admin.user.profile', compact('user','logs'));
     }
     public function profilePicture(User $user ,Request $request){
