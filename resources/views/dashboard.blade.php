@@ -231,6 +231,108 @@
                     </div>
                 </div>
             @endif
+            @if (auth()->user()->role->name == 'Doctor')
+                <div class="row">
+                    <div class="col-xl-3 col-xxl-6 col-lg-6 col-sm-6">
+                        <div class="widget-stat card bg-info">
+                            <div class="card-body p-4">
+                                <div class="media">
+                                    <span class="me-3">
+                                        <svg id="icon-customers" xmlns="http://www.w3.org/2000/svg" width="30"
+                                            height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                            class="feather feather-user">
+                                            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                                            <circle cx="12" cy="7" r="4"></circle>
+                                        </svg>
+                                    </span>
+                                    <div class="media-body text-white text-end">
+                                        <p class="mb-1">Total Patients</p>
+                                        <h3 class="text-white">
+                                            {{ $totalPatient }}
+                                        </h3>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-3 col-xxl-6 col-lg-6 col-sm-6">
+                        <div class="widget-stat card bg-primary">
+                            <div class="card-body p-4">
+                                <div class="media">
+                                    <span class="me-3">
+                                        <i class="flaticon-381-user-7"></i>
+                                    </span>
+                                    <div class="media-body text-white text-end">
+                                        <p class="mb-1">Upcoming Appointment</p>
+                                        <h3 class="text-white">{{ $totalAppointment }}</h3>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-6 col-lg-12 col-sm-12">
+                        <div class="card">
+                            <div class="card-header border-0 pb-0">
+                                <h4>Upcoming Appointments</h4>
+                            </div>
+                            <div class="card-body pb-0">
+                                <div class="table-responsive">
+                                    <table class="table table-bordered table-striped table-sm" id="data-table">
+                                        <thead>
+                                            <tr>
+                                                <th scope="col">Name</th>
+                                                <th scope="col">Date</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach ($upcomingAppointments as $appointment)
+                                                <tr>
+                                                    <td>{{ $appointment->name }}</td>
+                                                    <td>{{ $appointment->date }}</td>
+                                                </tr>
+                                            @endforeach
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-6 col-lg-12 col-sm-12">
+                        <div class="card">
+                            <div class="card-header border-0 pb-0">
+                                <h4>Recent Appointments</h4>
+                            </div>
+                            <div class="card-body pb-0">
+                                <div class="table-responsive">
+                                    <table class="table table-bordered table-striped table-sm" id="data-table">
+                                        <thead>
+                                            <tr>
+                                                <th scope="col">Name</th>
+                                                <th scope="col">Date</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach ($appointments as $appointment)
+                                                <tr>
+                                                    <td>{{ $appointment->name }}</td>
+                                                    <td>{{ $appointment->date }}</td>
+                                                </tr>
+                                            @endforeach
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="card-footer pt-0 pb-0 text-center">
+                                <div class="row">
+                                    <h3 class="mb-1 text-primary">{{ $appointmentsToday }}</h3>
+                                    <span>Appointments today</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            @endif
         </div>
     </div>
 @endsection

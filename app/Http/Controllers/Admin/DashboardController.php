@@ -32,6 +32,18 @@ class DashboardController extends Controller
             return view('dashboard', compact('totalPatients', 'totalDoctors', 'appointments', 'upcomingAppointments', 'appointmentsToday', 'patientAppointments', 'medicals'));
         }
 
+        if (auth()->user()->doctor) {
+            $loggedInDoctorId = auth()->user()->doctor->id;
+            $totalPatient = Patient::whereHas('appointments', function ($query) use ($loggedInDoctorId) {
+                $query->where('doctor_id', $loggedInDoctorId);
+            })->count();
+            $appointments = Appointment::orderBy('created_at', 'desc')->where('doctor_id', $loggedInDoctorId)->take(3)->get();
+            $totalAppointment = Appointment::where('doctor_id', $loggedInDoctorId)->where('date', '>', Carbon::now())->count();
+            $appointmentsToday = Appointment::whereDate('date',  Carbon::today())->where('doctor_id', $loggedInDoctorId)->count();
+            $upcomingAppointments = Appointment::where('date', '>', Carbon::now())->where('doctor_id', $loggedInDoctorId)->get();
+            return view('dashboard', compact('totalPatient', 'totalAppointment', 'appointments','appointmentsToday', 'upcomingAppointments'));
+        }
+
         return view('dashboard', compact('totalPatients', 'totalDoctors', 'appointments', 'upcomingAppointments', 'appointmentsToday'));
     }
     public function getRevenue()
