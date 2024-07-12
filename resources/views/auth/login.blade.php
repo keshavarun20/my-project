@@ -34,7 +34,7 @@
                                 <div class="auth-form">
                                     <h4 class="text-center mb-4">Sign in to your account</h4>
                                     
-                                    <!-- Laravel Login Form -->
+                                    <!-- Login Form -->
                                     <form method="POST" action="{{ route('login') }}">
                                         @csrf
 
@@ -108,7 +108,6 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-danger light" data-bs-dismiss="modal">Close</button>
-                    <!-- You can add additional buttons if needed -->
                 </div>
             </div>
         </div>
