@@ -35,16 +35,19 @@ class UserController extends Controller
     }
 
     public function store(UserStoreRequest $request){
+        // Validate the incoming request data
         $data = $request->validated();
+        
         $admin = Auth::user();
-        //dd($data);
+       
+        //Common Fields
         $user=User::create([
             'email' => $data['email'],
             'role_id'=>$data['role_id'],
             'password' =>Hash::make($data['password']),
         ]);
 
-        //dd($data['role_id']);
+        //if the role is Doctor;
         if ($data['role_id'] == 2){
             $doctor=Doctor::create([
                 'user_id'=>$user->id,
@@ -63,62 +66,63 @@ class UserController extends Controller
                 'base_hospital'=>$data['base_hospital'],
 
             ]);
-            //dd($request);
-            if($request->input('daily_available') == 'No'){
-                $days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
-                $availableDays = $request->input('available_days', []);
-                $times = $request->input('times', []);
+            
+                //Doctor Schedule;
+                if($request->input('daily_available') == 'No'){
+                    $days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+                    $availableDays = $request->input('available_days', []);
+                    $times = $request->input('times', []);
 
-                $schedules = [];
-                foreach($days as $index=>$day){
-                    foreach ($availableDays as $availableDay) {
-                        if($availableDay == $day){
-                            $schedules[] = [
-                                'doctor_id'=>$doctor->id,
-                                'available_days' => $day,
-                                'time' => $times[$index],
-                            ];
+                    $schedules = [];
+                    foreach($days as $index=>$day){
+                        foreach ($availableDays as $availableDay) {
+                            if($availableDay == $day){
+                                $schedules[] = [
+                                    'doctor_id'=>$doctor->id,
+                                    'available_days' => $day,
+                                    'time' => $times[$index],
+                                ];
+                            }
                         }
                     }
+                    
+                    foreach ($schedules as $schedule) {
+                        DoctorSchedule::create([
+                            'doctor_id' => $doctor->id,
+                            'available_days' => $schedule['available_days'],
+                            'time' => $schedule['time']
+                        ]);
+                    }
+
+
                 }
-                //dd($request->input('times'));
-                //dd($schedules);
+                else {
+                $days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+
+                    $schedules = [];
+                    foreach ($days as $day) {
+                        $schedules[] = [
+                            'available_days' => $day,
+                            'time' => $request->input('time'),
+                        ];
+                    }
+                
                 foreach ($schedules as $schedule) {
                     DoctorSchedule::create([
                         'doctor_id' => $doctor->id,
                         'available_days' => $schedule['available_days'],
                         'time' => $schedule['time']
                     ]);
+                    }
                 }
-
-
-            }//dd()
-            else {
-            $days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
-
-                $schedules = [];
-                foreach ($days as $day) {
-                    $schedules[] = [
-                        'available_days' => $day,
-                        'time' => $request->input('time'),
-                    ];
-                }
-            
-            foreach ($schedules as $schedule) {
-                DoctorSchedule::create([
-                    'doctor_id' => $doctor->id,
-                    'available_days' => $schedule['available_days'],
-                    'time' => $schedule['time']
-                ]);
-                }
-            }
 
             ActivityLog::create([
                 'user_id' => $admin->id,
                 'description' => ' Created a Doctor'. '' .'('.$doctor->name.')',
                 'action_type' => 'create_doctor',
             ]);
-
+                
+        //if the Role is Patient    
         } else if($data['role_id'] == 3){
             $patient=Patient::create([
                 'user_id'=>$user->id,
@@ -140,6 +144,7 @@ class UserController extends Controller
                 'action_type' => 'create_patient',
             ]);
             
+        //if the role is Admin    
         } else {
              $receptionist= Receptionist::create([
                 'user_id'=>$user->id,

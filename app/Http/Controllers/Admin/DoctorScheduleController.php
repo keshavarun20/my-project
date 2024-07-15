@@ -24,7 +24,6 @@ class DoctorScheduleController extends Controller
     
     public function update(Doctor $doctor, DoctorScheduleUpdateRequest $request){
         
-        //dd($request);  
         $days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
         $availableDays = $request->input('available_days', []);
         $times = $request->input('times', []);

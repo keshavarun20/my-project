@@ -40,7 +40,7 @@
 
                                         <!-- Session Status -->
                                         @if (session('status'))
-                                            <div class="mb-4 text-green-600">
+                                            <div class="mb-4 text-green">
                                                 {{ session('status') }}
                                             </div>
                                         @endif
@@ -48,18 +48,18 @@
                                         <!-- Email Address -->
                                         <div class="mb-3">
                                             <label for="email" class="mb-1"><strong>Email</strong></label>
-                                            <input id="email" type="email" class="form-control" name="email" value="{{ old('email') }}" required autofocus autocomplete="username">
+                                            <input id="email" type="email" class="form-control" name="email" value="{{ old('email') }}" required autofocus autocomplete="username" placeholder="Email">
                                             @if ($errors->has('email'))
-                                                <div class="mt-2 text-red-600">{{ $errors->first('email') }}</div>
+                                                <div class="mt-2 text-red">{{ $errors->first('email') }}</div>
                                             @endif
                                         </div>
 
                                         <!-- Password -->
                                         <div class="mb-3">
                                             <label for="password" class="mb-1"><strong>Password</strong></label>
-                                            <input id="password" type="password" class="form-control" name="password" required autocomplete="current-password">
+                                            <input id="password" type="password" class="form-control" name="password" required autocomplete="current-password" placeholder="Password">
                                             @if ($errors->has('password'))
-                                                <div class="mt-2 text-red-600">{{ $errors->first('password') }}</div>
+                                                <div class="mt-2 text-red">{{ $errors->first('password') }}</div>
                                             @endif
                                         </div>
 

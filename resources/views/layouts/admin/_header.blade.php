@@ -84,8 +84,6 @@
                                      @endif
                                  </ul>
                              </div>
-                             <a class="all-notification" href="javascript:void(0);">See all notifications <i
-                                     class="ti-arrow-end"></i></a>
                          </div>
                      </li>
 

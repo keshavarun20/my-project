@@ -9,6 +9,7 @@ use App\Http\Controllers\Admin\DoctorScheduleController;
 use App\Http\Controllers\Doctor\DoctorController;
 use App\Http\Controllers\AppointmentController;
 use App\Http\Controllers\Admin\PatientController;
+use App\Http\Controllers\Admin\ReportController;
 use App\Http\Controllers\MedicalController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\VitalSignController;
@@ -142,6 +143,12 @@ Route::group(['prefix' => 'dashboard', 'middleware' => 'auth'], function () {
         Route::get('/send-notifications', [NotificationController::class, 'notification'])->name('send.notifications');
         Route::get('/notifications', [NotificationController::class, 'showNotifications'])->name('notifications');
 
+    });
+
+    Route::group(['prefix'=> 'reports',], function() {
+        Route::get('/patient-demographics', [ReportController::class, 'patientDemographics'])->name('reportpd.index');
+        Route::get('/billing-invoice', [ReportController::class, 'billingInvoice'])->name('reportbi.index');
+        Route::get('/reports/patient-demographics/pdf', [ReportController::class, 'downloadPatientDemographicsPdf']);
     });
 });
 
