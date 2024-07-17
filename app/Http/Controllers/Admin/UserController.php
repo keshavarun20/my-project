@@ -339,7 +339,7 @@ class UserController extends Controller
 
         $user->update($data);
 
-        return redirect()->route('user.index')->with('updated', 'Post  details has been updated Successfully!');
+        return redirect()->route('user.index')->with('updated', 'User  details has been updated Successfully!');
     }
 
     public function destroy(User $user){

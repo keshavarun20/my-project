@@ -26,10 +26,7 @@
                                 @endforeach
                             </select>
                             <input class="btn btn-success" type="submit" name="action" value="Generate">
-                            <button class="btn btn-primary dropdown-toggle" type="button" data-bs-toggle="dropdown">Export</button>
-                            <div class="dropdown-menu">
-                                <button class="dropdown-item" type="submit" name="action" value="pdf"><i class="las la-file-pdf"></i>PDF</button>
-                            </div>
+                            <input class="btn btn-primary" type="submit" name="action" value="Export">
                         </form>
                         <table class="table table-bordered mt-4">
                             <thead>

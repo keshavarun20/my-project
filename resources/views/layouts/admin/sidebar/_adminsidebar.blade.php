@@ -46,6 +46,8 @@
                 <ul aria-expanded="false">
                     <li><a href="{{ route('reportpd.index') }}">Patinet Demographic Report</a></li>
                     <li><a href="{{ route('reportbi.index') }}">Billing and Invoicing Report</a></li>
+                    <li><a href="{{ route('reportap.index') }}">Appointment Report</a></li>
+                    <li><a href="{{ route('reportyr.index') }}">Yearly Revenue Report</a></li>
                 </ul>
             </li>
         </ul>

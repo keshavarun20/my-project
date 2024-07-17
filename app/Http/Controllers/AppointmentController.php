@@ -54,14 +54,11 @@ class AppointmentController extends Controller
     {
         $data = $request->validated();
         $appointmentCount = Appointment::where('doctor_id', $data['doctor_id'])->where('date',$data['date'])->count();
-        //dd($appointmentCount);
         $tokenNumber = $appointmentCount + 1;
-        //dd($tokenNumber);
         $patient = Patient::where('nic', $data['nic'])->value('id');
         $patientN = Patient::find($patient);
 
         $referenceNumber = uniqid('#HCC');
-        //dd($tokenNumber);
         Appointment::create([
             'doctor_id' => $data['doctor_id'],
             'patient_id' => $patient,
@@ -109,4 +106,34 @@ class AppointmentController extends Controller
 
         return response()->json($appointments->get());
     }
+
+    public function cancel(Appointment $appointment ){
+        $doctorId = $appointment->doctor_id;
+        $date = $appointment->date;
+        $tokenNumber = $appointment->token_number;
+
+        // Delete the appointment
+        $appointment->delete();
+        
+        $subsequentAppointments = Appointment::where('doctor_id', $doctorId)
+            ->where('date', $date)
+            ->where('token_number', '>', $tokenNumber)
+            ->orderBy('token_number')
+            ->get();
+
+        foreach ($subsequentAppointments as $subsequentAppointment) {
+            $subsequentAppointment->token_number -= 1;
+            $subsequentAppointment->save();
+        }
+        
+        ActivityLog::create([
+            'user_id' => Auth::user()->id,
+            'description' => 'Cancelled Appointment' . '' . '(' . $appointment->first_name . ' ' . $appointment->last_name . ')',
+            'action_type' => 'cancelled_appointment',
+        ]);
+
+        return redirect()->route('appointment.index')->with('appointmentCancelled', true);
+    }
+
+    
 }

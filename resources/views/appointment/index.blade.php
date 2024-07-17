@@ -52,6 +52,38 @@
                                             <td>{{ $appointment->doctor->name }}</td>
                                             <td>{{ $appointment->token_number }}</td>
                                             <td>{{ $appointment->reference_number }}</td>
+                                            <td>
+                                                <button type="button" class="btn btn-danger mb-2" data-bs-toggle="modal"
+                                                    data-bs-target="#deleteModal-{{ $appointment->id }}">Cancel
+                                                    Appointment</button>
+                                                <div class="modal fade" id="deleteModal-{{ $appointment->id }}">
+                                                    <div class="modal-dialog modal-dialog-centered" role="document">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <h5 class="modal-title">Confirm Deletion</h5>
+                                                                <button type="button" class="btn-close"
+                                                                    data-bs-dismiss="modal"></button>
+                                                            </div>
+                                                            <div class="modal-body">
+                                                                <p>Are you sure you want to Cancel the Appointment?</p>
+                                                            </div>
+                                                            <div class="modal-footer">
+                                                                <button type="button" class="btn btn-secondary"
+                                                                    data-bs-dismiss="modal">Back</button>
+
+                                                                <form
+                                                                    action="{{ route('appointment.cancel', [$appointment->id]) }}"
+                                                                    method="POST">
+                                                                    @csrf
+                                                                    @method('DELETE')
+                                                                    <button type="submit"
+                                                                        class="btn btn-danger">Cancel</button>
+                                                                </form>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </td>
                                         </tr>
                                     @endforeach
                                 </tbody>

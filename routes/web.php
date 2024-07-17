@@ -60,6 +60,12 @@ Route::group(['prefix' => 'dashboard', 'middleware' => 'auth'], function () {
         Route::get('ajaxRequest', [AppointmentController::class, 'getUser'])->name('get.user');
         Route::post('/store', [AppointmentController::class, 'store'])->name('appointment.store');
         Route::get('ajaxRequest1', [AppointmentController::class, 'getAvailableDoctors'])->name('get.available.doctors');
+            
+        Route::group(['prefix' => '{appointment}'], function () {
+            Route:: delete('/', [AppointmentController::class, 'cancel'])->name('appointment.cancel');
+
+            });
+
 
 
         // Route::group(['prefix' => '{user}'], function () {
@@ -148,7 +154,9 @@ Route::group(['prefix' => 'dashboard', 'middleware' => 'auth'], function () {
     Route::group(['prefix'=> 'reports',], function() {
         Route::get('/patient-demographics', [ReportController::class, 'patientDemographics'])->name('reportpd.index');
         Route::get('/billing-invoice', [ReportController::class, 'billingInvoice'])->name('reportbi.index');
-        Route::get('/reports/patient-demographics/pdf', [ReportController::class, 'downloadPatientDemographicsPdf']);
+        Route::get('/appointment', [ReportController::class, 'appointmentReport'])->name('reportap.index');
+        Route::get('/yearlyRevenueReport', [ReportController::class, 'yearlyRevenueReport'])->name('reportyr.index');
+        
     });
 });
 
