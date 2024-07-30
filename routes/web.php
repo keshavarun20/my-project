@@ -48,7 +48,7 @@ Route::group(['prefix' => 'dashboard', 'middleware' => 'auth'], function () {
             Route::get('/edit', [UserController::class, 'edit'])->name('user.edit');
             Route::post('/profile_picture', [UserController::class, 'profilePicture'])->name('user.profile_picture');
             Route::patch('/', [UserController::class, 'update'])->name('user.update');
-            //Route::get('/delete',[UserController::class,'delete'])->name('user.delete');
+            Route::delete('/profile_pic_delete',[UserController::class,'profilePictureDelete'])->name('user.profile_picture.delete');
             Route::delete('/', [UserController::class, 'destroy'])->name('user.destroy');
         });
     });
@@ -146,8 +146,8 @@ Route::group(['prefix' => 'dashboard', 'middleware' => 'auth'], function () {
         Route::get('/get-spo2-data', [VitalSignController::class, 'getSpo2Data'])->name('vital.spo2');
     });
     Route::group(['prefix'=> 'notifications',], function () {
-        Route::get('/send-notifications', [NotificationController::class, 'notification'])->name('send.notifications');
-        Route::get('/notifications', [NotificationController::class, 'showNotifications'])->name('notifications');
+        Route::delete('/notifications/delete-all', [NotificationController::class, 'deleteAllNotifications'])->name('notifications.delete-all');
+
 
     });
 

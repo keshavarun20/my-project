@@ -27,27 +27,27 @@
             max-width: 600px;
             text-align: center;
             position: relative;
-            margin-top: 2rem; /* Adjust as needed */
+            margin-top: 2rem;
         }
 
         p {
             font-size: 1.2rem;
-            color: #333; /* Adjust text color */
-            margin-bottom: 1rem; /* Space between items */
+            color: #333;
+            margin-bottom: 1rem;
         }
 
         ul {
-            list-style-type: none; /* Remove default list styles */
+            list-style-type: none;
             padding: 0;
         }
 
         li {
             font-size: 1rem;
-            margin-bottom: 0.5rem; /* Space between list items */
+            margin-bottom: 0.5rem;
         }
 
         li strong {
-            font-weight: bold; /* Bold telephone and email */
+            font-weight: bold;
         }
     </style>
 </head>

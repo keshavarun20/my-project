@@ -7,32 +7,22 @@ use App\Models\Notification;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class NotificationController extends Controller
 {
-    public function notification()
+    public function deleteAllNotifications(Request $request)
     {
-        $date = Carbon::now()->addDay()->toDateString();
-       
-        $appointments = Appointment::whereDate('date', $date)->get();
 
-        foreach ($appointments as $appointment) {
-            $patient = User::find($appointment->patient_id);
-            $doctor = User::find($appointment->doctor_id);
-            
-                $title = "Appointment Reminder: " . $appointment->date;
+        $user = Auth::user();
+        if ($user->patient) {
+            $userId = $user->patient->id; // Get ID from the patients table
+        } elseif ($user->doctor) {
+            $userId = $user->doctor->id;
 
-                Notification::create([
-                    'patient_id' => $patient->id,
-                    'doctor_id' => $doctor->id,
-                    'title' => $title,
-                    'message' => "You have an upcoming appointment with" . " " . $appointment->doctor->name . " tomorrow.",
-                    'doctor_message'=> "You have an appointment with " . " ".$appointment->patient->name . " tomorrow.",
-                ]);
-                
-               
+            Notification::where('patient_id', $userId)->orWhere('doctor_id', $userId)->delete();
+
+            return redirect()->back()->with('status', 'All notifications deleted successfully.');
         }
     }
-   
-
 }

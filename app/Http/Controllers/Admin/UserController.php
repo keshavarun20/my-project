@@ -362,6 +362,16 @@ class UserController extends Controller
         return redirect()->back()->with('success', 'Profile Picture Details Uploaded successfully.');
     }
 
+    public function ProfilePictureDelete(User $user)
+    {
+
+        if ($user->hasMedia('profile_picture')) {
+            $user->getFirstMedia('profile_picture')->delete();
+        }
+
+        return redirect()->back()->with('success', 'Profile picture deleted successfully.');
+    }
+
     public function search(Request $request){
         $q=$request->search;
 

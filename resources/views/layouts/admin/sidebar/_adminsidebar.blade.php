@@ -40,7 +40,7 @@
                 </ul>
             </li>
             <li><a href="javascript:void()" aria-expanded="false">
-                    <i class="fas fa-file-invoice-dollar"></i>
+                    <i class="fas fa-file-alt"></i>
                     <span class="nav-text">Reports</span>
                 </a>
                 <ul aria-expanded="false">
