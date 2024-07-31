@@ -61,7 +61,7 @@ class BillingController extends Controller
         ]);
     }
 
-    return redirect()->route('admin.billing.invoice')->with('success', 'Billing information saved successfully.');
+    return redirect()->route('billing.invoice')->with('success', 'Billing information saved successfully.');
     }
 
     public function invoice()

@@ -48,18 +48,22 @@ class DashboardController extends Controller
     }
     public function getRevenue()
     {
-            $response = [];
-            for ($i = 1; $i < 13; $i++) {
-                $response[$i - 1] = Payment::whereMonth('date', $i)->sum('payable');
-            }
-
-        if (auth()->user()->patient) {
-            $patientId = auth()->user()->patient->id;
-            $response = [];
-            for ($i = 1; $i < 13; $i++) {
-                $response[$i - 1] = Payment::where('patient_id', $patientId)->whereMonth('date', $i)->sum('payable');
-            }
+        $currentYear = now()->year;
+            if (auth()->user()->patient) {
+        $patientId = auth()->user()->patient->id;
+        for ($i = 1; $i <= 12; $i++) {
+            $response[$i - 1] = Payment::where('patient_id', $patientId)
+                ->whereYear('date', $currentYear)
+                ->whereMonth('date', $i)
+                ->sum('payable');
         }
+    } else {
+        for ($i = 1; $i <= 12; $i++) {
+            $response[$i - 1] = Payment::whereYear('date', $currentYear)
+                ->whereMonth('date', $i)
+                ->sum('payable');
+        }
+    }
 
 
         return response()->json($response);

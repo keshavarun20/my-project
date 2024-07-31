@@ -81,25 +81,25 @@
                                                 <td>
                                                     <div class="input-group mb-3 input-primary">
                                                         <input type="text" id="description" name="description[]"
-                                                            class="form-control" placeholder="Description">
+                                                            class="form-control" placeholder="Description" required>
                                                     </div>
                                                 </td>
                                                 <td>
                                                     <div class="input-group mb-3 input-primary">
                                                         <input type="text" id="rate" name="rate[]"
-                                                            class="form-control" placeholder="RATE">
+                                                            class="form-control" placeholder="RATE" required>
                                                     </div>
                                                 </td>
                                                 <td>
                                                     <div class="input-group mb-3 input-primary">
                                                         <input type="text" id="qty" name="qty[]"
-                                                            class="form-control" placeholder="QTY/HRS">
+                                                            class="form-control" placeholder="QTY/HRS" required>
                                                     </div>
                                                 </td>
                                                 <td>
                                                     <div class="input-group mb-3 input-primary">
                                                         <input type="total" id="subtotal" name="subtotal[]"
-                                                            class="form-control" placeholder="SUB TOTAL" readonly>
+                                                            class="form-control" placeholder="SUB TOTAL" readonly required>
                                                     </div>
                                                 </td>
                                             </tr>
@@ -111,7 +111,7 @@
                                         <div class="col-xl-4">
                                             <label class="me-sm-2">Payment Method</label>
                                             <select class="me-sm-2 default-select form-control wide "
-                                                id="inlineFormCustomSelect" name="payment_method">
+                                                id="inlineFormCustomSelect" name="payment_method" required>
                                                 <option selected="">Select Option</option>
                                                 <option value="Cash">Cash</option>
                                                 <option value="Cheque">Cheque</option>
@@ -156,13 +156,13 @@
                                                                     <div class="input-group-text">Discount %</div>
                                                                     <input type="text" id="discount_percent"
                                                                         name="discount_percent" class="form-control"
-                                                                        placeholder="Discount">
+                                                                        placeholder="Discount" required>
                                                                 </div>
                                                             </td>
                                                             <td>
                                                                 <div class="input-group mb-3 input-primary">
                                                                     <input type="text" id= "discount" name= "discount"
-                                                                        class="form-control" placeholder="0.00">
+                                                                        class="form-control" placeholder="0.00" readonly>
                                                                 </div>
                                                             </td>
                                                         </tr>
@@ -172,13 +172,13 @@
                                                                     <div class="input-group-text">Tax %</div>
                                                                     <input type="text" id= "tax_percent"
                                                                         name= "tax_percent" class="form-control"
-                                                                        placeholder="Tax">
+                                                                        placeholder="Tax" required>
                                                                 </div>
                                                             </td>
                                                             <td>
                                                                 <div class="input-group mb-3 input-primary">
                                                                     <input type="text" id= "tax" name= "tax"
-                                                                        class="form-control" placeholder="0.00">
+                                                                        class="form-control" placeholder="0.00" readonly>
                                                                 </div>
                                                             </td>
                                                         </tr>

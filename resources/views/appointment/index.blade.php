@@ -115,6 +115,7 @@
                             <p><strong>Name:</strong> {{ $appointmentBooked->name }}</p>
                             <p><strong>Appointment Date:</strong> {{ $appointmentBooked->date }}</p>
                             <p><strong>Doctor Name:</strong> {{ $appointmentBooked->doctor->name }}</p>
+                            <p><strong>Consultation Type:</strong> {{ $appointmentBooked->doctor->consultation->name }}</p>
 
                             <p><strong>Your token number :</strong> {{ $appointmentBooked->token_number }}</p>
                             <p><strong>Your reference number for payment:</strong>
