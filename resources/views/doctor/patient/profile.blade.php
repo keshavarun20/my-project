@@ -677,13 +677,13 @@
                                                             <label for="symptom1">Symptom</label>
                                                             <input type="text" name="symptoms[]"
                                                                 class="form-control symptom" id="symptom1"
-                                                                placeholder="Symptom">
+                                                                placeholder="Symptom" required>
                                                         </div>
                                                         <div class="mb-3 col-md-5 input-primary">
                                                             <label for="duration1">Duration</label>
                                                             <input type="text" name="durations[]"
                                                                 class="form-control duration" id="duration1"
-                                                                placeholder="Duration">
+                                                                placeholder="Duration" required>
                                                         </div>
                                                         <div class="mb-3 col-md-2">
                                                             <label>&nbsp;</label>
@@ -699,13 +699,13 @@
                                                     <div class="row">
                                                         <div class="input-primary">
                                                             <label for="treatment">Treatment for this Disease</label>
-                                                            <textarea name="treatment" class="form-control " id="treatment" placeholder="Treatment for this Disease"></textarea>
+                                                            <textarea name="treatment" class="form-control " id="treatment" placeholder="Treatment for this Disease" required></textarea>
                                                         </div>
                                                     </div>
                                                     <div class="row">
                                                         <div class="input-primary">
                                                             <label for="medication">Medication for this Disease</label>
-                                                            <textarea name="medication" class="form-control" id="medication" placeholder="Medication for this Disease"></textarea>
+                                                            <textarea name="medication" class="form-control" id="medication" placeholder="Medication for this Disease" required></textarea>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -713,7 +713,7 @@
                                             <div id="v-pills-messages" class="tab-pane fade">
                                                 <div class="d-none input-primary" id="messages">
                                                     <label for="medical_history">Medical History</label>
-                                                    <textarea name="medical_history" class="form-control" id="medical_history" placeholder="Medical History"></textarea>
+                                                    <textarea name="medical_history" class="form-control" id="medical_history" placeholder="Medical History" required></textarea>
                                                 </div>
                                             </div>
                                             <div id="v-pills-settings" class="tab-pane fade">
@@ -748,7 +748,7 @@
                                                             <label for="treatment">Family History of Chronic
                                                                 illnesses</label>
                                                             <textarea name="family_history" class="form-control " id="family_history"
-                                                                placeholder="Family History of Chronic illnesses"></textarea>
+                                                                placeholder="Family History of Chronic illnesses" required></textarea>
                                                         </div>
                                                     </div>
                                                     <div class="row">
@@ -806,46 +806,46 @@
                                                     <div class="input-primary">
                                                         <label for="general_sign">General Sign</label>
                                                         <input type="text" name="general_sign" class="form-control"
-                                                            id="general_sign" placeholder="General Sign">
+                                                            id="general_sign" placeholder="General Sign" required>
                                                     </div>
                                                     <div class="input-primary">
                                                         <label for="abdominal">Abdominal</label>
                                                         <input type="text" name="abdominal" class="form-control"
-                                                            id="abdominal" placeholder="Abdominal">
+                                                            id="abdominal" placeholder="Abdominal" required>
                                                     </div>
                                                     <div class="input-primary">
                                                         <label for="cardiovascular_system">Cardiovascular System</label>
                                                         <input type="text" name="cardiovascular_system"
                                                             class="form-control" id="cardiovascular_system"
-                                                            placeholder="Cardiovascular System">
+                                                            placeholder="Cardiovascular System" required>
                                                     </div>
                                                     <div class="input-primary">
                                                         <label for="respiratory_system">Respiratory System</label>
                                                         <input type="text" name="respiratory_system"
                                                             class="form-control" id="respiratory_system"
-                                                            placeholder="Respiratory System">
+                                                            placeholder="Respiratory System" required>
                                                     </div>
                                                     <div class="row input-primary">
                                                         <div class="mb-3 col-md-3">
                                                             <label for="height">Height (meters):</label>
                                                             <input type="number" class="form-control" id="height"
-                                                                name="height" step="0.01" placeholder="Height">
+                                                                name="height" step="0.01" placeholder="Height" required>
                                                         </div>
                                                         <div class="mb-3 col-md-3">
                                                             <label for="weight">Weight (kg):</label>
                                                             <input type="number" id="weight" class="form-control"
-                                                                name="weight" step="0.01" placeholder="Weight'">
+                                                                name="weight" step="0.01" placeholder="Weight'" required>
                                                         </div>
                                                         <div class="mb-3 col-md-3">
                                                             <label for="bmi">BMI:</label>
                                                             <input type="number" class="form-control" id="bmi"
-                                                                name="bmi" readonly placeholder="BMI">
+                                                                name="bmi" readonly placeholder="BMI" required>
                                                         </div>
                                                         <div class="mb-3 col-md-3">
                                                             <label for="temperature">Temperature (°C):</label>
                                                             <input type="number" class="form-control" id="temperature"
                                                                 name="temperature" step="0.01"
-                                                                placeholder="Temperature">
+                                                                placeholder="Temperature" required>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -855,7 +855,7 @@
                                                     <div class="input-primary">
                                                         <label for="diagnosis">Diagnosis</label>
                                                         <input type="text" name="diagnosis" class="form-control"
-                                                            id="diagnosis" placeholder="Diagnosis">
+                                                            id="diagnosis" placeholder="Diagnosis" required>
                                                     </div>
                                                     <div class="row input-primary" id="ro1">
                                                         <div class="mb-3 col-md-3">
