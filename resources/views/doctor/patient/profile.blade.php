@@ -361,7 +361,7 @@
                                                     </div>
                                                 </h3>
                                                 <span>
-                                                    @if ($spo2 >= 95)
+                                                    @if ($spo2 >= 95 && $spo2)
                                                         <div class="text-success">Normal</div>
                                                     @elseif ($spo2 >= 90 && $spo2 < 95)
                                                         <div class="text-warning">Mild Hypoxemia</div>
@@ -587,27 +587,24 @@
                                                         </table>
                                                     </div>
                                                     <div class="row">
-                                                        <div class="mb-3 col-md-6 ">
-                                                            <label for="symptom">General Sign :</label>
-                                                            <input type="text" class="form-control" readonly
-                                                                value="{{ $medical->general_sign }}">
+                                                        <div class="mb-3 col-md-6">
+                                                            <label for="general_sign">General Sign:</label>
+                                                            <textarea class="form-control" id="general_sign" readonly rows="5">{{ $medical->general_sign }}</textarea>
                                                         </div>
-                                                        <div class="mb-3 col-md-6 ">
-                                                            <label for="duration">Abdominal :</label>
-                                                            <input type="text" class="form-control" readonly
-                                                                value="{{ $medical->abdominal }}">
+                                                        <div class="mb-3 col-md-6">
+                                                            <label for="abdominal">Abdominal:</label>
+                                                            <textarea class="form-control" readonly rows="5">{{ $medical->abdominal }}</textarea>
                                                         </div>
                                                     </div>
                                                     <div class="row">
-                                                        <div class="mb-3 col-md-6 ">
-                                                            <label for="symptom">Cardiovascular System :</label>
-                                                            <input type="text" class="form-control" readonly
-                                                                value="{{ $medical->cardiovascular_system }}">
+                                                        <div class="mb-3 col-md-6">
+                                                            <label for="cardiovascular_system">Cardiovascular
+                                                                System:</label>
+                                                            <textarea class="form-control" id="cardiovascular_system" readonly rows="5">{{ $medical->cardiovascular_system }}</textarea>
                                                         </div>
-                                                        <div class="mb-3 col-md-6 ">
-                                                            <label for="duration">Respiratory System</label>
-                                                            <input type="text" class="form-control" readonly
-                                                                value="{{ $medical->respiratory_system }}">
+                                                        <div class="mb-3 col-md-6">
+                                                            <label for="respiratory_system">Respiratory System:</label>
+                                                            <textarea class="form-control" id="respiratory_system" readonly rows="5">{{ $medical->respiratory_system }}</textarea>
                                                         </div>
                                                     </div>
                                                 </fieldset>
@@ -829,12 +826,14 @@
                                                         <div class="mb-3 col-md-3">
                                                             <label for="height">Height (meters):</label>
                                                             <input type="number" class="form-control" id="height"
-                                                                name="height" step="0.01" placeholder="Height" required>
+                                                                name="height" step="0.01" placeholder="Height"
+                                                                required>
                                                         </div>
                                                         <div class="mb-3 col-md-3">
                                                             <label for="weight">Weight (kg):</label>
                                                             <input type="number" id="weight" class="form-control"
-                                                                name="weight" step="0.01" placeholder="Weight'" required>
+                                                                name="weight" step="0.01" placeholder="Weight'"
+                                                                required>
                                                         </div>
                                                         <div class="mb-3 col-md-3">
                                                             <label for="bmi">BMI:</label>
